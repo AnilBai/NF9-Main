@@ -1,6 +1,6 @@
 :root {
-  --text: #ffffff;
-  --muted: rgba(255,255,255,0.7);
+  --text: #000000;
+  --muted: rgba(0,0,0,0.7);
   --font-heading: "Satoshi", sans-serif;
   --font-body: "Inter", sans-serif;
 }
@@ -102,7 +102,7 @@
 }
 
 .about-label {
-  font-family: var(--font-body);
+  font-family: #ffffff;
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -112,7 +112,7 @@
 }
 
 .about-title {
-  font-family: var(--font-heading);
+  font-family: #ffffff;
   font-size: 100px;
   font-weight: 400;
   line-height: 100px;
@@ -120,7 +120,7 @@
 }
 
 .about-description {
-  font-family: var(--font-body);
+  font-family: #ffffff;
   font-size: 28px;
   font-weight: 400;
   line-height: 38px;

@@ -67,7 +67,7 @@
   
     /* 👇 ADD ONLY THIS */
     position: absolute;
-    right: 50px;
+    right: 40px;
     top: 50%;
     transform: translateY(-50%);
   }
@@ -573,6 +573,8 @@
     .hamburger {
       width: 48px;
       height: 28px;
+      right: 10px;
+
     }
   
     .hamburger.active span:nth-child(1) {
