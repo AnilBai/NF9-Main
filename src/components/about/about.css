@@ -102,7 +102,7 @@
 }
 
 .about-label {
-  font-family: #ffffff;
+  font-family: var(--font-heading);
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -112,19 +112,20 @@
 }
 
 .about-title {
-  font-family: #ffffff;
+  font-family: var(--font-body);
   font-size: 100px;
+  color: #ffffff !important;
   font-weight: 400;
   line-height: 100px;
   margin-bottom: 40px;
 }
 
 .about-description {
-  font-family: #ffffff;
+  font-family: var(--font-body);
   font-size: 28px;
   font-weight: 400;
   line-height: 38px;
-  color: var(--text);
+  color: #ffffff !important;
   margin-top: 50px;
 }
 
@@ -241,16 +242,18 @@
 
 @media (max-width: 468px) {
   .about-section {
-    min-height: 180vh;
+    min-height: 300vh;
     align-items: center;      /* vertical centering */
     justify-content: center;  /* horizontal centering */
   }
 
   .about-content {
     max-width: 100%;
-    margin-top: 100%;
-    padding: 80px 20px;       /* breathing space only */
-    text-align: center;
+    margin-top: 0;
+    padding: 120px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .about-label {

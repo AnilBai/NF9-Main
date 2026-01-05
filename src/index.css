@@ -38,11 +38,6 @@
 
 /* ================= ROOT DESIGN TOKENS ================= */
 :root {
-  --col1: #000000;
-  --col2: #ffffff;
-  --muted: rgba(255, 255, 255, 0.6);
-  --accent: #ff6a00;
-
   --font-heading: "Satoshi", sans-serif;
   --font-brand: "EZRA",  sans-serif;
   --font-body: "Inter", sans-serif;
@@ -79,16 +74,6 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* ================= HEADINGS ================= */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
 }
 
 /* ================= MEDIA FIXES ================= */
