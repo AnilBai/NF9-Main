@@ -6,7 +6,6 @@ import Hero from './components/hero/hero'
 import About from './components/about/about'
 import Services from './components/services/services'
 import Works from './components/works/works'
-import VitalStats from './components/vital-stats/vital-stats'
 import FAQ from './components/faq/faq'
 import Footer from './components/footer/footer'
 import Together from './components/together/together';
@@ -33,7 +32,6 @@ function App() {
           <About />
           <Services />
           <Works />
-          <VitalStats />
           <Together/>
           <FAQ />
         </main>

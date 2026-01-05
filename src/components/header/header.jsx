@@ -58,14 +58,7 @@ const Header = () => {
     <>
       {/* Header */}
       <header className={`fixed main-header left-0 right-0 flex justify-between items-center px-5 md:px-10  z-[1000] ${isMenuActive ? 'header-active' : ''}`}>
-        <div className="logo">
-          <img
-            src="https://res.cloudinary.com/dsb1k3ugo/image/upload/v1760451582/nf9-icon_jcmneo.png"
-            width="60"
-            alt="NF9 Logo"
-          />
-        </div>
-
+        
         <div className="center-text">
           NF9
         </div>

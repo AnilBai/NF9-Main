@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ================= GOOGLE FONT (INTER ONLY) ================= */
+/* ================= GOOGLE FONT (INTER) ================= */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
 /* ================= SATOSHI (LOCAL) ================= */
@@ -36,23 +36,34 @@
   font-display: swap;
 }
 
-/* ================= ROOT TOKENS ================= */
+/* ================= ROOT DESIGN TOKENS ================= */
 :root {
-  --col1: #000;
-  --col2: #fff;
+  --col1: #000000;
+  --col2: #ffffff;
   --muted: rgba(255, 255, 255, 0.6);
   --accent: #ff6a00;
 
   --font-heading: "Satoshi", sans-serif;
+  --font-brand: "EZRA",  sans-serif;
   --font-body: "Inter", sans-serif;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: #ffffff; /* BODY NEVER ANIMATES */
+/* ================= GLOBAL RESET ================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ================= PAGE BACKGROUND LAYER ================= */
 #page-bg {
   position: fixed;
   inset: 0;
@@ -61,50 +72,131 @@ html, body {
   will-change: background-color;
 }
 
-
-/* ================= BASE ================= */
+/* ================= BODY BASE ================= */
 body {
-  margin: 0;
   background: var(--col1);
   color: var(--col2);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
-/* Headings = SATOSHI */
-h1, h2, h3, h4, h5, h6 {
+/* ================= HEADINGS ================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
 }
 
-/* ================= BASE ================= */
-body {
-  margin: 0;
-  background: var(--col1);
-  color: var(--text);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ================= MEDIA FIXES ================= */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* ================= PRELOADER ================= */
+/* ===============================
+   PRELOADER
+================================ */
+
+.preloader {
+  background: #ffffff;
+  overflow: hidden;
+}
+
+/* Curtains */
+.curtain {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: #000;
+  z-index: 30;
+}
+
+.curtain.top {
+  top: 0;
+  left: 0;
+}
+
+.curtain.bottom {
+  bottom: 0;
+  left: 0;
+}
+
+/* Center */
+.preloader-center {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Box */
+.preloader-box {
+  width: 100%;
+  height: 450px;                 /* 🔒 stable */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mask */
+.preloader-mask {
+  height: 280px;                 /* controls reveal */
+  display: flex;
+  align-items: center;
+  overflow: hidden;              /* 🔥 trap letters */
+}
+
+/* Letters row */
+.preloader-letters {
+  display: flex;
+  align-items: center;
+}
+
+/* EZRA text */
 .preloader-text {
-  font-size: 300px;
+  font-family: var(--font-brand); /* EZRA */
   font-weight: 900;
-  font-family: var(--font-body);
-  line-height: 1;
+  font-size: clamp(140px, 22vw, 360px);
+  line-height: 0.9;
+  color: #000;
+
+  /* 🔥 THICKNESS BOOST */
+  letter-spacing: 10px;
+  text-shadow:
+  2px 0   0 #000,
+ -2px 0   0 #000,
+  0   2px 0 #000,
+  0  -2px 0 #000,
+  2px 2px 0 #000,
+ -2px -2px 0 #000,
+  2px -2px 0 #000,
+ -2px 2px 0 #000;
+
+
+
+  will-change: transform, opacity;
 }
 
-@media (max-width: 768px) {
-  .preloader-text {
-    font-size: 200px;
-  }
+
+/* Line */
+.preloader-line {
+  margin-top: 16px;              /* 🔒 never drifts */
+  width: clamp(80px, 20vw, 140px);
+  height: 4px;
+  background: #111;
+  opacity: 0;
+  transform-origin: center;
+  will-change: transform, opacity;
 }
 
-@media (max-width: 480px) {
-  .preloader-text {
-    font-size: 140px;
-  }
-}
 

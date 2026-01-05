@@ -1,39 +1,62 @@
+/* ===============================
+   ROOT APP CONTAINER
+================================ */
 #root {
   width: 100%;
   min-height: 100vh;
+  overflow-x: hidden; /* prevents right-side scroll issues */
 }
 
-.logo {
-  padding: 1.5em 0;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ===============================
+   GLOBAL RESET (SAFE)
+================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* ===============================
+   BODY BASE
+================================ */
+body {
+  font-family: "Inter", sans-serif; /* or your NF9 body font */
+  background: #000; /* NF9 base background */
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.card {
-  padding: 2em;
+/* ===============================
+   MEDIA DEFAULT FIXES
+================================ */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-.read-the-docs {
-  color: #888;
+/* ===============================
+   LINKS
+================================ */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===============================
+   REMOVE TAP HIGHLIGHT (MOBILE)
+================================ */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }

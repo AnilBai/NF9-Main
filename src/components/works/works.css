@@ -1,5 +1,5 @@
 :root {
-  --bg: #0e0e0e;
+  --bg: #000000;
   --text: #f7f7f7;
   --muted: rgba(255,255,255,0.5);
 }
@@ -11,6 +11,7 @@
   color: var(--text);
   padding: 150px 50px;
 }
+
 
 .nf9-projects-header h1 {
   font-size: clamp(48px, 8vw, 120px);
@@ -65,7 +66,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.45s cubic-bezier(.22,1,.36,1);
+  transition: transform 0.6s cubic-bezier(.22,1,.36,1);
 }
 
 /* ARROW */
@@ -159,7 +160,7 @@
   }
   .nf9-projects-header sup {
     font-size: 0.28em;
-    top: -0.01em;
+    top: 100px;
   }
   .nf9-image-wrap {
     height: 300px;

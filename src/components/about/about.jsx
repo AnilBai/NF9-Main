@@ -12,96 +12,90 @@ const About = () => {
   const descRef = useRef(null);
   const imagesRef = useRef([]);
 
+
+
+
   useEffect(() => {
     const ctx = gsap.context(() => {
+  
       /* ================= INITIAL STATE ================= */
+      gsap.set(labelRef.current, {
+        opacity: 0,
+        filter: "blur(4px)"
+      });
+  
       gsap.set(
         [
-          labelRef.current,
-          titleRef.current.querySelectorAll("span"),
-          descRef.current.querySelectorAll("span"),
+          ...titleRef.current.querySelectorAll("span"),
+          ...descRef.current.querySelectorAll("span")
         ],
-        { opacity: 0, y: 40 }
+        {
+          opacity: 0,
+          filter: "blur(8px)"
+        }
       );
-
-      /* ================= TEXT REVEAL ================= */
+  
+      /* ================= FAST FRAMER REVEAL ================= */
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
+          start: "top 75%",
+          toggleActions: "play none none none"
+        }
       });
-
+  
+      // Label (quick hint)
       tl.to(labelRef.current, {
         opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.out",
-      })
-        .to(
-          titleRef.current.querySelectorAll("span"),
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1.4,
-            stagger: 0.05,
-            ease: "power3.out",
+        filter: "blur(0px)",
+        duration: 0.25,
+        ease: "power1.out"
+      });
+  
+      // Title + Description TOGETHER
+      tl.to(
+        [
+          ...titleRef.current.querySelectorAll("span"),
+          ...descRef.current.querySelectorAll("span")
+        ],
+        {
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 0.6,
+          stagger: {
+            each: 0.008,
+            from: "start"
           },
-          "-=0.4"
-        )
-        .to(
-          descRef.current.querySelectorAll("span"),
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1.2,
-            stagger: 0.012,
-            ease: "power2.out",
-          },
-          "-=0.6"
-        );
-
-      /* ================= IMAGE PARALLAX ================= */
+          ease: "power1.out"
+        },
+        "-=0.1"
+      );
+  
+      /* ================= IMAGE PARALLAX (UNCHANGED) ================= */
       imagesRef.current.forEach((img, i) => {
         gsap.fromTo(
           img,
-          { y: i % 2 === 0 ? 120 : -120 },
+          { y: i % 2 === 0 ? 60 : -60 },
           {
             y: 0,
             ease: "none",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 90%",
-              end: "bottom 10%",
-              scrub: 1,
-            },
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.1
+            }
           }
         );
       });
-
-      /* ================= PAGE BACKGROUND TRANSITION ================= */
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          scrub: 1.2,
-        },
-      })
-        .fromTo(
-          "#page-bg",
-          { backgroundColor: "#ffffff" },
-          { backgroundColor: "#000000", ease: "none" }
-        )
-        .to("#page-bg", {
-          backgroundColor: "#ffffff",
-          ease: "none",
-        });
+  
     }, sectionRef);
-
+  
     return () => ctx.revert();
   }, []);
+  
+  
+  
 
   const splitWords = (text) =>
     text.split(" ").map((word, i) => (

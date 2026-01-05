@@ -32,10 +32,8 @@ export default function Works() {
       </header>
 
       <div className="nf9-layout">
-        {/* ROW 1 */}
         <ProjectCard {...PROJECTS[0]} />
 
-        {/* ROW 2 */}
         <div className="nf9-row-two">
           <ProjectCard {...PROJECTS[1]} />
           <ProjectCard {...PROJECTS[2]} />
@@ -52,14 +50,16 @@ function ProjectCard({ title, subtitle, image, color }) {
     if (window.innerWidth < 769) return;
 
     const rect = imgRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 14;
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 6;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 6;
 
-    imgRef.current.style.transform = `scale(1.06) translate(${x}px, ${y}px)`;
+    imgRef.current.style.transform = `scale(1.25) translate(${x}px, ${y}px)`;
   };
 
   const onLeave = () => {
-    if (imgRef.current) imgRef.current.style.transform = "";
+    if (imgRef.current) {
+      imgRef.current.style.transform = "scale(1)";
+    }
   };
 
   return (
