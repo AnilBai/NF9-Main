@@ -1,6 +1,8 @@
-# Services Section Fix Plan
-
-- [x] Update JSX: Split titles and label into spans for each letter with initial inactive styles
-- [x] Update CSS: Add classes for inactive (opacity 0.001, blur 2px) and active (opacity 1, no blur, will-change: transform) spans
-- [x] Modify GSAP: Animate spans with stagger effects instead of whole elements
-- [x] Test animations and adjust if needed
+- [x] Create ScrollColorTransition.jsx component for smooth color transitions between sections
+- [x] Update App.jsx to include ScrollColorTransition component
+- [x] Ensure fixed background element in index.css for color changes
+- [ ] Modify together.jsx to detect idle state and apply floating class to images
+- [ ] Update together.css with keyframes and class for idle floating animation
+- [ ] Test animations on scroll and idle
+- [ ] Adjust timings if needed
+- [ ] Ensure mobile performance
