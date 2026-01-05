@@ -14,34 +14,6 @@ const SERVICES = [
   { title: "Branding", image: "https://framerusercontent.com/images/36wvwfIbrnOBnFSzVzIZ4BEv9ms.jpeg" },
 ];
 
-/* =====================================================
-   TUNING CONTROLS (SAFE TO ADJUST)
-===================================================== */
-const getStep = () => {
-  const w = window.innerWidth;
-  if (w <= 468)  return 0;
-  if (w <= 768)  return 0;
-  if (w <= 1024) return 0;
-  if (w <= 1440) return 0;
-  return 5;
-};
-
-const getStartOffset = () => {
-  const w = window.innerWidth;
-  if (w <= 468)  return 0;
-  if (w <= 768)  return 20;
-  if (w <= 1024) return 20;
-  return 20;
-};
-
-const getEndOffset = () => {
-  const w = window.innerWidth;
-  if (w <= 468)  return 20;
-  if (w <= 768)  return 40;
-  if (w <= 1024) return 60;
-  return 100;
-};
-
 export default function Services() {
   const sectionRef = useRef(null);
   const imageWrapRef = useRef(null);
@@ -52,37 +24,52 @@ export default function Services() {
       const images = gsap.utils.toArray(".nf9-services-image");
       const imageWrap = imageWrapRef.current;
 
+      /* ---------------- INITIAL ---------------- */
       gsap.set(images, { opacity: 0, scale: 0.96 });
-      gsap.set(imageWrap, { autoAlpha: 1, y: 0 });
+      gsap.set(imageWrap, {
+        autoAlpha: 0,
+        y: -120,
+        rotateX: -3,
+        rotateY: 2,
+      });
 
+      /* ---------------- ENTER / EXIT ---------------- */
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        onEnter: () =>
+          gsap.to(imageWrap, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+          }),
+        onLeaveBack: () =>
+          gsap.to(imageWrap, {
+            autoAlpha: 0,
+            y: -120,
+            duration: 0.6,
+            ease: "power3.in",
+          }),
+      });
+
+      /* ---------------- SCROLL IMAGE FOLLOW ---------------- */
       function activate(index) {
         const sectionRect = sectionRef.current.getBoundingClientRect();
         const itemRect = items[index].getBoundingClientRect();
 
-        const step = getStep();
-        const startOffset = getStartOffset();
-        const endOffset = getEndOffset();
-
-        let targetY =
+        const targetY =
           itemRect.top -
           sectionRect.top +
           itemRect.height / 2 -
           imageWrap.offsetHeight / 2;
 
-        /* STEP DRIFT */
-        targetY += index * step;
-
-        /* START ADJUSTMENT */
-        if (index === 0) targetY -= startOffset;
-
-        /* STOP ADJUSTMENT */
-        if (index === items.length - 1) targetY -= endOffset;
-
         images.forEach((img, i) => {
           gsap.to(img, {
             opacity: i === index ? 1 : 0,
             scale: i === index ? 1 : 0.96,
-            duration: 0.4,
+            duration: 0.35,
             ease: "power3.out",
           });
         });
@@ -90,26 +77,18 @@ export default function Services() {
         items.forEach((el, i) => {
           gsap.to(el, {
             opacity: i === index ? 1 : 0.35,
-            duration: 0.3,
+            duration: 0.25,
           });
         });
 
+        /* 🔑 Smooth slide (no stepping) */
         gsap.to(imageWrap, {
           y: targetY,
-          x: window.innerWidth < 768 ? 14 : 40,
-          rotateX: -4,
-          rotateY: 3,
-          duration: 0.65,
+          duration: 1.1,
           ease: "power3.out",
+          overwrite: "auto",
         });
       }
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top",
-        onEnter: () => activate(0),
-        onEnterBack: () => activate(0),
-      });
 
       items.forEach((item, index) => {
         ScrollTrigger.create({
@@ -119,6 +98,51 @@ export default function Services() {
           onEnter: () => activate(index),
           onEnterBack: () => activate(index),
         });
+      });
+
+      /* ---------------- CURSOR (TILT ONLY) ---------------- */
+      function onMouseMove(e) {
+        const b = sectionRef.current.getBoundingClientRect();
+        const x = (e.clientX - b.left) / b.width - 0.5;
+        const y = (e.clientY - b.top) / b.height - 0.5;
+
+        gsap.to(imageWrap, {
+          rotateY: x * 6,
+          rotateX: -y * 6,
+          duration: 0.6,
+          ease: "power3.out",
+        });
+      }
+
+      function resetMouse() {
+        gsap.to(imageWrap, {
+          rotateX: -3,
+          rotateY: 2,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      }
+
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => {
+          sectionRef.current.addEventListener("mousemove", onMouseMove);
+          sectionRef.current.addEventListener("mouseleave", resetMouse);
+        },
+        onLeave: () => {
+          sectionRef.current.removeEventListener("mousemove", onMouseMove);
+          sectionRef.current.removeEventListener("mouseleave", resetMouse);
+        },
+        onEnterBack: () => {
+          sectionRef.current.addEventListener("mousemove", onMouseMove);
+          sectionRef.current.addEventListener("mouseleave", resetMouse);
+        },
+        onLeaveBack: () => {
+          sectionRef.current.removeEventListener("mousemove", onMouseMove);
+          sectionRef.current.removeEventListener("mouseleave", resetMouse);
+        },
       });
 
       ScrollTrigger.refresh();
@@ -150,7 +174,6 @@ export default function Services() {
         {/* TEXT */}
         <div className="nf9-services-content">
           <div className="nf9-services-label">Our Services ↴</div>
-
           <div className="nf9-services-list">
             {SERVICES.map((s, i) => (
               <h1 key={i} className="nf9-services-item">

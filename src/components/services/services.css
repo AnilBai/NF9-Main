@@ -31,14 +31,17 @@
 .nf9-services-image-stage {
   position: relative;
   height: 100%;
+  perspective: 1200px;
 }
 
 .nf9-services-image-wrap {
   position: absolute;
-  top: -100px; /* 🔼 move image slightly up */
+  top: -100px;
+  will-change: transform;
   left: 35%;
   transform: translateX(-50%);
-  width: 260px;
+  
+  width: 220px;
   height: 320px;
   border-radius: 20px;
   overflow: hidden;
