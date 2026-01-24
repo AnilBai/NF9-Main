@@ -46,25 +46,28 @@ export default function OurProcess() {
     const section = sectionRef.current;
     const track = trackRef.current;
   
-    const scrollWidth = track.scrollWidth - window.innerWidth;
+    let ctx = gsap.context(() => {
+      const getScrollAmount = () =>
+        track.scrollWidth - window.innerWidth;
   
-    gsap.to(track, {
-      x: -scrollWidth,
-      ease: "power1.out",          // ⬅️ smoother than linear
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: () => `+=${scrollWidth * 0.5}`, // ⬅️ 15% faster
-        scrub: 0.5,                // ⬅️ faster response
-        pin: true,
-        anticipatePin: 1
-      }
-    });
+      gsap.to(track, {
+        x: () => -getScrollAmount(),
+        ease: "none", // ⬅️ scrub handles smoothness
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${getScrollAmount()}`,
+          scrub: 1.2,                 // ⬅️ smoother glide
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true
+        }
+      });
+    }, section);
   
-    return () => ScrollTrigger.killAll();
-  }, []);
+    return () => ctx.revert();
+  }, []);  
   
-
   return (
     <section className="ourprocess" ref={sectionRef}>
       <div className="ourprocess-track" ref={trackRef}>

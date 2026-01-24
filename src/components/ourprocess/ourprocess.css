@@ -1,104 +1,195 @@
 /* ================= SECTION ================= */
 .ourprocess {
-    position: relative;
-    height: 100vh;
-    background: #0b0b0b;
-    overflow: hidden;
+  position: relative;
+  height: 100vh;
+  background: #0b0b0b;
+  overflow: hidden;
+}
+
+/* ================= TRACK ================= */
+.ourprocess-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ================= INTRO ================= */
+.process-intro {
+  flex-shrink: 0;
+  width: 80vw;
+  height: 100vh;
+  padding: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #0b0b0b;
+}
+
+.process-intro h1 {
+  font-size: 120px;
+  line-height: 0.9;
+  font-weight: 500;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.process-intro p {
+  margin-top: 32px;
+  max-width: 420px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #9a9a9a;
+}
+
+/* ================= CARD ================= */
+.process-card {
+  flex-shrink: 0;
+  width: 50vw;
+  height: 100vh;
+  padding: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+/* Alternating background */
+.process-card:nth-child(even) {
+  background: #ffffff;
+  color: #000000;
+}
+
+.process-card:nth-child(odd) {
+  background: #0b0b0b;
+  color: #ffffff;
+}
+
+/* ================= META ================= */
+.process-step {
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.process-label {
+  margin-top: 6px;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+/* ================= TITLE ================= */
+.process-card h2 {
+  margin: 42px 0 22px;
+  font-size: 70px;
+  line-height: 0.95;
+  font-weight: 500;
+}
+
+/* ================= DESC ================= */
+.process-desc {
+  max-width: 360px;
+  font-size: 18px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+/* ================================================= */
+/* ================= LARGE DESKTOP ================= */
+/* ================================================= */
+
+@media (min-width: 1440px) {
+  .process-intro {
+    width: 70vw;
+    padding: 140px;
   }
-  
-  /* ================= TRACK ================= */
-  .ourprocess-track {
-    display: flex;
-    height: 100%;
-    width: max-content;
+
+  .process-card {
+    width: 45vw;
+    padding: 140px;
   }
-  
-  /* ================= INTRO ================= */
+
+  .process-card h2 {
+    font-size: 76px;
+  }
+}
+
+/* ================================================= */
+/* ================= DESKTOP / LAPTOP =============== */
+/* ================================================= */
+
+@media (max-width: 1439px) and (min-width: 1200px) {
   .process-intro {
     width: 80vw;
-    height: 100vh;
     padding: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: #0b0b0b;
   }
-  
-  .process-intro h1 {
-    font-size: 120px;
-    line-height: 0.9;
-    font-weight: 500;
-    color: #fff;
-  }
-  
-  .process-intro p {
-    margin-top: 30px;
-    max-width: 420px;
-    font-size: 18px;
-    color: #9a9a9a;
-  }
-  
-  /* ================= CARDS ================= */
+
   .process-card {
-    width: 50vw;
-    height: 100vh;
+    width: 55vw;
     padding: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    flex-shrink: 0;
   }
-  
-  /* alternating background like Framer */
-  .process-card:nth-child(even) {
-    background: #ffffff;
-    color: #000;
-  }
-  
-  .process-card:nth-child(odd) {
-    background: #0b0b0b;
-    color: #fff;
-  }
-  
-  /* ================= META ================= */
-  .process-step {
-    font-size: 14px;
-    letter-spacing: 1px;
-    opacity: 0.7;
-  }
-  
-  .process-label {
-    font-size: 14px;
-    margin-top: 8px;
-    opacity: 0.5;
-  }
-  
-  /* ================= TITLE ================= */
+
   .process-card h2 {
-    margin: 40px 0 20px;
-    font-size: 70px;
-    line-height: 0.95;
-    font-weight: 500;
+    font-size: 68px;
   }
-  
-  /* ================= DESC ================= */
+}
+
+/* ================================================= */
+/* ================= TABLET ======================== */
+/* ================================================= */
+
+@media (max-width: 1199px) and (min-width: 768px) {
+  .process-intro {
+    width: 90vw;
+    padding: 90px;
+  }
+
+  .process-card {
+    width: 80vw;
+    padding: 90px;
+  }
+
+  .process-intro h1 {
+    font-size: 80px;
+  }
+
+  .process-card h2 {
+    font-size: 56px;
+  }
+
   .process-desc {
-    max-width: 360px;
-    font-size: 18px;
-    opacity: 0.75;
+    font-size: 16px;
   }
-  
-  /* ================= MOBILE ================= */
-  @media (max-width: 768px) {
-    .process-intro,
-    .process-card {
-      padding: 60px 30px;
-    }
-  
-    .process-intro h1,
-    .process-card h2 {
-      font-size: 56px;
-    }
+}
+
+/* ================================================= */
+/* ================= MOBILE ======================== */
+/* ================================================= */
+
+@media (max-width: 767px) {
+  .process-intro {
+    width: 95vw;
+    padding: 60px 32px;
   }
-  
+
+  .process-card {
+    width: 90vw;
+    padding: 60px 32px;
+  }
+
+  .process-intro h1 {
+    font-size: 56px;
+  }
+
+  .process-card h2 {
+    font-size: 42px;
+    line-height: 1.05;
+  }
+
+  .process-desc {
+    max-width: 100%;
+    font-size: 15px;
+  }
+}
