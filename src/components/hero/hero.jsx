@@ -19,10 +19,9 @@ const Hero = () => {
             type="video/mp4"
           />
         </video>
-
-        {/* Overlay Text */}
+        {/* Center Text */}
         <div className="heroContent">
-          <p className="heroSubtitle">IDEAS. ENGINEERED.</p>
+          <h1 className="heroTitle">IDEAS. ENGINEERED. </h1>
         </div>
       </div>
     </section>

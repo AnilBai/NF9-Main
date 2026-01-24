@@ -47,10 +47,8 @@ function ProjectCard({ title, subtitle, image, color }) {
   const imgRef = useRef(null);
   const raf = useRef(null);
 
-  /* ================= SCROLL DRIVEN PARALLAX + ZOOM ================= */
+  /* ================= SCROLL PARALLAX + ZOOM (ALL DEVICES) ================= */
   useEffect(() => {
-    if (window.innerWidth < 769) return;
-
     const update = () => {
       const wrap = wrapRef.current;
       const img = imgRef.current;
@@ -67,11 +65,13 @@ function ProjectCard({ title, subtitle, image, color }) {
       const progress = (vh - rect.top) / (vh + rect.height);
       const p = Math.max(0, Math.min(1, progress));
 
-      /* 🔥 INCREASED PARALLAX SPEED */
-      img.style.setProperty("--scrollY", `${-p * 8}px`);
+      /* 📱 Responsive strength */
+      const isMobile = window.innerWidth < 769;
+      const zoomStrength = isMobile ? 0.12 : 0.18;
+      const parallaxStrength = isMobile ? 5 : 8;
 
-      /* 🔥 STRONGER SCROLL ZOOM */
-      img.style.setProperty("--zoom", (1 + p * 0.18).toFixed(3));
+      img.style.setProperty("--scrollY", `${-p * parallaxStrength}px`);
+      img.style.setProperty("--zoom", (1 + p * zoomStrength).toFixed(3));
 
       raf.current = null;
     };
@@ -89,7 +89,7 @@ function ProjectCard({ title, subtitle, image, color }) {
     };
   }, []);
 
-  /* ================= HOVER = DEPTH ONLY ================= */
+  /* ================= HOVER DEPTH (DESKTOP ONLY) ================= */
   const onMove = (e) => {
     if (window.innerWidth < 769) return;
 
