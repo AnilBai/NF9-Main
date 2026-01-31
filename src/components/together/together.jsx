@@ -15,6 +15,7 @@ export default function Together() {
   const leftRef = useRef(null);
   const rightRef = useRef(null);
   const centerRef = useRef(null);
+  const titleRef = useRef(null);
 
   const anim = useRef({
     current: 0,
@@ -28,11 +29,23 @@ export default function Together() {
   useEffect(() => {
     const state = anim.current;
 
-    const io = new IntersectionObserver(
+    /* ================= IMAGE SCROLL ANIMATION ================= */
+
+    const sectionIO = new IntersectionObserver(
       ([entry]) => (state.visible = entry.isIntersecting),
       { threshold: 0.35 }
     );
-    sectionRef.current && io.observe(sectionRef.current);
+
+    sectionRef.current && sectionIO.observe(sectionRef.current);
+
+    const startRAF = () => {
+      if (!state.raf) state.raf = requestAnimationFrame(tick);
+    };
+
+    const stopRAF = () => {
+      cancelAnimationFrame(state.raf);
+      state.raf = null;
+    };
 
     const onWheel = (e) => {
       if (!state.visible) return;
@@ -41,7 +54,11 @@ export default function Together() {
     };
 
     let lastY = null;
-    const onTouchStart = (e) => (lastY = e.touches[0].clientY);
+
+    const onTouchStart = (e) => {
+      lastY = e.touches[0].clientY;
+    };
+
     const onTouchMove = (e) => {
       if (!state.visible || lastY === null) return;
       const diff = lastY - e.touches[0].clientY;
@@ -51,20 +68,15 @@ export default function Together() {
         lastY = e.touches[0].clientY;
       }
     };
-    const onTouchEnd = () => (lastY = null);
+
+    const onTouchEnd = () => {
+      lastY = null;
+    };
 
     window.addEventListener("wheel", onWheel, { passive: true });
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: true });
     window.addEventListener("touchend", onTouchEnd, { passive: true });
-
-    const startRAF = () => {
-      if (!state.raf) state.raf = requestAnimationFrame(tick);
-    };
-    const stopRAF = () => {
-      cancelAnimationFrame(state.raf);
-      state.raf = null;
-    };
 
     const tick = () => {
       state.current = lerp(state.current, state.target, 0.12);
@@ -128,8 +140,29 @@ export default function Together() {
       }
     };
 
+    /* ================= TEXT SLIDE-UP ================= */
+
+    const titleIO = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          titleRef.current.classList.add("is-visible");
+          titleIO.disconnect(); // run once
+        }
+      },
+      {
+        threshold: 0.25,
+        rootMargin: "0px 0px -120px 0px", // delays trigger = smoother perception
+      }
+    );
+    
+    titleRef.current && titleIO.observe(titleRef.current);
+    
+
+    /* ================= CLEANUP ================= */
+
     return () => {
-      io.disconnect();
+      sectionIO.disconnect();
+      titleIO.disconnect();
       stopRAF();
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
@@ -161,18 +194,17 @@ export default function Together() {
         />
       </div>
 
-      <div className="together-title">
+      <div className="together-title" ref={titleRef}>
         <h1>LET&apos;S WORK</h1>
         <h1>
           TOGETHER<span className="dot">.</span>
         </h1>
 
-        {/* NEW CTA */}
         <a href="/contact-us" className="framer-cta">
           <span className="cta-label">GET STARTED TODAY</span>
           <span className="cta-line"></span>
           <span className="cta-arrow">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
               <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
             </svg>
           </span>
@@ -181,4 +213,3 @@ export default function Together() {
     </section>
   );
 }
-

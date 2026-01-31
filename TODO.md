@@ -1,4 +1,5 @@
-- [ ] Change hero position to fixed for static pinning
-- [ ] Ensure about section has higher z-index for overlay
-- [ ] Add margin-top:100vh to services section to prevent it from being under fixed hero
-- [ ] Test the overlay effect
+- [x] Change hero back to sticky for proper overlay and scroll away after about
+- [x] Remove mix-blend-mode from hero text and set color to white
+- [x] Add margin-top: -100vh to about section for overlay
+- [x] Remove margin-top from services section
+- [x] Test the overlay effect (dev server running on localhost:5174)

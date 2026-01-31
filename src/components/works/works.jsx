@@ -47,7 +47,9 @@ function ProjectCard({ title, subtitle, image, color }) {
   const imgRef = useRef(null);
   const raf = useRef(null);
 
-  /* ================= SCROLL PARALLAX + ZOOM (ALL DEVICES) ================= */
+  const lastScrollY = useRef(window.scrollY);
+  const maxZoom = useRef(1);
+
   useEffect(() => {
     const update = () => {
       const wrap = wrapRef.current;
@@ -62,16 +64,35 @@ function ProjectCard({ title, subtitle, image, color }) {
         return;
       }
 
+      /* ===== progress ===== */
       const progress = (vh - rect.top) / (vh + rect.height);
-      const p = Math.max(0, Math.min(1, progress));
+      const clamp = (v) => Math.max(0, Math.min(1, v));
+      const raw = clamp(progress);
 
-      /* 📱 Responsive strength */
-      const isMobile = window.innerWidth < 769;
-      const zoomStrength = isMobile ? 0.12 : 0.18;
-      const parallaxStrength = isMobile ? 5 : 8;
+      /* Framer-style easeOutCubic */
+      const p = 1 - Math.pow(1 - raw, 3);
+
+      /* ===== scroll speed ===== */
+      const currentY = window.scrollY;
+      const velocity = Math.abs(currentY - lastScrollY.current);
+      lastScrollY.current = currentY;
+      const speed = Math.min(velocity / 40, 1);
+
+      /* ===== responsive strength ===== */
+      const w = window.innerWidth;
+
+      let zoomStrength = 0.18;
+      if (w < 1024) zoomStrength = 0.24; // tablet
+      if (w < 768) zoomStrength = 0.3;  // mobile
+
+      const parallaxStrength = w < 768 ? 6 : 9;
+
+      /* ===== apply transforms ===== */
+      const targetZoom = 1 + p * zoomStrength * (1 + speed * 0.6);
+      maxZoom.current = Math.max(maxZoom.current, targetZoom);
 
       img.style.setProperty("--scrollY", `${-p * parallaxStrength}px`);
-      img.style.setProperty("--zoom", (1 + p * zoomStrength).toFixed(3));
+      img.style.setProperty("--zoom", maxZoom.current.toFixed(3));
 
       raf.current = null;
     };
@@ -89,14 +110,12 @@ function ProjectCard({ title, subtitle, image, color }) {
     };
   }, []);
 
-  /* ================= HOVER DEPTH (DESKTOP ONLY) ================= */
+  /* ===== hover depth (desktop only) ===== */
   const onMove = (e) => {
     if (window.innerWidth < 769) return;
-
     const rect = wrapRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 14;
-
     imgRef.current.style.setProperty("--hoverX", `${x}px`);
     imgRef.current.style.setProperty("--hoverY", `${y}px`);
   };

@@ -55,8 +55,28 @@
   margin: 50px auto;
   text-align: center;
   line-height: 0.9;
-
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 1s ease-out 0.5s forwards;
 }
+
+/* ================= ULTRA SMOOTH SLIDE UP ================= */
+
+.together-title {
+  opacity: 0;
+  transform: translateY(180px); /* BIG distance so it's visible */
+  transition:
+    transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 1.4s ease;
+  will-change: transform, opacity;
+}
+
+/* When section is reached */
+.together-title.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 .together-title h1 {
   margin: 0;

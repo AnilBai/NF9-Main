@@ -1,7 +1,7 @@
 :root {
   --bg: #000;
   --text: #f7f7f7;
-  --muted: rgba(255,255,255,.5);
+  --muted: rgba(255, 255, 255, 0.5);
 }
 
 /* ================= SECTION ================= */
@@ -22,7 +22,7 @@
   font-size: 0.35em;
   opacity: 0.5;
   display: inline-block;
-  transform: translateY(-0.9em); /* RootSquare style */
+  transform: translateY(-0.9em);
 }
 
 /* ================= LAYOUT ================= */
@@ -55,7 +55,7 @@
   overflow: hidden;
 }
 
-/* ================= IMAGE EFFECT PIPELINE ================= */
+/* ================= IMAGE EFFECT ================= */
 
 .nf9-image-wrap img {
   width: 100%;
@@ -68,19 +68,17 @@
   --zoom: 1;
 
   transform-origin: center;
-  transform:
-    translate3d(
+  transform: translate3d(
       var(--hoverX),
       calc(var(--scrollY) + var(--hoverY)),
       0
     )
     scale(var(--zoom));
 
-  transition: transform 0.6s cubic-bezier(.22,1,.36,1);
+  transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
   will-change: transform;
   backface-visibility: hidden;
 }
-
 
 /* ================= ARROW ================= */
 
@@ -96,7 +94,7 @@
   display: grid;
   place-items: center;
   transform: scale(0);
-  transition: transform .3s ease;
+  transition: transform 0.3s ease;
 }
 
 .nf9-image-wrap:hover .nf9-arrow {
@@ -127,13 +125,6 @@
 
   .nf9-image-wrap {
     height: 420px;
-    transform: translateZ(0);
-  }
-
-  .nf9-image-wrap img {
-    will-change: transform;
-    backface-visibility: hidden;
-    transition: transform 0.35s linear;
   }
 
   .nf9-arrow {

@@ -3,305 +3,304 @@
 ================================ */
 
 .contact-main {
-    padding: 200px 60px;
-    background: #000;
-    color: #fff;
-    font-family: "Inter", sans-serif;
-  }
+  padding: 200px 60px;
+  background: #000;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
 
-  /* ===============================
-   FRAMER LOADING / REVEAL EFFECT
+/* ===============================
+ FRAMER LOADING / REVEAL EFFECT
 ================================ */
 
 /* Initial hidden state */
 .contact-main .framer-reveal {
-    opacity: 0;
-    transform: translateY(60px);
-    transition:
-      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform, opacity;
-  }
-  
-  /* Visible state */
-  .contact-main.is-visible .framer-reveal {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  /* Stagger delays (Framer-style) */
-  .delay-1 { transition-delay: 0.05s; }
-  .delay-2 { transition-delay: 0.12s; }
-  .delay-3 { transition-delay: 0.2s; }
-  .delay-4 { transition-delay: 0.28s; }
-  .delay-5 { transition-delay: 0.36s; }
-  .delay-6 { transition-delay: 0.44s; }
-  .delay-7 { transition-delay: 0.52s; }
-  .delay-8 { transition-delay: 0.6s; }
-  
-  
-  /* ===============================
-     ROW 1 – TITLE
-  ================================ */
-  
-  .contact-title-row h1 {
-    font-size: clamp(60px, 10vw, 130px);
-    font-weight: 700;
-    margin-bottom: 40px;
-    color: #fff;
-  }
-  
-  /* ===============================
-     ROW 2 – CONTENT
-  ================================ */
-  
-  .contact-content-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-  }
-  
-  /* ===============================
-     LEFT CONTENT
-  ================================ */
-  
-  .contact-left p {
-    font-size: 30px;
-    line-height: 1.4;
-    color: rgba(255, 255, 255, 0.65);
-  }
-  
-  .contact-left strong {
-    color: #fff;
-    font-weight: 500;
-  }
-  
-  /* ===============================
-     FORM
-  ================================ */
-  
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-  
-  /* ===============================
-     INPUT FIELDS
-  ================================ */
-  
-  .field {
-    position: relative;
-  }
-  
-  .field input,
-  .field textarea {
-    width: 100%;
-    border: none;
-    outline: none;
-    padding: 12px 0;
-    background: transparent;
-    font-size: 16px;
-    color: #fff;
-    resize: none;
-  }
-  
-  .field textarea {
-    min-height: 90px;
-  }
-  
-  .field input::placeholder,
-  .field textarea::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-  }
-  
-  /* Bottom underline */
-  .field .line {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.25);
-    transition: background 0.3s ease;
-  }
-  
-  /* Focus underline */
-  .field input:focus + .line,
-  .field textarea:focus + .line {
-    background: #fff;
-  }
-  
-  /* ===============================
-   FRAMER SMOOTH BUTTON
+  opacity: 0;
+  transform: translateY(60px);
+  transition:
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+}
+
+/* Visible state */
+.contact-main.is-visible .framer-reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays (Framer-style) */
+.delay-1 { transition-delay: 0.05s; }
+.delay-2 { transition-delay: 0.12s; }
+.delay-3 { transition-delay: 0.2s; }
+.delay-4 { transition-delay: 0.28s; }
+.delay-5 { transition-delay: 0.36s; }
+.delay-6 { transition-delay: 0.44s; }
+.delay-7 { transition-delay: 0.52s; }
+.delay-8 { transition-delay: 0.6s; }
+
+
+/* ===============================
+   ROW 1 – TITLE
+================================ */
+
+.contact-title-row h1 {
+  font-size: clamp(60px, 10vw, 130px);
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #fff;
+}
+
+/* ===============================
+   ROW 2 – CONTENT
+================================ */
+
+.contact-content-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+
+/* ===============================
+   LEFT CONTENT
+================================ */
+
+.contact-left p {
+  font-size: 30px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.contact-left strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ===============================
+   FORM
+================================ */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ===============================
+   INPUT FIELDS
+================================ */
+
+.field {
+  position: relative;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 12px 0;
+  background: transparent;
+  font-size: 16px;
+  color: #fff;
+  resize: none;
+}
+
+.field textarea {
+  min-height: 90px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Bottom underline */
+.field .line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.3s ease;
+}
+
+/* Focus underline */
+.field input:focus + .line,
+.field textarea:focus + .line {
+  background: #fff;
+}
+
+/* ===============================
+ FRAMER SMOOTH BUTTON
 ================================ */
 
 .submit-btn {
-    position: relative;
-    width: 100px;
-    height: 30px;
-    border-radius: 40px;
-    background: #fff;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    padding-left: 15px;
-    padding-right: 15px;
-  
-    /* critical for smoothness */
-    will-change: transform;
-  }
-  
-  /* ===============================
-     TEXT
-  ================================ */
-  
-  .btn-text {
-    position: absolute;
-    left: 18px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #000;
-  
-    will-change: transform, opacity;
-  
-    transition:
-      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  
-  /* visible text */
-  .btn-text.bottom {
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 1;
-  }
-  
-  /* hidden text (above) */
-  .btn-text.top {
-    top: 50%;
-    transform: translateY(-140%);
-    opacity: 0;
-  }
-  
-  /* ===============================
-     DOT
-  ================================ */
-  
-  .btn-dot {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    width: 6px;
-    height: 6px;
-    background: #000;
-    border-radius: 50%;
-  
-    transform: translateY(-50%) scale(1);
-    will-change: transform;
-  
-    transition:
-      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  
-  /* ===============================
-     HOVER – SMOOTH FRAMER MOTION
-  ================================ */
-  
-  .submit-btn:hover .btn-text.bottom {
-    transform: translateY(140%);
-    opacity: 0;
-  }
-  
-  .submit-btn:hover .btn-text.top {
-    transform: translateY(-50%);
-    opacity: 1;
-  }
-  
-  /* subtle dot growth (NOT jumpy) */
-  .submit-btn:hover .btn-dot {
-    transform: translateY(-50%) scale(1.8);
-  }
-  
-  
-  
-  /* ===============================
-     TERMS
-  ================================ */
-  
-  .terms {
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.6);
-  }
-  
-  .terms a {
-    color: #fff;
-    text-decoration: underline;
-  }
+  position: relative;
+  width: 100px;
+  height: 30px;
+  border-radius: 40px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  padding-left: 15px;
+  padding-right: 15px;
 
-  /* ===============================
-   SUCCESS MESSAGE – FRAMER STYLE
+  /* critical for smoothness */
+  will-change: transform;
+}
+
+/* ===============================
+   TEXT
+================================ */
+
+.btn-text {
+  position: absolute;
+  left: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #000;
+
+  will-change: transform, opacity;
+
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* visible text */
+.btn-text.bottom {
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 1;
+}
+
+/* hidden text (above) */
+.btn-text.top {
+  top: 50%;
+  transform: translateY(-140%);
+  opacity: 0;
+}
+
+/* ===============================
+   DOT
+================================ */
+
+.btn-dot {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: #000;
+  border-radius: 50%;
+
+  transform: translateY(-50%) scale(1);
+  will-change: transform;
+
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===============================
+   HOVER – SMOOTH FRAMER MOTION
+================================ */
+
+.submit-btn:hover .btn-text.bottom {
+  transform: translateY(140%);
+  opacity: 0;
+}
+
+.submit-btn:hover .btn-text.top {
+  transform: translateY(-50%);
+  opacity: 1;
+}
+
+/* subtle dot growth (NOT jumpy) */
+.submit-btn:hover .btn-dot {
+  transform: translateY(-50%) scale(1.8);
+}
+
+
+
+/* ===============================
+   TERMS
+================================ */
+
+.terms {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.terms a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* ===============================
+ SUCCESS MESSAGE – FRAMER STYLE
 ================================ */
 
 .success-message {
-  max-width: 420px;
+max-width: 420px;
 }
 
 .success-message h3 {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: #fff;
+font-size: 22px;
+font-weight: 600;
+margin-bottom: 12px;
+color: #fff;
 }
 
 .success-message p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
+font-size: 16px;
+line-height: 1.6;
+color: rgba(255, 255, 255, 0.7);
 }
 
 .success-message strong {
-  color: #fff;
+color: #fff;
 }
 
-  
-  /* ===============================
-     RESPONSIVE
-  ================================ */
-  
-  @media (max-width: 768px) {
-    .contact-main {
-      padding: 150px 20px 100px 20px;
-    }
-  
-    .contact-content-row {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-    .contact-title-row h1 { 
-        font-size: 70px;
-        margin-bottom: 20px;
-    }
-  
-    .contact-left p {
-      font-size: 24px;
-    }
-  
-    .submit-btn {
-      width: 110px;
-    }
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+  .contact-main {
+    padding: 150px 20px 100px 20px;
   }
 
-  @media (max-width: 468px) {
-    .contact-title-row h1 { 
-        font-size: 50px;
-        margin-bottom: 20px;
-    }
-    .contact-left p {
-        font-size: 18px;
-        line-height: 1.4;
-        color: rgba(255, 255, 255, 0.65);
-      }
-
+  .contact-content-row {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
-  
+  .contact-title-row h1 { 
+      font-size: 70px;
+      margin-bottom: 20px;
+  }
+
+  .contact-left p {
+    font-size: 24px;
+  }
+
+  .submit-btn {
+    width: 110px;
+  }
+}
+
+@media (max-width: 468px) {
+  .contact-title-row h1 { 
+      font-size: 50px;
+      margin-bottom: 20px;
+  }
+  .contact-left p {
+      font-size: 18px;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+}
