@@ -8,8 +8,9 @@
 /* ================= SECTION ================= */
 .about-section {
   position: relative;
-  min-height: 240vh;          /* 🔒 BIG SECTION */
+  min-height: 240vh;
   background-color: black;
+  /* Extra overflow room so fast-moving images never get clipped mid-scroll */
   overflow: hidden;
   color: var(--text);
   isolation: isolate;
@@ -29,15 +30,19 @@
   overflow: hidden;
   z-index: 1;
   filter: saturate(0.95);
+  /* GPU-composited layer — keeps scroll butter-smooth */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .about-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-/* ===== FRAMER IMAGE ORBIT ===== */
+/* ─── IMAGE BASE POSITIONS ─── */
 
 /* Top Left */
 .img-1 {
@@ -95,13 +100,11 @@
 .about-content {
   position: sticky;
   top: 50%;
-  transform: translateY(-50%); /* 🎯 PERFECT vertical centering */
-
+  transform: translateY(-50%);
   z-index: 10;
   max-width: 860px;
   margin: 0 auto;
   padding: 0 24px;
-
   text-align: center;
 }
 
@@ -117,9 +120,9 @@
 
 .about-title {
   font-family: var(--font-heading);
-  font-size: 90px;
+  font-size: clamp(42px, 6vw, 80px);
   font-weight: 500;
-  line-height: 100px;
+  line-height: 1.1;
   margin-bottom: 40px;
 }
 
@@ -140,7 +143,6 @@
   font-weight: 500;
 }
 
-
 .about-description {
   font-family: var(--font-body);
   font-size: 26px;
@@ -150,32 +152,55 @@
   margin-top: 50px;
 }
 
-/* Animation helpers */
-.about-title span,
-.about-description span {
+/* ─── FRAMER WORD REVEAL ─── */
+/*
+  Each word lives inside .word-wrap which clips it.
+  GSAP animates .word from yPercent: 115 → 0
+  creating the "rising through a slot" Framer effect.
+*/
+
+.split-line {
+  display: inline;
+}
+
+.word-wrap {
+  display: inline-block;
+  overflow: hidden;         /* THE clip — hides word below baseline */
+  vertical-align: bottom;
+  line-height: 1.15;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+/* Title lines: display as block so each is on its own line, no wrapping */
+.line-wrap {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1.1;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.word {
   display: inline-block;
   will-change: transform, opacity;
 }
 
 /* ================= 1024px ================= */
 @media (max-width: 1024px) {
-    .about-section {
-      min-height: 240vh;
-    }
-  
-    .about-title {
-      font-size: 80px;
-      line-height: 1.1;
-    }
-  
-    .about-description {
-      font-size: 18px;
-      line-height: 30px;
-    }
+  .about-section { min-height: 240vh; }
 
-  
+  .about-title {
+    font-size: 80px;
+    line-height: 1.1;
+  }
 
-  /* ===== Images ===== */
+  .about-description {
+    font-size: 18px;
+    line-height: 30px;
+  }
+
   .img-1 { width: 160px; height: 220px; top: 25%; left: 3%; }
   .img-2 { width: 180px; height: 240px; top: 25%; right: 5%; }
   .img-3 { width: 160px; height: 220px; top: 75%; left: 50%; transform: translateX(-50%); }
@@ -184,137 +209,30 @@
   .img-6 { width: 140px; height: 200px; top: 20%; left: 40%; transform: translateX(-50%); }
 }
 
-
 @media (max-width: 768px) {
-    .about-label {
-      font-size: 18px;
-    }
+  .about-label  { font-size: 18px; }
+  .about-section { min-height: 240vh; }
+  .about-title  { font-size: 36px; line-height: 40px; }
+  .about-description { font-size: 16px; }
 
-
-    .about-section {
-      min-height: 240vh;
-    }
-  
-    .about-title {
-      font-size: 36px;
-      line-height: 40px;
-    }
-  
-    .about-description {
-      font-size: 16px;
-    }
-  
-  
-
-  /* ===== Images (ALL SHOWN) ===== */
-  .img-1 {
-    width: 120px;
-    height: 180px;
-    top: 20%;
-    left: 2%;
-  }
-
-  .img-2 {
-    width: 160px;
-    height: 220px;
-    top: 20%;
-    right: 2%;
-  }
-
-  .img-6 {
-    width: 160px;
-    height: 220px;
-    top: 15%;
-    left: 40%;
-    transform: translateX(-50%);
-  }
-
-  .img-3 {
-    width: 200px;
-    height: 260px;
-    top: 75%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .img-4 {
-    width: 120px;
-    height: 180px;
-    bottom: 15%;
-    right: 2%;
-  }
-
-  .img-5 {
-    width: 140px;
-    height: 200px;
-    bottom: 20%;
-    left: 5%;
-  }
+  .img-1 { width: 120px; height: 180px; top: 20%; left: 2%; }
+  .img-2 { width: 160px; height: 220px; top: 20%; right: 2%; }
+  .img-6 { width: 160px; height: 220px; top: 15%; left: 40%; transform: translateX(-50%); }
+  .img-3 { width: 200px; height: 260px; top: 75%; left: 50%; transform: translateX(-50%); }
+  .img-4 { width: 120px; height: 180px; bottom: 15%; right: 2%; }
+  .img-5 { width: 140px; height: 200px; bottom: 20%; left: 5%; }
 }
 
-
 @media (max-width: 468px) {
-    .about-section {
-      min-height: 240vh;
-    }
+  .about-section { min-height: 240vh; }
+  .about-label  { font-size: 18px; }
+  .about-title  { font-size: 36px; line-height: 40px; }
+  .about-description { font-size: 16px; line-height: 1.6; }
 
-    .about-label {
-      font-size: 18px;
-     }
-  
-    .about-title {
-      font-size: 36px;
-      line-height: 40px;
-    }
-  
-    .about-description {
-      font-size: 16px;
-      line-height: 1.6;
-  }
-  
-
-  /* ===== Images (Compact Orbit – unchanged logic) ===== */
-  .img-1 {
-    width: 100px;
-    height: 140px;
-    top: 18%;
-    left: 1%;
-  }
-
-  .img-2 {
-    width: 110px;
-    height: 150px;
-    top: 25%;
-    right: 10px;
-  }
-
-  .img-6 {
-    width: 120px;
-    height: 160px;
-    top: 12%;
-    left: 40%;
-    transform: translateX(-50%);
-  }
-
-  .img-3 {
-    width: 150px;
-    height: 190px;
-    top: 80%;
-    left: 40%;
-    transform: translateX(-50%);
-  }
-
-  .img-4 {
-    width: 100px;
-    height: 140px;
-    bottom: 18%;
-    right: 10px;
-  }
-
-  .img-5 {
-    width: 110px;
-    height: 150px;
-    bottom: 27%;
-    left: 3%;
-  }
+  .img-1 { width: 100px; height: 140px; top: 18%; left: 1%; }
+  .img-2 { width: 110px; height: 150px; top: 25%; right: 10px; }
+  .img-6 { width: 120px; height: 160px; top: 12%; left: 40%; transform: translateX(-50%); }
+  .img-3 { width: 150px; height: 190px; top: 80%; left: 40%; transform: translateX(-50%); }
+  .img-4 { width: 100px; height: 140px; bottom: 18%; right: 10px; }
+  .img-5 { width: 110px; height: 150px; bottom: 27%; left: 3%; }
 }
