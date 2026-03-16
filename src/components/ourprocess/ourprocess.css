@@ -1,195 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap');
+
+/* ================= RESET / BASE ================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 /* ================= SECTION ================= */
 .ourprocess {
   position: relative;
-  height: 100vh;
-  background: #0b0b0b;
+  background: #050505;
   overflow: hidden;
+  font-family: 'Syne', sans-serif;
 }
 
-/* ================= TRACK ================= */
-.ourprocess-track {
+/* =============================================
+   HORIZONTAL SCROLL — desktop only
+   ============================================= */
+.ourprocess.is-horizontal {
+  height: 100vh;
+}
+
+.ourprocess.is-horizontal .ourprocess-track {
   display: flex;
   height: 100%;
   width: max-content;
   will-change: transform;
 }
 
-/* ================= INTRO ================= */
+/* =============================================
+   INTRO PANEL
+   ============================================= */
 .process-intro {
   flex-shrink: 0;
-  width: 80vw;
+  width: 72vw;
   height: 100vh;
-  padding: 120px;
+  padding: 10vh 10vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  background: #0b0b0b;
+  justify-content: flex-end;
+  background: #050505;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle grain overlay on intro */
+.process-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.process-intro-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.process-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0.4;
+  margin-bottom: 32px;
+}
+
+.process-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
 }
 
 .process-intro h1 {
-  font-size: 120px;
-  line-height: 0.9;
-  font-weight: 500;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(72px, 11vw, 140px);
+  line-height: 0.88;
+  font-weight: 800;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  letter-spacing: -0.03em;
 }
 
-.process-intro p {
-  margin-top: 32px;
-  max-width: 420px;
-  font-size: 18px;
-  line-height: 1.6;
-  color: #9a9a9a;
+.process-intro h1 em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.35);
 }
 
-/* ================= CARD ================= */
+.process-intro-sub {
+  margin-top: 40px;
+  max-width: 380px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.45);
+  font-weight: 300;
+}
+
+/* scroll hint */
+.process-scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 56px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+
+.scroll-arrow {
+  width: 36px;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+  position: relative;
+  overflow: visible;
+}
+
+.scroll-arrow::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid rgba(255,255,255,0.25);
+  border-right: 1px solid rgba(255,255,255,0.25);
+  transform: rotate(45deg);
+}
+
+/* large step count decorative */
+.process-total {
+  position: absolute;
+  top: 10vh;
+  right: 10vw;
+  font-size: clamp(100px, 16vw, 240px);
+  font-weight: 800;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  z-index: 0;
+  font-family: 'Syne', sans-serif;
+}
+
+/* =============================================
+   PROCESS CARDS
+   ============================================= */
 .process-card {
   flex-shrink: 0;
-  width: 50vw;
+  width: 48vw;
   height: 100vh;
-  padding: 120px;
+  padding: 10vh 7vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   position: relative;
+  overflow: hidden;
 }
 
-/* Alternating background */
-.process-card:nth-child(even) {
-  background: #ffffff;
-  color: #000000;
-}
-
+/* alternating theme */
 .process-card:nth-child(odd) {
-  background: #0b0b0b;
-  color: #ffffff;
+  background: #0c0c0c;
+  color: #f0ede8;
+}
+
+.process-card:nth-child(even) {
+  background: #f2efe9;
+  color: #0c0c0c;
+}
+
+/* large ghost step number */
+.process-card::before {
+  content: attr(data-step);
+  position: absolute;
+  top: -0.1em;
+  right: -0.05em;
+  font-size: clamp(140px, 22vw, 340px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  font-family: 'Syne', sans-serif;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.process-card:nth-child(odd)::before {
+  color: rgba(255,255,255,0.04);
+}
+
+.process-card:nth-child(even)::before {
+  color: rgba(0,0,0,0.05);
+}
+
+/* divider line */
+.process-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.process-card:nth-child(odd)::after {
+  background: rgba(255,255,255,0.06);
+}
+
+.process-card:nth-child(even)::after {
+  background: rgba(0,0,0,0.08);
+}
+
+.process-card-inner {
+  position: relative;
+  z-index: 1;
 }
 
 /* ================= META ================= */
+.process-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
 .process-step {
-  font-size: 14px;
-  letter-spacing: 1.2px;
-  opacity: 0.7;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
   text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.process-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.3;
 }
 
 .process-label {
-  margin-top: 6px;
-  font-size: 14px;
-  opacity: 0.5;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.4;
 }
 
 /* ================= TITLE ================= */
 .process-card h2 {
-  margin: 42px 0 22px;
-  font-size: 70px;
-  line-height: 0.95;
-  font-weight: 500;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(44px, 5.5vw, 80px);
+  line-height: 0.92;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 28px;
 }
 
 /* ================= DESC ================= */
 .process-desc {
-  max-width: 360px;
-  font-size: 18px;
-  line-height: 1.6;
-  opacity: 0.75;
+  max-width: 340px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  opacity: 0.6;
+  font-weight: 300;
 }
 
-/* ================================================= */
-/* ================= LARGE DESKTOP ================= */
-/* ================================================= */
-
-@media (min-width: 1440px) {
-  .process-intro {
-    width: 70vw;
-    padding: 140px;
-  }
-
-  .process-card {
-    width: 45vw;
-    padding: 140px;
-  }
-
-  .process-card h2 {
-    font-size: 76px;
-  }
+/* ================= TAG ================= */
+.process-tag {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 7px 16px;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-/* ================================================= */
-/* ================= DESKTOP / LAPTOP =============== */
-/* ================================================= */
-
-@media (max-width: 1439px) and (min-width: 1200px) {
-  .process-intro {
-    width: 80vw;
-    padding: 120px;
-  }
-
-  .process-card {
-    width: 55vw;
-    padding: 120px;
-  }
-
-  .process-card h2 {
-    font-size: 68px;
-  }
+.process-card:nth-child(odd) .process-tag {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ================================================= */
-/* ================= TABLET ======================== */
-/* ================================================= */
+.process-card:nth-child(even) .process-tag {
+  background: rgba(0,0,0,0.05);
+  color: rgba(0,0,0,0.45);
+  border: 1px solid rgba(0,0,0,0.1);
+}
 
+/* =============================================
+   PROGRESS BAR
+   ============================================= */
+.process-progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #ffffff;
+  z-index: 100;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.1s linear;
+  mix-blend-mode: difference;
+}
+
+/* =============================================
+   VERTICAL / MOBILE LAYOUT
+   ============================================= */
+.ourprocess.is-vertical .ourprocess-track {
+  display: block;
+  width: 100%;
+}
+
+.ourprocess.is-vertical .process-intro {
+  width: 100%;
+  height: auto;
+  min-height: 85vh;
+  padding: 80px 32px 72px;
+  justify-content: flex-end;
+}
+
+.ourprocess.is-vertical .process-card {
+  width: 100%;
+  height: auto;
+  min-height: 80vh;
+  padding: 80px 32px 72px;
+  justify-content: flex-end;
+}
+
+.ourprocess.is-vertical .process-total {
+  display: none;
+}
+
+.ourprocess.is-vertical .process-scroll-hint {
+  display: none;
+}
+
+/* =============================================
+   TABLET ADJUSTMENTS
+   ============================================= */
 @media (max-width: 1199px) and (min-width: 768px) {
-  .process-intro {
-    width: 90vw;
-    padding: 90px;
+  .ourprocess.is-vertical .process-intro {
+    padding: 80px 56px 72px;
+    min-height: 75vh;
   }
 
-  .process-card {
-    width: 80vw;
-    padding: 90px;
-  }
-
-  .process-intro h1 {
-    font-size: 80px;
-  }
-
-  .process-card h2 {
-    font-size: 56px;
-  }
-
-  .process-desc {
-    font-size: 16px;
-  }
-}
-
-/* ================================================= */
-/* ================= MOBILE ======================== */
-/* ================================================= */
-
-@media (max-width: 767px) {
-  .process-intro {
-    width: 95vw;
-    padding: 60px 32px;
-  }
-
-  .process-card {
-    width: 90vw;
-    padding: 60px 32px;
-  }
-
-  .process-intro h1 {
-    font-size: 56px;
-  }
-
-  .process-card h2 {
-    font-size: 42px;
-    line-height: 1.05;
-  }
-
-  .process-desc {
-    max-width: 100%;
-    font-size: 15px;
+  .ourprocess.is-vertical .process-card {
+    padding: 80px 56px 72px;
+    min-height: 70vh;
   }
 }

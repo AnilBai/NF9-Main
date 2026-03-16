@@ -43,8 +43,6 @@
   --muted: rgba(255, 255, 255, 0.6);
   --accent: #ff6a00;
 
-  --font-heading: "Satoshi", sans-serif;
-  --font-body: "Inter", sans-serif;
 }
 
 html, body {

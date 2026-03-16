@@ -1,31 +1,14 @@
-/* ================= ROOT ================= */
+/* hero.css — NF9 unified theme */
 
-:root {
-  --col1: #000000;
-  --col2: #ffffff;
-  --font-heading: "Satoshi", sans-serif;
-  --font-body: "Inter", sans-serif;
-}
-
-/* ================= WRAPPER ================= */
-
-.homeWrap {
-  width: 100%;
-  height: 100vh;
-  overflow: visible;
-}
-
-/* ================= HERO ================= */
+.homeWrap { width: 100%; height: 100vh; overflow: visible; }
 
 .hero {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: transparent;
+  background: #080808;
   isolation: isolate;
 }
-
-/* ================= VIDEO ================= */
 
 .heroVideo {
   position: absolute;
@@ -36,46 +19,28 @@
   z-index: 0;
 }
 
-
-/* ================= CONTENT ================= */
-
 .heroContent {
   position: relative;
   z-index: 3;
   height: 100%;
   display: flex;
-  font-size: clamp(4rem, 14vw, 8rem);
-  font-weight: 900;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   pointer-events: none;
-
-  /* IMPORTANT FOR BLEND MODE */
-  isolation: isolate;
-}
-
-/* ================= MAIN TITLE ================= */
-
-.heroContent {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  pointer-events: none;
-  color: white;
+  color: #ffffff;
   mix-blend-mode: difference;
 }
 
-/* ================= MOBILE ================= */
+.heroTitle {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(3.2rem, 11.5vw, 8.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+}
 
 @media (max-width: 768px) {
-  .heroTitle {
-    font-size: clamp(2rem, 14vw, 5rem);
-  }
+  .heroTitle { font-size: clamp(2rem, 12vw, 4.5rem); }
 }

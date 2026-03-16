@@ -1,99 +1,63 @@
-/* ===============================
-   CONTACT SECTION – BLACK THEME
-================================ */
+/* contactus.css — NF9 unified theme */
 
 .contact-main {
-  padding: 200px 60px;
-  background: #000;
-  color: #fff;
-  font-family: "Inter", sans-serif;
+  padding: 200px 64px;
+  background: #080808;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
 }
 
-/* ===============================
- FRAMER LOADING / REVEAL EFFECT
-================================ */
-
-/* Initial hidden state */
+/* reveal animation */
 .contact-main .framer-reveal {
   opacity: 0;
-  transform: translateY(60px);
+  transform: translateY(56px);
   transition:
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.9s cubic-bezier(0.16,1,0.3,1),
+    opacity   0.9s cubic-bezier(0.16,1,0.3,1);
   will-change: transform, opacity;
 }
+.contact-main.is-visible .framer-reveal { opacity: 1; transform: translateY(0); }
 
-/* Visible state */
-.contact-main.is-visible .framer-reveal {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger delays (Framer-style) */
 .delay-1 { transition-delay: 0.05s; }
 .delay-2 { transition-delay: 0.12s; }
-.delay-3 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.20s; }
 .delay-4 { transition-delay: 0.28s; }
 .delay-5 { transition-delay: 0.36s; }
 .delay-6 { transition-delay: 0.44s; }
 .delay-7 { transition-delay: 0.52s; }
-.delay-8 { transition-delay: 0.6s; }
+.delay-8 { transition-delay: 0.60s; }
 
-
-/* ===============================
-   ROW 1 – TITLE
-================================ */
-
+/* title */
 .contact-title-row h1 {
-  font-size: clamp(60px, 10vw, 130px);
-  font-weight: 700;
-  margin-bottom: 40px;
-  color: #fff;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(52px, 10vw, 130px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  margin-bottom: 48px;
+  color: #ffffff;
 }
 
-/* ===============================
-   ROW 2 – CONTENT
-================================ */
-
+/* layout */
 .contact-content-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
 }
 
-/* ===============================
-   LEFT CONTENT
-================================ */
-
 .contact-left p {
-  font-size: 30px;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.65);
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(18px, 2.4vw, 28px);
+  line-height: 1.5;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
 }
+.contact-left strong { color: #ffffff; font-weight: 500; }
 
-.contact-left strong {
-  color: #fff;
-  font-weight: 500;
-}
+/* form */
+.contact-form { display: flex; flex-direction: column; gap: 40px; }
 
-/* ===============================
-   FORM
-================================ */
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-/* ===============================
-   INPUT FIELDS
-================================ */
-
-.field {
-  position: relative;
-}
-
+.field { position: relative; }
 .field input,
 .field textarea {
   width: 100%;
@@ -102,205 +66,78 @@
   padding: 12px 0;
   background: transparent;
   font-size: 16px;
-  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  color: #ffffff;
   resize: none;
 }
-
-.field textarea {
-  min-height: 90px;
-}
-
+.field textarea { min-height: 90px; }
 .field input::placeholder,
-.field textarea::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-}
+.field textarea::placeholder { color: rgba(255,255,255,0.3); font-family: 'DM Sans', sans-serif; }
 
-/* Bottom underline */
-.field .line {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.25);
-  transition: background 0.3s ease;
-}
-
-/* Focus underline */
+.field .line { position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: rgba(255,255,255,0.18); transition: background 0.3s ease; }
 .field input:focus + .line,
-.field textarea:focus + .line {
-  background: #fff;
-}
+.field textarea:focus + .line { background: rgba(255,255,255,0.7); }
 
-/* ===============================
- FRAMER SMOOTH BUTTON
-================================ */
-
+/* button */
 .submit-btn {
   position: relative;
-  width: 100px;
-  height: 30px;
+  width: 120px; height: 34px;
   border-radius: 40px;
-  background: #fff;
+  background: #ffffff;
   border: none;
   cursor: pointer;
   overflow: hidden;
-  padding-left: 15px;
-  padding-right: 15px;
-
-  /* critical for smoothness */
+  padding: 0 15px;
   will-change: transform;
 }
-
-/* ===============================
-   TEXT
-================================ */
 
 .btn-text {
   position: absolute;
   left: 18px;
+  font-family: 'DM Sans', sans-serif;
   font-size: 12px;
-  font-weight: 600;
-  color: #000;
-
+  font-weight: 500;
+  color: #080808;
   will-change: transform, opacity;
-
-  transition:
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1);
 }
-
-/* visible text */
-.btn-text.bottom {
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 1;
-}
-
-/* hidden text (above) */
-.btn-text.top {
-  top: 50%;
-  transform: translateY(-140%);
-  opacity: 0;
-}
-
-/* ===============================
-   DOT
-================================ */
+.btn-text.bottom { top: 50%; transform: translateY(-50%); opacity: 1; }
+.btn-text.top    { top: 50%; transform: translateY(-140%); opacity: 0; }
 
 .btn-dot {
   position: absolute;
-  right: 16px;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  background: #000;
+  right: 16px; top: 50%;
+  width: 6px; height: 6px;
+  background: #080808;
   border-radius: 50%;
-
   transform: translateY(-50%) scale(1);
   will-change: transform;
-
-  transition:
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
 }
 
-/* ===============================
-   HOVER – SMOOTH FRAMER MOTION
-================================ */
+.submit-btn:hover .btn-text.bottom { transform: translateY(140%); opacity: 0; }
+.submit-btn:hover .btn-text.top    { transform: translateY(-50%); opacity: 1; }
+.submit-btn:hover .btn-dot         { transform: translateY(-50%) scale(1.8); }
 
-.submit-btn:hover .btn-text.bottom {
-  transform: translateY(140%);
-  opacity: 0;
-}
+/* terms */
+.terms { font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.35); }
+.terms a { color: rgba(255,255,255,0.65); text-decoration: underline; }
 
-.submit-btn:hover .btn-text.top {
-  transform: translateY(-50%);
-  opacity: 1;
-}
+/* success */
+.success-message { max-width: 420px; }
+.success-message h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #ffffff; letter-spacing: -0.02em; }
+.success-message p  { font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.65; color: rgba(255,255,255,0.55); font-weight: 300; }
+.success-message strong { color: #ffffff; }
 
-/* subtle dot growth (NOT jumpy) */
-.submit-btn:hover .btn-dot {
-  transform: translateY(-50%) scale(1.8);
-}
-
-
-
-/* ===============================
-   TERMS
-================================ */
-
-.terms {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.terms a {
-  color: #fff;
-  text-decoration: underline;
-}
-
-/* ===============================
- SUCCESS MESSAGE – FRAMER STYLE
-================================ */
-
-.success-message {
-max-width: 420px;
-}
-
-.success-message h3 {
-font-size: 22px;
-font-weight: 600;
-margin-bottom: 12px;
-color: #fff;
-}
-
-.success-message p {
-font-size: 16px;
-line-height: 1.6;
-color: rgba(255, 255, 255, 0.7);
-}
-
-.success-message strong {
-color: #fff;
-}
-
-
-/* ===============================
-   RESPONSIVE
-================================ */
-
+/* responsive */
 @media (max-width: 768px) {
-  .contact-main {
-    padding: 150px 20px 100px 20px;
-  }
-
-  .contact-content-row {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .contact-title-row h1 { 
-      font-size: 70px;
-      margin-bottom: 20px;
-  }
-
-  .contact-left p {
-    font-size: 24px;
-  }
-
-  .submit-btn {
-    width: 110px;
-  }
+  .contact-main { padding: 140px 28px 100px; }
+  .contact-content-row { grid-template-columns: 1fr; gap: 40px; }
+  .contact-left p { font-size: clamp(16px, 4.5vw, 22px); }
 }
 
-@media (max-width: 468px) {
-  .contact-title-row h1 { 
-      font-size: 50px;
-      margin-bottom: 20px;
-  }
-  .contact-left p {
-      font-size: 18px;
-      line-height: 1.4;
-      color: rgba(255, 255, 255, 0.65);
-    }
-
+@media (max-width: 480px) {
+  .contact-main { padding: 100px 20px 80px; }
+  .contact-title-row h1 { margin-bottom: 32px; }
+  .contact-left p { font-size: 16px; line-height: 1.55; }
 }

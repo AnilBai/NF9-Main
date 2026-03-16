@@ -1,22 +1,13 @@
-/* ================= ROOT ================= */
-:root {
-  --col1: #000000;
-  --col2: #ffffff;
-  --muted: rgba(251, 249, 249, 0.264);
-  --font-heading: "Satoshi", sans-serif;
-  --font-body: "Inter", sans-serif;
-}
+/* together.css — NF9 unified theme */
 
-/* ================= TOGETHER SECTION ================= */
 .together-section {
-  background: var(--col1);
-  color: var(--col2);
+  background: #080808;
+  color: #ffffff;
   padding: 150px 50px;
   position: relative;
   overflow: hidden;
 }
 
-/* ================= IMAGE WRAPPER ================= */
 .together-wrapper {
   width: 100%;
   max-width: 1300px;
@@ -27,8 +18,7 @@
 
 .together-wrapper img {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 50%; top: 50%;
   transform: translate(-50%, -24%);
   border-radius: 18px;
   object-fit: cover;
@@ -36,208 +26,88 @@
   pointer-events: none;
 }
 
-.center-img {
-  width: 380px;
-  height: 450px;
-  z-index: 30;
-}
+.center-img { width: 380px; height: 450px; z-index: 30; }
+.side-img   { width: 200px; height: 250px; z-index: 20; opacity: 0; }
 
-.side-img {
-  width: 200px;
-  height: 250px;
-  z-index: 20;
-  opacity: 0;
-}
-
-/* ================= TITLE ================= */
+/* title */
 .together-title {
   max-width: 1200px;
   margin: 50px auto;
   text-align: center;
   line-height: 0.9;
   opacity: 0;
-  transform: translateY(50px);
-  animation: fadeInUp 1s ease-out 0.5s forwards;
-}
-
-/* ================= ULTRA SMOOTH SLIDE UP ================= */
-
-.together-title {
-  opacity: 0;
-  transform: translateY(180px); /* BIG distance so it's visible */
-  transition:
-    transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 1.4s ease;
+  transform: translateY(140px);
+  transition: transform 1.8s cubic-bezier(0.16,1,0.3,1), opacity 1.4s ease;
   will-change: transform, opacity;
 }
-
-/* When section is reached */
-.together-title.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.together-title.is-visible { opacity: 1; transform: translateY(0); }
 
 .together-title h1 {
   margin: 0;
-  font-family: var(--font-heading);
-  font-size: 9rem;
-  font-weight: 900;
-  letter-spacing: -6px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(3rem, 8vw, 7.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
 }
 
-.dot {
-  color: var(--col2);
-}
+.dot { color: #ff4500; }
 
-/* ==============================
-   FRAMER STYLE CTA (NO DOT)
-============================== */
-
+/* CTA */
 .framer-cta {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
-
+  margin-top: 28px;
   text-decoration: none;
-  color: var(--col2);
-
-  font-family: var(--font-heading);
-  font-size: 18px;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
-/* TEXT */
-.cta-label {
-  position: relative;
-  z-index: 2;
-}
+.cta-label { position: relative; z-index: 2; }
 
-/* LINE */
 .cta-line {
   position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 48px;
-  height: 2px;
-  background: var(--col2);
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  left: 0; bottom: -5px;
+  width: 48px; height: 2px;
+  background: #ffffff;
+  transition: width 0.45s cubic-bezier(0.16,1,0.3,1);
 }
 
-/* ARROW */
 .cta-arrow {
   display: inline-flex;
-  width: 25px;
-  height: 25px;
+  width: 25px; height: 25px;
   transform: rotate(45deg);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
 }
+.cta-arrow svg { width: 100%; height: 100%; fill: #ffffff; }
 
-.cta-arrow svg {
-  width: 100%;
-  height: 100%;
-  fill: var(--col2);
-}
+.framer-cta:hover .cta-line  { width: 100%; }
+.framer-cta:hover .cta-arrow { transform: translateX(6px) rotate(90deg); }
 
-/* HOVER */
-.framer-cta:hover .cta-line {
-  width: 100%;
-}
-
-.framer-cta:hover .cta-arrow {
-  transform: translateX(6px) rotate(90deg);
-}
-
-/* ================= RESPONSIVE ================= */
-
-/* <= 1024px */
+/* responsive */
 @media (max-width: 1024px) {
-.together-title {
-  margin-top: 50px;
-}
-  .center-img {
-    width: 340px;
-    height: 400px;
-  }
-
-  .side-img {
-    width: 180px;
-    height: 220px;
-  }
-
-  .together-wrapper {
-    height: 480px;
-  }
-
-  .together-title h1 {
-    font-size: 7.5rem;
-    letter-spacing: -4px;
-  }
+  .center-img { width: 340px; height: 400px; }
+  .side-img   { width: 180px; height: 220px; }
+  .together-wrapper { height: 480px; }
 }
 
-/* <= 768px */
 @media (max-width: 768px) {
-  .together-wrapper {
-    height: 420px;
-  }
-
-  .center-img {
-    width: 260px;
-    height: 320px;
-    transform: translate(-50%, -34%);
-  }
-
-  .side-img {
-    width: 140px;
-    height: 180px;
-    opacity: 1;
-  }
-
-  .together-title {
-    margin-top: 50px;
-  }
-
-  .together-title h1 {
-    font-size: 4.8rem;
-    letter-spacing: -3px;
-  }
+  .together-wrapper { height: 420px; }
+  .center-img { width: 260px; height: 320px; transform: translate(-50%, -34%); }
+  .side-img   { width: 140px; height: 180px; opacity: 1; }
+  .together-title { margin-top: 50px; }
 }
 
-/* <= 468px (mobile) */
-@media (max-width: 468px) {
-  .together-section {
-    padding: 70px 12px 100px;
-  }
-
-  .together-wrapper {
-    height: 300px;
-  }
-
-  .center-img {
-    width: 140px;
-    height: 180px;
-    transform: translate(-50%, -45%);
-  }
-
-  .side-img {
-    width: 80px;
-    height: 100px;
-  }
-
-  .together-title h1 {
-    font-size: 3.2rem;
-    letter-spacing: -2px;
-    line-height: 1;
-  }
-  .cta-framer {
-    margin-top: -20px;
-
-  }
-  .cta-text {
-    font-size: 14px;
-  }
+@media (max-width: 480px) {
+  .together-section { padding: 70px 16px 100px; }
+  .together-wrapper { height: 300px; }
+  .center-img { width: 140px; height: 180px; transform: translate(-50%, -45%); }
+  .side-img   { width: 80px; height: 100px; }
+  .framer-cta { font-size: 13px; }
 }
-

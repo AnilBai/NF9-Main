@@ -1,130 +1,166 @@
-import React, { useEffect, useRef } from "react";
 import "./serviceslist.css";
 
-const services = [
+const SERVICES = [
   {
     id: "01",
-    title: "Neural Network",
-    subtitle:
-      "A self-learning intelligence core that observes, learns, and makes smart decisions in milliseconds to optimize your operations.",
-    description:
-      "Our neural engine forms the intelligent core of your infrastructure. Through continuous learning and pattern analysis, it evolves with your needs, making increasingly sophisticated decisions.",
-    image: "https://framerusercontent.com/images/dH3YgDqCRIzqoBzeGKe0noWpAw.jpeg",
+    name: "UI/UX Design",
+    badge: "Design",
+    desc: "Crafting intuitive, modern, and user-centric digital experiences that convert visitors into loyal customers.",
+    subs: [
+      "UX Research & Wireframing",
+      "UI Design — Web & Mobile",
+      "Prototyping",
+      "Design Systems",
+      "Interaction Design",
+      "Product Design",
+      "Branding-Aligned UI Kits",
+    ],
   },
   {
     id: "02",
-    title: "Design Intelligence",
-    subtitle:
-      "An automated architecture engine that designs and adapts your infrastructure on the fly.",
-    description:
-      "It analyzes usage patterns, anticipates growth requirements, and automatically implements optimal configurations.",
-    image: "https://framerusercontent.com/images/deYGLS22CQzYIyIpMjbZHzcrzMw.jpeg",
+    name: "Website Development",
+    badge: "Web",
+    desc: "Beautiful, fast, secure, and SEO-optimized websites built for growth and long-term performance.",
+    subs: [
+      "Business Websites",
+      "eCommerce & WooCommerce",
+      "WordPress Development",
+      "Custom Web Applications",
+      "CMS & Headless CMS",
+      "Landing Pages",
+      "Performance Optimization",
+    ],
   },
   {
     id: "03",
-    title: "Security AI",
-    subtitle:
-      "A proactive defense system that anticipates and evolves with threats.",
-    description:
-      "Our AI security system monitors global threat patterns and neutralizes risks before impact.",
-    image: "https://framerusercontent.com/images/LDUuKjtAiZ9Dt3A4Ib9ugB0H7II.jpeg",
+    name: "eCommerce & SaaS",
+    badge: "Platform",
+    desc: "Scalable digital products that help businesses sell, grow, and automate operations end-to-end.",
+    subs: [
+      "WooCommerce & Shopify",
+      "Headless eCommerce",
+      "Multi-Vendor Marketplace",
+      "SaaS Product Development",
+      "Subscription & Billing",
+      "Web Portals & Dashboards",
+      "Custom Feature Development",
+    ],
   },
   {
     id: "04",
-    title: "Smart Scale",
-    subtitle:
-      "An intelligent scaling module that grows or streamlines resources automatically.",
-    description:
-      "Predicts traffic and adjusts infrastructure for optimal performance and cost efficiency.",
-    image: "https://framerusercontent.com/images/pZdX5DSLgcDIuo8Kwf0r7qayGs.jpeg",
+    name: "Application Development",
+    badge: "Apps",
+    desc: "High-performing apps engineered for usability, functionality, and scale across every platform.",
+    subs: [
+      "Mobile App — Android & iOS",
+      "Full-Stack Web Apps",
+      "API Development & Integration",
+      "Cross-Platform Development",
+      "Custom Software Solutions",
+      "Backend Architecture",
+      "Product Maintenance",
+    ],
+  },
+  {
+    id: "05",
+    name: "Cloud & DevOps",
+    badge: "Infra",
+    desc: "Reliable, secure, and scalable infrastructure to keep your business running 24/7 without compromise.",
+    subs: [
+      "Cloud Setup & Migration",
+      "DevOps & CI/CD Pipelines",
+      "Server Security & Hardening",
+      "Monitoring & Alerting",
+      "Performance Tuning",
+      "Backup & Disaster Recovery",
+      "SRE & Infra Automation",
+    ],
+  },
+  {
+    id: "06",
+    name: "Branding & Marketing",
+    badge: "Brand",
+    desc: "Helping brands grow through creative identity, strategic visibility, and performance-driven marketing.",
+    subs: [
+      "Logo & Brand Identity",
+      "Brand Positioning & Strategy",
+      "SEO — On-Page & Technical",
+      "Social Media Management",
+      "Paid Ads — Google & Meta",
+      "Copywriting & Content",
+      "Marketing Automation",
+    ],
   },
 ];
 
-const Services = () => {
-  const rowsRef = useRef([]);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("show");
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    rowsRef.current.forEach((el) => el && obs.observe(el));
-  }, []);
-
+function ServiceCard({ svc }) {
   return (
-    <section className="services-section">
-      <div className="services-container">
+    <div className="svc__card">
+      <span className="svc__card-bg-num" aria-hidden="true">{svc.id}</span>
 
-        {/* HEADER */}
-        <div className="services-header">
-          <h1>Our Services</h1>
+      <div className="svc__card-top">
+        <span className="svc__card-index">{svc.id}</span>
+        <span className="svc__card-badge">{svc.badge}</span>
+      </div>
 
-          <div className="label-row">
-            <div className="label-row1">
-              <span className="orange-line" />
-              <div>
-                <p className="label-main">Services</p>
-                <p className="label-sub">Next Frontier 9</p>
-              </div>
-            </div>
-            <h3>Flexible solutions for building modern digital infrastructure.</h3>
-          <p className="small-text">
-            Future-proof systems that scale seamlessly.
-          </p>
-          </div>
-        </div>
+      <h3 className="svc__card-name">{svc.name}</h3>
+      <p className="svc__card-desc">{svc.desc}</p>
 
-        {/* INTRO */}
-        <div className="services-intro">
-          <div className="intro-text">
-            <h2>
-              Modular, flexible solutions for modern digital infrastructure
-            </h2>
-            <p>
-              At Platform®, we specialize in developing future-proof systems that
-              scale and adapt to evolving business needs.
+      <div className="svc__card-subs-label">Includes</div>
+      <div className="svc__card-tags">
+        {svc.subs.map((sub) => (
+          <span key={sub} className="svc__tag">{sub}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function ServicesSection() {
+  return (
+    <section className="svc">
+
+      {/* Top label bar */}
+      <div className="svc__topbar">
+        <span className="svc__topbar-label">Our Services</span>
+        <span className="svc__topbar-count">06 Capabilities</span>
+      </div>
+
+      {/* Hero title */}
+      <div className="svc__hero">
+        <div className="svc__hero-inner">
+          <h2 className="svc__hero-title">
+            Ideas.
+            <span className="outline">Engineered.</span>
+          </h2>
+          <div className="svc__hero-right">
+            <p className="svc__hero-note">
+              End-to-end digital solutions — design, development,
+              infrastructure, and growth. Everything your brand
+              needs to move fast.
             </p>
           </div>
-
-          <div className="intro-img">
-            <img src="https://framerusercontent.com/images/fG5jaXcnt8LMl8SpLuihd7Ulwo.jpeg" />
-          </div>
         </div>
-
-        {/* LIST */}
-        <div className="services-list">
-          {services.map((s, i) => (
-            <div
-              key={s.id}
-              className="service-row"
-              ref={(el) => (rowsRef.current[i] = el)}
-            >
-              <div className="row-img">
-                <img src={s.image} />
-              </div>
-
-              <div className="row-content">
-                <h4>{s.title}</h4>
-                <p className="row-sub">{s.subtitle}</p>
-                <p className="row-desc">{s.description}</p>
-              </div>
-
-              <div className="row-meta">
-                <span className="arrow">↗</span>
-                <span className="row-id">{s.id}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
       </div>
+
+      {/* 2-col card grid */}
+      <div className="svc__grid">
+        {SERVICES.map((svc) => (
+          <ServiceCard key={svc.id} svc={svc} />
+        ))}
+      </div>
+
+      {/* CTA band */}
+      <div className="svc__cta">
+        <div className="svc__cta-left">
+         
+        </div>
+        <div className="svc__cta-right">
+          
+        
+        </div>
+      </div>
+
     </section>
   );
-};
-
-export default Services;
+}

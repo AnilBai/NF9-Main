@@ -1,17 +1,11 @@
-:root {
-  --col1: #000000;
-  --col2: #ffffff;
-  --muted: rgba(0, 0, 0, 0.35);
-  --font-heading: "Satoshi", sans-serif;
-  --font-body: "Inter", sans-serif;
-}
+/* services.css — NF9 unified theme */
 
 .nf9-services-section {
   width: 100vw;
   min-height: 100vh;
   padding-top: 200px;
-  background: var(--col2);
-  font-family: var(--font-body);
+  background: #f0ede6;
+  font-family: 'DM Sans', sans-serif;
   overflow: hidden;
 }
 
@@ -22,20 +16,13 @@
   grid-template-columns: 35% 65%;
 }
 
-.nf9-services-image-col {
-  position: relative;
-}
-
-.nf9-services-image-stage {
-  position: relative;
-  height: 100%;
-}
+.nf9-services-image-col { position: relative; }
+.nf9-services-image-stage { position: relative; height: 100%; }
 
 .nf9-services-image-wrap {
   position: absolute;
   top: -100px;
   left: 35%;
-  /* NO transform or perspective here — RAF owns the full transform */
   width: 200px;
   height: 280px;
   border-radius: 20px;
@@ -64,10 +51,13 @@
 
 .nf9-services-label {
   text-align: right;
-  font-size: 24px;
-  color: var(--col1);
-  margin-bottom: 30px;
+  font-size: clamp(14px, 1.6vw, 22px);
+  font-weight: 400;
+  color: rgba(0,0,0,0.55);
+  margin-bottom: 24px;
   padding-right: 30px;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.01em;
 }
 
 .nf9-services-list {
@@ -78,41 +68,38 @@
 }
 
 .nf9-services-item {
-  font-family: var(--font-heading);
-  font-size: clamp(160px, 10vw, 180px);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(48px, 10vw, 176px);
+  font-weight: 800;
   line-height: 1;
   white-space: nowrap;
-  color: var(--col1);
-  opacity: 0.35;
+  color: #080808;
+  opacity: 0.3;
+  letter-spacing: -0.03em;
 }
 
-.nf9-services-spacer {
-  height: 35vh;
-}
+.nf9-services-spacer { height: 35vh; }
 
 @media (max-width: 1024px) {
   .nf9-services-image-wrap { width: 200px; height: 280px; }
-  .nf9-services-item { font-size: 100px; line-height: 100px; }
-  .nf9-services-label,
-  .nf9-services-list { padding-right: 30px; }
-  .nf9-services-list { text-align: right; }
+  .nf9-services-item { font-size: clamp(40px, 9vw, 110px); }
+  .nf9-services-label, .nf9-services-list { padding-right: 30px; }
 }
 
 @media (max-width: 768px) {
   .nf9-services-grid { grid-template-columns: 35% 65%; }
-  .nf9-services-image-wrap { width: 180px; height: 240px; }
-  .nf9-services-item { font-size: 80px; line-height: 1; white-space: nowrap; text-align: right; }
-  .nf9-services-label,
-  .nf9-services-list { padding-right: 24px; }
+  .nf9-services-image-wrap { width: 175px; height: 235px; }
+  .nf9-services-item { font-size: clamp(32px, 8.5vw, 88px); line-height: 1; white-space: nowrap; text-align: right; }
+  .nf9-services-label, .nf9-services-list { padding-right: 24px; }
 }
 
-@media (max-width: 468px) {
+@media (max-width: 480px) {
   .nf9-services-section { padding-top: 120px; }
   .nf9-services-grid { grid-template-columns: 40% 60%; }
   .nf9-services-image-wrap { width: 100px; height: 140px; }
   .nf9-services-content { min-height: calc(100vh - 120px); }
-  .nf9-services-label { font-size: 18px; padding-right: 20px; }
+  .nf9-services-label { font-size: 15px; padding-right: 20px; }
   .nf9-services-list { padding-right: 20px; }
-  .nf9-services-item { font-size: 40px; }
+  .nf9-services-item { font-size: clamp(26px, 8vw, 48px); }
   .nf9-services-spacer { height: 20vh; }
 }

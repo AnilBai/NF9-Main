@@ -44,55 +44,53 @@ export default function Works() {
 
 function ProjectCard({ title, subtitle, image, color }) {
   const wrapRef = useRef(null);
-  const imgRef = useRef(null);
-  const raf = useRef(null);
+  const imgRef  = useRef(null);
+  const raf     = useRef(null);
 
   const lastScrollY = useRef(window.scrollY);
-  const maxZoom = useRef(1);
 
   useEffect(() => {
     const update = () => {
       const wrap = wrapRef.current;
-      const img = imgRef.current;
+      const img  = imgRef.current;
       if (!wrap || !img) return;
 
       const rect = wrap.getBoundingClientRect();
-      const vh = window.innerHeight;
+      const vh   = window.innerHeight;
 
       if (rect.bottom < 0 || rect.top > vh) {
         raf.current = null;
         return;
       }
 
-      /* ===== progress ===== */
+      /* ── progress: 0 (card top at viewport bottom) → 1 (card bottom at viewport top) ── */
       const progress = (vh - rect.top) / (vh + rect.height);
-      const clamp = (v) => Math.max(0, Math.min(1, v));
-      const raw = clamp(progress);
+      const clamp    = (v) => Math.max(0, Math.min(1, v));
+      const raw      = clamp(progress);
 
       /* Framer-style easeOutCubic */
       const p = 1 - Math.pow(1 - raw, 3);
 
-      /* ===== scroll speed ===== */
+      /* ── scroll speed for a subtle extra push ── */
       const currentY = window.scrollY;
       const velocity = Math.abs(currentY - lastScrollY.current);
       lastScrollY.current = currentY;
       const speed = Math.min(velocity / 40, 1);
 
-      /* ===== responsive strength ===== */
+      /* ── responsive strength ── */
       const w = window.innerWidth;
-
-      let zoomStrength = 0.18;
-      if (w < 1024) zoomStrength = 0.24; // tablet
-      if (w < 768) zoomStrength = 0.3;  // mobile
+      let zoomStrength    = 0.18;
+      if (w < 1024) zoomStrength = 0.24;
+      if (w < 768)  zoomStrength = 0.30;
 
       const parallaxStrength = w < 768 ? 6 : 9;
 
-      /* ===== apply transforms ===== */
-      const targetZoom = 1 + p * zoomStrength * (1 + speed * 0.6);
-      maxZoom.current = Math.max(maxZoom.current, targetZoom);
+      /* ── zoom follows p in BOTH directions ──
+         removed maxZoom so scrolling back up shrinks the image again */
+      const targetZoom = 1 + p * zoomStrength * (1 + speed * 0.4);
 
       img.style.setProperty("--scrollY", `${-p * parallaxStrength}px`);
-      img.style.setProperty("--zoom", maxZoom.current.toFixed(3));
+      img.style.setProperty("--zoom",    targetZoom.toFixed(4));
 
       raf.current = null;
     };
@@ -110,12 +108,12 @@ function ProjectCard({ title, subtitle, image, color }) {
     };
   }, []);
 
-  /* ===== hover depth (desktop only) ===== */
+  /* ── hover depth (desktop only) ── */
   const onMove = (e) => {
     if (window.innerWidth < 769) return;
     const rect = wrapRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 14;
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 14;
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 14;
     imgRef.current.style.setProperty("--hoverX", `${x}px`);
     imgRef.current.style.setProperty("--hoverY", `${y}px`);
   };

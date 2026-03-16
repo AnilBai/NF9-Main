@@ -2,111 +2,70 @@ import React, { useEffect, useRef } from "react";
 import "./together.css";
 
 const CONFIG = {
-  OUT_X: 420,
-  LEFT_OUT_Y: -70,
-  RIGHT_OUT_Y: 40,
-  LEFT_ROT: -18,
-  RIGHT_ROT: 18,
+  OUT_X:       420,
+  LEFT_OUT_Y:  -70,
+  RIGHT_OUT_Y:  40,
+  LEFT_ROT:    -18,
+  RIGHT_ROT:    18,
   CENTER_SCALE: 1.08,
 };
 
 export default function Together() {
   const sectionRef = useRef(null);
-  const leftRef = useRef(null);
-  const rightRef = useRef(null);
-  const centerRef = useRef(null);
-  const titleRef = useRef(null);
+  const leftRef    = useRef(null);
+  const rightRef   = useRef(null);
+  const centerRef  = useRef(null);
+  const titleRef   = useRef(null);
 
-  const anim = useRef({
-    current: 0,
-    target: 0,
-    raf: null,
-    visible: false,
-  });
+  const raf     = useRef(null);
+  const current = useRef(0); // smoothed progress 0→1
 
   const lerp = (a, b, t) => a + (b - a) * t;
 
   useEffect(() => {
-    const state = anim.current;
+    /* ─────────────────────────────────────────
+       Compute t purely from section's scroll position.
+       t = 0  → section just entered viewport (images centered)
+       t = 1  → section fully scrolled through (images spread)
+       Scrolling back up reverses t naturally.
+    ───────────────────────────────────────── */
+    const getTarget = () => {
+      const section = sectionRef.current;
+      if (!section) return 0;
 
-    /* ================= IMAGE SCROLL ANIMATION ================= */
+      const rect = section.getBoundingClientRect();
+      const vh   = window.innerHeight;
 
-    const sectionIO = new IntersectionObserver(
-      ([entry]) => (state.visible = entry.isIntersecting),
-      { threshold: 0.35 }
-    );
+      // We want spread to happen while the section occupies the viewport.
+      // progress: 0 when top of section hits bottom of viewport,
+      //           1 when bottom of section hits top of viewport.
+      const total    = vh + rect.height;
+      const traveled = vh - rect.top;
+      const raw      = Math.max(0, Math.min(1, traveled / total));
 
-    sectionRef.current && sectionIO.observe(sectionRef.current);
+      // Start spreading the moment the section enters the viewport (raw=0),
+      // reach full spread by the time 55% of the scroll is done.
+      const remapped = Math.max(0, Math.min(1, raw / 0.55));
 
-    const startRAF = () => {
-      if (!state.raf) state.raf = requestAnimationFrame(tick);
+      // easeOutCubic — fast start, gentle finish
+      return 1 - Math.pow(1 - remapped, 3);
     };
 
-    const stopRAF = () => {
-      cancelAnimationFrame(state.raf);
-      state.raf = null;
-    };
-
-    const onWheel = (e) => {
-      if (!state.visible) return;
-      state.target = e.deltaY > 0 ? 1 : 0;
-      startRAF();
-    };
-
-    let lastY = null;
-
-    const onTouchStart = (e) => {
-      lastY = e.touches[0].clientY;
-    };
-
-    const onTouchMove = (e) => {
-      if (!state.visible || lastY === null) return;
-      const diff = lastY - e.touches[0].clientY;
-      if (Math.abs(diff) > 14) {
-        state.target = diff > 0 ? 1 : 0;
-        startRAF();
-        lastY = e.touches[0].clientY;
-      }
-    };
-
-    const onTouchEnd = () => {
-      lastY = null;
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchend", onTouchEnd, { passive: true });
-
-    const tick = () => {
-      state.current = lerp(state.current, state.target, 0.12);
-      const t = Math.max(0, Math.min(1, state.current));
+    const applyFrame = () => {
+      const t  = Math.max(0, Math.min(1, current.current));
       const vw = window.innerWidth;
 
-      let outX = CONFIG.OUT_X;
-      let leftY = CONFIG.LEFT_OUT_Y;
-      let rightY = CONFIG.RIGHT_OUT_Y;
+      let outX        = CONFIG.OUT_X;
+      let leftY       = CONFIG.LEFT_OUT_Y;
+      let rightY      = CONFIG.RIGHT_OUT_Y;
       let centerScale = CONFIG.CENTER_SCALE;
-      let baseY = -26;
+      let baseY       = -26;
 
-      if (vw <= 768) {
-        outX = 260;
-        leftY = -40;
-        rightY = 28;
-        centerScale = 1.04;
-        baseY = -22;
-      }
+      if (vw <= 768) { outX = 260; leftY = -40; rightY = 28; centerScale = 1.04; baseY = -22; }
+      if (vw <= 468) { outX = 140; leftY = -30; rightY = -10; centerScale = 1.02; baseY = -10; }
 
-      if (vw <= 468) {
-        outX = 140;
-        leftY = -30;
-        rightY = -10;
-        centerScale = 1.02;
-        baseY = -10;
-      }
-
-      const leftX = lerp(0, -outX, t);
-      const rightX = lerp(0, outX, t);
+      const leftX  = lerp(0, -outX, t);
+      const rightX = lerp(0,  outX, t);
 
       if (leftRef.current) {
         leftRef.current.style.transform = `
@@ -132,42 +91,51 @@ export default function Together() {
           scale(${lerp(1, centerScale, t)})
         `;
       }
+    };
 
-      if (Math.abs(state.current - state.target) > 0.001) {
-        state.raf = requestAnimationFrame(tick);
+    const tick = () => {
+      const target = getTarget();
+      const diff   = target - current.current;
+
+      current.current += diff * 0.14; // faster tracking
+
+      applyFrame();
+
+      // Keep ticking only while there's visible movement
+      if (Math.abs(diff) > 0.0005) {
+        raf.current = requestAnimationFrame(tick);
       } else {
-        stopRAF();
+        current.current = target; // snap to final value
+        applyFrame();
+        raf.current = null;
       }
     };
 
-    /* ================= TEXT SLIDE-UP ================= */
+    const onScroll = () => {
+      if (!raf.current) raf.current = requestAnimationFrame(tick);
+    };
 
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Run once on mount to set initial state
+    tick();
+
+    /* ── text slide-up ── */
     const titleIO = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           titleRef.current.classList.add("is-visible");
-          titleIO.disconnect(); // run once
+          titleIO.disconnect();
         }
       },
-      {
-        threshold: 0.25,
-        rootMargin: "0px 0px -120px 0px", // delays trigger = smoother perception
-      }
+      { threshold: 0.25, rootMargin: "0px 0px -120px 0px" }
     );
-    
-    titleRef.current && titleIO.observe(titleRef.current);
-    
-
-    /* ================= CLEANUP ================= */
+    if (titleRef.current) titleIO.observe(titleRef.current);
 
     return () => {
-      sectionIO.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      if (raf.current) cancelAnimationFrame(raf.current);
       titleIO.disconnect();
-      stopRAF();
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
     };
   }, []);
 
@@ -196,9 +164,7 @@ export default function Together() {
 
       <div className="together-title" ref={titleRef}>
         <h1>LET&apos;S WORK</h1>
-        <h1>
-          TOGETHER<span className="dot">.</span>
-        </h1>
+        <h1>TOGETHER<span className="dot">.</span></h1>
 
         <a href="/contact-us" className="framer-cta">
           <span className="cta-label">GET STARTED TODAY</span>
