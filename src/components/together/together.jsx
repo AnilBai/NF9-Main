@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./together.css";
 
 const CONFIG = {
@@ -140,7 +141,7 @@ export default function Together() {
   }, []);
 
   return (
-    <section className="together-section" ref={sectionRef}>
+    <section id="together" className="together-section" ref={sectionRef}>
       <div className="together-wrapper">
         <img
           ref={leftRef}
@@ -166,7 +167,7 @@ export default function Together() {
         <h1>LET&apos;S WORK</h1>
         <h1>TOGETHER<span className="dot">.</span></h1>
 
-        <a href="/contact-us" className="framer-cta">
+        <Link to="/contact-us" className="framer-cta">
           <span className="cta-label">GET STARTED TODAY</span>
           <span className="cta-line"></span>
           <span className="cta-arrow">
@@ -174,7 +175,7 @@ export default function Together() {
               <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
             </svg>
           </span>
-        </a>
+        </Link>
       </div>
     </section>
   );

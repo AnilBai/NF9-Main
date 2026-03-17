@@ -3,7 +3,7 @@ import "./hero.css";
 
 const Hero = () => {
   return (
-    <section className="homeWrap">
+    <section id="hero" className="homeWrap">
       <div className="hero">
         {/* Video Background */}
         <video

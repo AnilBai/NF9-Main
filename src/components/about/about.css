@@ -41,13 +41,24 @@
 }
 
 .about-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: 'DM Sans', sans-serif;
-  font-size: clamp(16px, 2.2vw, 26px);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1.4;
-  color: rgba(255,255,255,0.55);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  opacity: 0.4;
   margin-bottom: 36px;
+}
+
+.about-label::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
 }
 
 

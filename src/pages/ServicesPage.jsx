@@ -5,12 +5,12 @@ import Together from '../components/together/together'
 
 function ServicesPage() {
   return (
-    <>
+    <div>
       <ServicesList />
       <OurProcess />
       <TechStack />
       <Together />
-    </>
+    </div>
   )
 }
 

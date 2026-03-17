@@ -15,8 +15,11 @@ const ROW_TOP = [
 ];
 
 const ROW_BOTTOM = [
-  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", alt: "AWS" },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg", alt: "AWS" },  
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg", alt: "GCP" },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg", alt: "Firebase" },
+  { src: "https://cdn.simpleicons.org/shopify/96BF48", alt: "Shopify" },
+  { src: "https://cdn.simpleicons.org/wordpress/21759B", alt: "WordPress" },
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg", alt: "Kubernetes" },
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg",        alt: "Redis" },
   { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",      alt: "Python" },
@@ -92,7 +95,7 @@ export default function OurTech() {
       {/* Footer note */}
       <div className="ourtech-footer">
         <p className="ourtech-note">
-          We pick the right tool for every job — not the trendiest one.
+          We pick the right tool for every job, not the trendiest one.
           Every stack choice is intentional, scalable, and battle-tested.
         </p>
       </div>

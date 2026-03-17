@@ -1,7 +1,43 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "./footer.css";
 
 export default function Footer() {
+  const navigate = useNavigate();
+
+  const scrollToHash = (hash) => {
+    if (!hash) return;
+    const id = hash.startsWith('#') ? hash.slice(1) : hash;
+
+    const attempt = () => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return true;
+      }
+      return false;
+    };
+
+    if (attempt()) return;
+
+    let tries = 0;
+    const maxTries = 20;
+    const timer = window.setInterval(() => {
+      tries += 1;
+      if (attempt() || tries >= maxTries) {
+        window.clearInterval(timer);
+      }
+    }, 50);
+  };
+
+  const links = [
+    { label: 'Home', to: { pathname: '/', hash: '#hero' } },
+    { label: 'Services', to: '/services' },
+    { label: 'Our Work', to: { pathname: '/', hash: '#works' } },
+    { label: 'About NF9', to: { pathname: '/', hash: '#about' } },
+    { label: 'Careers', to: { pathname: '/', hash: '#together' } },
+    { label: 'Contact us', to: '/contact-us' },
+  ];
+
   return (
     <footer className="nf9-footer">
       <div className="nf9-container">
@@ -14,7 +50,7 @@ export default function Footer() {
             <p className="nf9-phone">+91 xxxx xxx xxx</p>
             <a href="mailto:support@nf9.com" className="nf9-email">
               <span className="nf9-plus-circle">+</span>
-              <span className="nf9-email-text">support@nf9.com</span>
+              <span className="nf9-email-text">support@nf9.in</span>
             </a>
           </div>
 
@@ -22,12 +58,21 @@ export default function Footer() {
             <span className="nf9-plus">+</span>
             <p className="nf9-label">Navigation</p>
             <div className="nf9-social-row">
-            <a href="/">Home</a>
-            <a href="/services">Services</a>
-            <a href="">Our Work</a>
-            <a href="">About NF9</a>
-            <a href="">Careers</a>
-            <a href="/contact-us">Contact us</a>
+              {links.map((link) => (
+                <a
+                  key={link.label}
+                  href="#"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    navigate(link.to);
+                    if (typeof link.to === 'object' && link.to.hash) {
+                      scrollToHash(link.to.hash);
+                    }
+                  }}
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
           </div>
 

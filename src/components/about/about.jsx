@@ -99,7 +99,7 @@ const About = () => {
       <div className="about-content" ref={contentRef}>
 
         <div ref={labelRef} className="about-label">
-          Our NF9 ↴
+          Our NF9
         </div>
 
         <h2 className="about-title steps">

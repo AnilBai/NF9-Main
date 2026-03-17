@@ -24,7 +24,7 @@ const PROJECTS = [
 
 export default function Works() {
   return (
-    <section className="nf9-projects">
+    <section id="works" className="nf9-projects">
       <header className="nf9-projects-header">
         <h1>
           Our Projects <sup>{PROJECTS.length}</sup>

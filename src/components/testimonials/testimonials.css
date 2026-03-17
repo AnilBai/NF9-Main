@@ -1,0 +1,325 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap');
+
+:root {
+  --col1:         #000000;
+  --col2:         #ffffff;
+  --muted:        rgba(0, 0, 0, 0.35);
+  --font-heading: "Satoshi", sans-serif;
+  --font-body:    "Inter", sans-serif;
+  --bg:           #080808;
+  --border:       rgba(255, 255, 255, 0.08);
+  --mono:         "IBM Plex Mono", monospace;
+}
+
+/* ─── SECTION ─────────────────────────── */
+.nf9-t {
+  width: 100%;
+  background: var(--bg);
+  color: var(--col2);
+  font-family: 'DM Sans', sans-serif;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* ─── HEADER ──────────────────────────── */
+.nf9-t__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 80px 64px 60px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nf9-t__kicker {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.nf9-t__kicker::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.nf9-t__title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(44px, 6vw, 84px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.nf9-t__title span {
+  display: block;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.18);
+  color: transparent;
+}
+
+/* counter top-right */
+.nf9-t__header-counter {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.2);
+  padding-bottom: 8px;
+}
+
+.nf9-t__header-counter em {
+  font-style: normal;
+  color: var(--col2);
+}
+
+/* ─── SLIDE AREA ──────────────────────── */
+.nf9-t__stage {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Left: large quote mark column ── */
+.nf9-t__aside {
+  width: 120px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 52px 0;
+}
+
+.nf9-t__big-mark {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 120px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.06);
+  user-select: none;
+}
+
+/* ── Slide content ── */
+.nf9-t__slides {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.nf9-t__slide {
+  position: absolute;
+  inset: 0;
+  padding: 64px 72px 64px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+
+  /* enter from right */
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.nf9-t__slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.nf9-t__slide.exit {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+/* quote text */
+.nf9-t__quote {
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  letter-spacing: 0.01em;
+  max-width: 740px;
+}
+
+/* author row */
+.nf9-t__author {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.nf9-t__author-line {
+  width: 24px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.nf9-t__author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.nf9-t__name {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--col2);
+}
+
+.nf9-t__role {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── FOOTER ──────────────────────────── */
+.nf9-t__footer {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+/* dots */
+.nf9-t__dots {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-right: 1px solid var(--border);
+}
+
+.nf9-t__dot-btn {
+  width: 56px;
+  height: 56px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s;
+}
+
+.nf9-t__dot-btn:last-child {
+  border-right: none;
+}
+
+.nf9-t__dot-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nf9-t__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.nf9-t__dot-btn.active .nf9-t__dot {
+  background: var(--col2);
+  transform: scale(1.4);
+}
+
+/* progress bar */
+.nf9-t__progress {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin: 0 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.nf9-t__progress-fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: width 0.1s linear;
+}
+
+/* nav arrows */
+.nf9-t__nav {
+  display: flex;
+  border-left: 1px solid var(--border);
+}
+
+.nf9-t__nav-btn {
+  width: 56px;
+  height: 56px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--border);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s, color 0.25s;
+}
+
+.nf9-t__nav-btn:first-child {
+  border-left: none;
+}
+
+.nf9-t__nav-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--col2);
+}
+
+.nf9-t__nav-btn:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.nf9-t__nav-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ─── RESPONSIVE ──────────────────────── */
+@media (max-width: 768px) {
+  .nf9-t__header {
+    padding: 52px 24px 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .nf9-t__aside { display: none; }
+
+  .nf9-t__slide {
+    padding: 40px 24px;
+  }
+
+  .nf9-t__footer {
+    flex-wrap: wrap;
+  }
+
+  .nf9-t__progress { margin: 0 20px; }
+}

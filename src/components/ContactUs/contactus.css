@@ -79,6 +79,9 @@
 .field textarea:focus + .line { background: rgba(255,255,255,0.7); }
 
 /* button */
+.recaptcha-wrapper { margin-bottom: 24px; }
+.recaptcha-missing { color: rgba(255, 85, 85, 0.8); font-size: 12px; margin-bottom: 12px; }
+
 .submit-btn {
   position: relative;
   width: 120px; height: 34px;

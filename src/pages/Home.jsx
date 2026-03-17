@@ -1,27 +1,69 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import Preloader from '../components/preloader'
 import Header from '../components/header/header'
 import Footer from '../components/footer/footer'
-import { Outlet } from 'react-router-dom'
 
 function Home() {
-  const [preloaderComplete, setPreloaderComplete] = useState(false)
+  const [preloaderComplete, setPreloaderComplete] = useState(() => {
+    return Boolean(window?.__nf9PreloaderHasShown)
+  })
+  const location = useLocation()
 
   const handlePreloaderComplete = () => {
+    try {
+      window.__nf9PreloaderHasShown = true
+    } catch {
+      // ignore
+    }
     setPreloaderComplete(true)
   }
 
+  // Fail-safe: ensure the page becomes visible even if the preloader animation never completes.
+  useEffect(() => {
+    if (preloaderComplete) return
+    const timeout = window.setTimeout(() => {
+      try {
+        window.__nf9PreloaderHasShown = true
+      } catch {
+        // ignore
+      }
+      setPreloaderComplete(true)
+    }, 5000)
+    return () => window.clearTimeout(timeout)
+  }, [preloaderComplete])
+
+  useEffect(() => {
+    if (!preloaderComplete) return
+    if (location.pathname !== '/') return
+
+    const hash = location.hash || '#hero'
+    const id = hash.startsWith('#') ? hash.slice(1) : hash
+    const element = document.getElementById(id)
+
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else if (!location.hash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [location, preloaderComplete])
+
+  // In rare cases the preloader animation may fail to complete; ensure the app becomes visible.
+  useEffect(() => {
+    if (preloaderComplete) return
+    const fallback = window.setTimeout(() => setPreloaderComplete(true), 5000)
+    return () => window.clearTimeout(fallback)
+  }, [preloaderComplete])
+
   return (
     <>
-      {!preloaderComplete && <Preloader onComplete={handlePreloaderComplete} />}
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
 
-      <div style={{ opacity: preloaderComplete ? 1 : 0, transition: 'opacity 0.5s ease-in' }}>
-        <Header />
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
+      {!preloaderComplete && <Preloader onComplete={handlePreloaderComplete} />}
     </>
   )
 }

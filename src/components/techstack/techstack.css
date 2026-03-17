@@ -9,7 +9,7 @@
 
   position: relative;
   background: var(--ot-bg);
-  padding: 140px 0 130px;
+  padding: 150px 60px 150px;
   text-align: center;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -28,8 +28,7 @@
   text-transform: uppercase;
   color: var(--ot-muted);
 }
-.ourtech-badge span::before,
-.ourtech-badge span::after { content: ''; display: block; width: 24px; height: 1px; background: var(--ot-muted); }
+.ourtech-badge span::before { content: ''; display: block; width: 24px; height: 1px; background: var(--ot-muted); }
 
 /* title */
 .ourtech-title {

@@ -3,7 +3,7 @@
 .together-section {
   background: #080808;
   color: #ffffff;
-  padding: 150px 50px;
+  padding: 100px 60px;
   position: relative;
   overflow: hidden;
 }
@@ -51,7 +51,7 @@
   line-height: 0.92;
 }
 
-.dot { color: #ff4500; }
+.dot { color: #ffffff; }
 
 /* CTA */
 .framer-cta {

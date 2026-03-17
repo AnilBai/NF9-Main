@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* ================= GOOGLE FONT (INTER ONLY) ================= */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+/* ================= GOOGLE FONT (DM SANS) ================= */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap");
 
 /* ================= SATOSHI (LOCAL) ================= */
 @font-face {
@@ -43,6 +43,15 @@
   --muted: rgba(255, 255, 255, 0.6);
   --accent: #ff6a00;
 
+  /* Force DM Sans as the sole system font across the site */
+  --font-body: 'DM Sans', sans-serif !important;
+  --font-heading: 'DM Sans', sans-serif !important;
+  --font-brand: 'DM Sans', sans-serif !important;
+}
+
+/* Force DM Sans everywhere (overrides component-specific font overrides) */
+html, body, * {
+  font-family: var(--font-body) !important;
 }
 
 html, body {

@@ -1,11 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css';
 
 const Header = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [bgText, setBgText] = useState('NF9');
   const backgroundTextRef = useRef(null);
+  const navigate = useNavigate();
+
+  const scrollToHash = (hash) => {
+    if (!hash) return
+    const id = hash.startsWith('#') ? hash.slice(1) : hash
+    const attempt = () => {
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return true
+      }
+      return false
+    }
+    if (attempt()) return
+    let tries = 0
+    const maxTries = 20
+    const timer = window.setInterval(() => {
+      tries += 1
+      if (attempt() || tries >= maxTries) {
+        window.clearInterval(timer)
+      }
+    }, 50)
+  }
 
   const toggleMenu = () => {
     setIsMenuActive(!isMenuActive);
@@ -47,12 +70,12 @@ const Header = () => {
   }, [isMenuActive, bgText]);
 
   const menuItems = [
-    { id: 1, text: 'Start Here', href: '/' },
-    { id: 2, text: 'Services', href: '/services' },
-    { id: 3, text: 'Our Work', href: '#services' },
-    { id: 4, text: 'About NF9', href: '#portfolio' },
-    { id: 5, text: 'Careers', href: '#careers' },
-    { id: 6, text: 'Contact Us', href: '/contact-us' }
+    { id: 1, text: 'Start Here', to: { pathname: '/', hash: '#hero' } },
+    { id: 2, text: 'Services', to: '/services' },
+    { id: 3, text: 'Our Work', to: { pathname: '/', hash: '#works' } },
+    { id: 4, text: 'About NF9', to: { pathname: '/', hash: '#about' } },
+    { id: 5, text: 'Careers', to: { pathname: '/', hash: '#together' } },
+    { id: 6, text: 'Contact Us', to: '/contact-us' }
   ];
 
   return (
@@ -89,8 +112,12 @@ const Header = () => {
                 {menuItems.map((item) => (
                   <li key={item.id}>
                     <Link
-                      to={item.href}
-                      onClick={toggleMenu}
+                      to={item.to}
+                      onClick={() => {
+                        toggleMenu()
+                        navigate(item.to)
+                        if (item.to?.hash) scrollToHash(item.to.hash)
+                      }}
                       onMouseEnter={() => handleMouseEnter(item.text)}
                       onMouseLeave={handleMouseLeave}
                     >

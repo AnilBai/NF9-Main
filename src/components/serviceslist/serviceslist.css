@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap');
 
 :root {
-  --accent:        #ff4500;
+  --accent:        #fafafa;
   --bg:            #0e0e0e;
   --col2:          #ffffff;
   --border:        rgba(255, 255, 255, 0.07);
@@ -23,7 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 100px 64px 0;
+  padding: 100px 60px 0;
 }
 
 .svc__topbar-label {
@@ -175,7 +175,7 @@
 }
 
 .svc__card:hover .svc__card-badge {
-  border-color: rgba(255, 69, 0, 0.35);
+  border-color: #fafafa;
   color: var(--accent);
 }
 
@@ -256,7 +256,7 @@
 }
 
 .svc__card:hover .svc__card-bg-num {
-  color: rgba(255, 69, 0, 0.45);
+  color: #fafafa6e;
 }
 
 /* ─── CTA BAND ────────────────────────── */
@@ -346,7 +346,7 @@
 /* Tablet */
 @media (max-width: 1100px) and (min-width: 768px) {
   .svc__topbar {
-    padding: 72px 48px 0;
+    padding: 100px 48px 0;
   }
 
   .svc__hero {
@@ -366,7 +366,7 @@
 /* Mobile */
 @media (max-width: 767px) {
   .svc__topbar {
-    padding: 56px 28px 0;
+    padding: 100px 28px 0;
   }
 
   .svc__hero {

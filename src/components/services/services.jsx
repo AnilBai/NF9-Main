@@ -205,7 +205,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section className="nf9-services-section" ref={sectionRef}>
+    <section id="services" className="nf9-services-section" ref={sectionRef}>
       <div className="nf9-services-grid">
 
         <div className="nf9-services-image-col" ref={imageColRef}>
@@ -224,7 +224,9 @@ export default function Services() {
         </div>
 
         <div className="nf9-services-content">
-          <div className="nf9-services-label">Our Services ↴</div>
+          <div className="nf9-services-label">
+            <span>Our Services</span>
+          </div>
           <div className="nf9-services-list">
             {SERVICES.map((s, i) => (
               <h1 key={i} className="nf9-services-item">

@@ -49,16 +49,22 @@
   min-height: calc(100vh - 180px);
 }
 
-.nf9-services-label {
-  text-align: right;
-  font-size: clamp(14px, 1.6vw, 22px);
-  font-weight: 400;
-  color: rgba(0,0,0,0.55);
-  margin-bottom: 24px;
-  padding-right: 30px;
+
+.nf9-services-label  { display: flex; justify-content: right; margin-bottom: 48px; }
+.nf9-services-label  span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: 'DM Sans', sans-serif;
-  letter-spacing: 0.01em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  padding-right: 20px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.55);
 }
+.nf9-services-label  span::before { content: ''; display: block; width: 24px; height: 1px; background: #080808; }
+
 
 .nf9-services-list {
   display: flex;
@@ -68,7 +74,6 @@
 }
 
 .nf9-services-item {
-  font-family: 'Bricolage Grotesque', sans-serif;
   font-size: clamp(48px, 10vw, 176px);
   font-weight: 800;
   line-height: 1;

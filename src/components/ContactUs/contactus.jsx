@@ -1,9 +1,24 @@
 import { useEffect, useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import "./contactus.css";
 
 export default function ContactUs() {
   const sectionRef = useRef(null);
+  const recaptchaRef = useRef(null);
   const [submitted, setSubmitted] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // rCAPTCHA site key (prefers env var; fallback for quick local testing)
+  const RECAPTCHA_SITE_KEY =
+    import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
+      "6LfHW4wsAAAAADWstDjbA-TmNDaKLXeI_G17YXXH";
+
+  // API endpoint (prefers env var; fallback to the deployed WP backend)
+  const API_CONTACT_URL =
+    import.meta.env.VITE_API_CONTACT_URL ||
+      "https://backend.nf9.in/wp-json/nf9/v1/contact";
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -24,51 +39,83 @@ export default function ContactUs() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const formData = {
-      name: e.target[0].value,
-      email: e.target[1].value,
-      phone: e.target[2].value,
-      message: e.target[3].value
+    setErrorMessage("");
+
+    if (!recaptchaToken) {
+      setErrorMessage("Please complete the captcha before submitting.");
+      return;
+    }
+
+    const formData = new FormData(e.target);
+
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      message: formData.get("message"),
+      recaptchaToken,
     };
-  
+
+    setIsSubmitting(true);
+
     try {
-      const apiUrl = import.meta.env.VITE_API_CONTACT_URL;
-      if (!apiUrl) {
-        throw new Error('API endpoint is not configured');
+      console.log("Contact form request:", API_CONTACT_URL, data);
+
+      const response = await fetch(API_CONTACT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      let result = null;
+      let rawBody = "";
+
+      try {
+        rawBody = await response.text();
+        result = rawBody ? JSON.parse(rawBody) : null;
+      } catch (parseErr) {
+        // Not JSON — keep raw body for debugging
       }
 
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+      console.log("Contact form response", response.status, {
+        parsed: result,
+        raw: rawBody,
       });
-  
-      const data = await response.json();
-  
-      if (data.success) {
+
+      if (!response.ok) {
+        const message =
+          (result && (result.error || result.message)) ||
+          rawBody ||
+          `Submission failed (${response.status}).`;
+        setErrorMessage(message);
+        return;
+      }
+
+      if (result && result.success) {
         setSubmitted(true);
+        setRecaptchaToken(null);
+        recaptchaRef.current?.reset();
+        e.target.reset();
       } else {
-        alert('Submission failed. Please try again.');
+        setErrorMessage((result && (result.error || result.message)) || "Submission failed. Please try again.");
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+      console.error(error);
+      setErrorMessage("Server error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <section className="contact-main" ref={sectionRef}>
-      {/* ROW 1 */}
       <div className="contact-title-row framer-reveal delay-1">
         <h1>Get in touch.</h1>
       </div>
 
-      {/* ROW 2 */}
       <div className="contact-content-row">
-        {/* LEFT */}
         <div className="contact-left framer-reveal delay-2">
           <p>
             <strong>Have a project in mind?</strong> Reach out to us, and we’ll
@@ -76,62 +123,67 @@ export default function ContactUs() {
           </p>
         </div>
 
-        {/* RIGHT */}
         <div className="contact-right framer-reveal delay-3">
           {!submitted ? (
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="field framer-reveal delay-4">
-                <input type="text" placeholder="Your name *" required />
+                <input name="name" type="text" placeholder="Your name *" required />
                 <span className="line"></span>
               </div>
 
               <div className="field framer-reveal delay-5">
-                <input type="email" placeholder="Email *" required />
+                <input name="email" type="email" placeholder="Email *" required />
                 <span className="line"></span>
               </div>
 
-              {/* PHONE FIELD */}
               <div className="field framer-reveal delay-6">
-                <input
-                  type="tel"
-                  placeholder="Phone number *"
-                  required
-                />
+                <input name="phone" type="tel" placeholder="Phone number *" required />
                 <span className="line"></span>
               </div>
 
               <div className="field framer-reveal delay-7">
-                <textarea
-                  placeholder="Your message *"
-                  required
-                ></textarea>
+                <textarea name="message" placeholder="Your message *" required></textarea>
                 <span className="line"></span>
               </div>
 
+              <div className="recaptcha-wrapper framer-reveal delay-8">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={RECAPTCHA_SITE_KEY}
+                  onChange={(token) => setRecaptchaToken(token)}
+                />
+              </div>
+
+              {errorMessage && (
+                <div className="form-error framer-reveal delay-8">{errorMessage}</div>
+              )}
+
               <button
-                className="submit-btn framer-reveal delay-8"
+                className="submit-btn framer-reveal delay-9"
                 type="submit"
+                disabled={!recaptchaToken || isSubmitting}
               >
-                <span className="btn-text top">Submit</span>
-                <span className="btn-text bottom">Submit</span>
+                <span className="btn-text top">
+                  {isSubmitting ? "Sending..." : "Submit"}
+                </span>
+                <span className="btn-text bottom">
+                  {isSubmitting ? "Sending..." : "Submit"}
+                </span>
                 <span className="btn-dot"></span>
               </button>
 
               <p className="terms framer-reveal delay-9">
-                By submitting, you agree to our{" "}
-                <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+                By submitting, you agree to our <a href="#">Terms</a> and{" "}
+                <a href="#">Privacy Policy</a>.
               </p>
             </form>
           ) : (
-            /* SUCCESS MESSAGE */
             <div className="success-message framer-reveal delay-4">
               <h3>Thank you for reaching out ✨</h3>
               <p>
-                We’ve received your message.  
-                Our team will contact you shortly.
+                We’ve received your message. Our team will contact you shortly.
                 <br />
-                Welcome to <strong>NF9</strong> — where ideas turn into
-                beautiful digital experiences.
+                Welcome to <strong>NF9</strong>.
               </p>
             </div>
           )}
