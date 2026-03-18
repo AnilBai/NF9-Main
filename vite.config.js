@@ -8,3 +8,5 @@ export default defineConfig({
     dedupe: ['react', 'react-dom'],
   },
 })
+
+// deploy test - 19 march 2026
