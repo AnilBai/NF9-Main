@@ -1,8 +1,31 @@
-- name: List dist folder
-        run: ls -la dist/
+name: NF9 Deploy
 
-      - name: Deploy to Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '41 5 19 3 *'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: echo "VITE_WP_API_URL=${{ secrets.VITE_WP_API_URL }}" >> .env
+
+      - run: npm run build
+
+      - uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
