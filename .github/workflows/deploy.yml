@@ -4,52 +4,28 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: '41 5 19 3 *'
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+      - name: Install Dependencies
+        run: npm install
 
-      - run: npm ci
+      - name: Create env file
+        run: echo "VITE_WP_API_URL=${{ secrets.VITE_WP_API_URL }}" >> .env
 
-      - run: echo "VITE_WP_API_URL=${{ secrets.VITE_WP_API_URL }}" >> .env
+      - name: Build Project
+        run: npm run build
 
-      - run: npm run build
-
-      - uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /home/u940599466/domains/nf9.in/public_html/
-          dangerous-clean-slate: false
-          dry-run: false
-          log-level: verbose
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            wp-admin/**
-            wp-content/**
-            wp-includes/**
-            wp-config.php
-            wp-login.php
-            wp-cron.php
-            xmlrpc.php
-            readme.html
-            license.txt
-            llms.txt
-            default.php
-            index.php
-            .htaccess
-            .ftp-deploy-sync-state.json
+          local-dir: dist/
