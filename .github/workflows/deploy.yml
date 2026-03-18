@@ -1,31 +1,5 @@
-name: NF9 Deploy
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Create env file
-        run: echo "VITE_WP_API_URL=${{ secrets.VITE_WP_API_URL }}" >> .env
-
-      - name: Build Project
-        run: npm run build
-
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/
+- name: Test FTP Connection
+        run: |
+          curl -v ftp://${{ secrets.FTP_SERVER }} \
+          --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}" \
+          --list-only
