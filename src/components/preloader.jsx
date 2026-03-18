@@ -12,20 +12,6 @@ const Preloader = ({ onComplete }) => {
   const timelineRef = useRef(null);
   const timerRef = useRef(null);
 
-  const skip = () => {
-    if (timelineRef.current) timelineRef.current.kill();
-    if (timerRef.current) clearTimeout(timerRef.current);
-    document.body.style.overflow = '';
-    document.body.style.touchAction = '';
-    setIsVisible(false);
-    if (onComplete) onComplete();
-    try {
-      window.__nf9PreloaderHasShown = true;
-    } catch {
-      // ignore
-    }
-  };
-
   useEffect(() => {
     // Prevent scrolling during preloader
     document.body.style.overflow = 'hidden';
@@ -166,13 +152,6 @@ const Preloader = ({ onComplete }) => {
 
       {/* Center Content */}
       <div className="relative flex flex-col items-center justify-center z-20">
-        <button
-          onClick={skip}
-          className="absolute top-4 right-4 z-40 rounded bg-black/20 px-3 py-1 text-xs text-white backdrop-blur-sm hover:bg-black/40"
-        >
-          Skip
-        </button>
-
         {/* Box containing letters; overflow hidden so letters rise inside the box */}
         <div className="preloader-box border-0 rounded-sm h-[40vh] w-full flex items-center justify-center overflow-hidden px-4">
           <div className="flex gap-1.0 sm:gap-2 md:gap-3">
