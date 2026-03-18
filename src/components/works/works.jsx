@@ -9,9 +9,9 @@ const PROJECTS = [
     color: "#ffcc96",
   },
   {
-    title: "Sensaya",
-    subtitle: "Memories in the making",
-    image: "https://framerusercontent.com/images/uK2BpwnizijFTL9zd5gnyiD2i0U.png",
+    title: "Greentaj",
+    subtitle: "TRADING & CONTRACTING W.L.L",
+    image: "https://nf9.in/wp-content/uploads/2026/03/NF9xGreentaj.png",
     color: "#aab8ff",
   },
   {
