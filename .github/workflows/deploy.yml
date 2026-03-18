@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: '41 5 19 3 *'
   workflow_dispatch:
 
 jobs:
@@ -24,10 +22,13 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+      - name: Deploy via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/
+          port: 21
+          local_path: ./dist/*
+          remote_path: /home/u940599466/domains/nf9.in/public_html/
+          sftp_only: true
