@@ -36,7 +36,7 @@
 .heroTitle {
   font-family: 'Bricolage Grotesque', sans-serif;
   font-size: clamp(4rem, 12vw, 9rem);
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 0.92;
 }

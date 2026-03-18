@@ -80,11 +80,21 @@ export default function Footer() {
             <span className="nf9-plus">+</span>
             <p className="nf9-label">Social</p>
             <div className="nf9-social-row">
-              <a href="#" className="nf9-social-link">
-                Twitter
+              <a
+                href="https://wa.me/7093493897?text=did%20you%20get%20it%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nf9-social-link"
+              >
+                WhatsApp
               </a>
-              <a href="#" className="nf9-social-link">
-                Instagram 
+              <a
+                href="https://www.instagram.com/nf9.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nf9-social-link"
+              >
+                Instagram
               </a>
               <a href="#" className="nf9-social-link">
                 LinkedIn 

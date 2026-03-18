@@ -1,10 +1,8 @@
 import express from "express";
-import fetch from "node-fetch";
 import nodemailer from "nodemailer";
 
 const router = express.Router();
 
-const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 const SMTP_HOST = process.env.SMTP_HOST;
 const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_USER = process.env.SMTP_USER;
@@ -18,36 +16,10 @@ const NOTIFY_RECIPIENTS = process.env.CONTACT_EMAIL_TO
   : ["anilbai897@gmail.com", "nf9officials@gmail.com", "support@nf9.in"];
 
 router.post("/contact", async (req, res) => {
-  const { name, email, phone, message, recaptchaToken } = req.body || {};
+  const { name, email, phone, message } = req.body || {};
 
   if (!name || !email || !phone || !message) {
     return res.status(400).json({ success: false, error: "Missing required fields" });
-  }
-
-  if (!recaptchaToken) {
-    return res.status(400).json({ success: false, error: "Missing recaptcha token" });
-  }
-
-  if (!RECAPTCHA_SECRET_KEY) {
-    return res.status(500).json({ success: false, error: "Recaptcha secret not configured" });
-  }
-
-  try {
-    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${encodeURIComponent(
-      RECAPTCHA_SECRET_KEY
-    )}&response=${encodeURIComponent(recaptchaToken)}`;
-
-    const verifyRes = await fetch(verifyUrl, { method: "POST" });
-    const verifyJson = await verifyRes.json();
-
-    if (!verifyJson.success) {
-      return res
-        .status(400)
-        .json({ success: false, error: "reCAPTCHA validation failed", details: verifyJson });
-    }
-  } catch (err) {
-    console.error("reCAPTCHA validation error", err);
-    return res.status(500).json({ success: false, error: "reCAPTCHA validation error" });
   }
 
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {

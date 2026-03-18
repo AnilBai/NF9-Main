@@ -17,17 +17,17 @@
 
 .nf9-projects-header sup {
   font-size: 0.35em;
-  opacity: 0.45;
+  color: rgba(255,255,255,0.75);
   display: inline-block;
   transform: translateY(-0.9em);
 }
 
 /* layout */
-.nf9-layout    { display: flex; flex-direction: column; gap: 40px; }
-.nf9-row-two   { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.nf9-layout  { display: flex; flex-direction: column; gap: 40px; }
+.nf9-row-two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 
 /* card */
-.nf9-card      { display: flex; flex-direction: column; gap: 14px; }
+.nf9-card    { display: flex; flex-direction: column; gap: 14px; }
 
 .nf9-image-wrap {
   position: relative;
@@ -37,28 +37,25 @@
   overflow: hidden;
 }
 
-/* image — zoom follows --zoom in both directions */
+/* ─── image ───────────────────────────────────────────────────────────────────
+   NO CSS transition here — the rAF lerp loop owns every frame.
+   Adding a CSS transition would double-smooth the value and create lag.
+   GPU hints stay so compositing is fast.
+──────────────────────────────────────────────────────────────────────────── */
 .nf9-image-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 
-  --scrollY: 0px;
-  --hoverX:  0px;
-  --hoverY:  0px;
-  --zoom:    1;
+  transform-origin: center center;
+  transform: translate3d(0, 0, 0) scale(1); /* initial — JS takes over */
 
-  transform-origin: center;
-  transform: translate3d(
-      var(--hoverX),
-      calc(var(--scrollY) + var(--hoverY)),
-      0
-    )
-    scale(var(--zoom));
-
-  transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
   will-change: transform;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  /* Remove transition — lerp handles smoothness */
+  transition: none;
 }
 
 /* arrow */
@@ -87,8 +84,8 @@
 .nf9-info .subtitle {
   font-family: 'DM Sans', sans-serif;
   font-size: clamp(14px, 1.4vw, 20px);
-  font-weight: 300;
-  color: rgba(255,255,255,0.45);
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
   margin-top: 4px;
 }
 

@@ -23,12 +23,12 @@
 .nf9-social  { grid-area: social; }
 
 /* contact */
-.nf9-plus { font-size: 36px; color: rgba(255,255,255,0.2); margin-bottom: 12px; }
+.nf9-plus { font-size: 36px; color: rgba(255,255,255,0.75); margin-bottom: 12px; }
 .nf9-phone {
   font-family: 'DM Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 300;
-  color: rgba(255,255,255,0.45);
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 600;
+  color: #ffffff;
   margin-bottom: 18px;
 }
 
@@ -54,7 +54,7 @@
   position: absolute;
   left: 0; bottom: 0;
   width: 100%; height: 1px;
-  background: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.75);
   transition: background 0.3s;
 }
 .nf9-email:hover .nf9-email-text::after { background: #ffffff; }
@@ -62,7 +62,7 @@
 .nf9-plus-circle {
   width: 22px; height: 22px;
   background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.75);
   color: #ffffff;
   border-radius: 50%;
   display: inline-flex;
@@ -80,7 +80,7 @@
   font-size: 11px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.32);
+  color: rgba(255,255,255,0.75);
   margin-bottom: 18px;
 }
 
@@ -94,7 +94,7 @@
   font-size: clamp(16px, 1.4vw, 20px);
   font-weight: 400;
   line-height: 1.6;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255);
   text-decoration: none;
   margin-bottom: 4px;
   transition: color 0.25s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
@@ -119,21 +119,21 @@
 .nf9-bottom {
   width: 100vw;
   background: #080808;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 40px 64px;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255,255,255,0.25);
 }
 
 .nf9-bottom-left {
   font-family: 'DM Sans', sans-serif;
   width: 50%;
-  font-size: 13px;
-  color: rgba(255,255,255,0.35);
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
 }
 
 .nf9-bottom-right {
@@ -145,8 +145,8 @@
 
 .nf9-bottom-right a {
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  color: rgba(255,255,255,0.35);
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
   text-decoration: none;
   transition: color 0.25s;
 }

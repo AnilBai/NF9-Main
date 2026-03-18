@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./services.css";
@@ -38,6 +39,7 @@ const getEndOffset = () => {
 };
 
 export default function Services() {
+  const navigate = useNavigate();
   const sectionRef   = useRef(null);
   const imageColRef  = useRef(null);
   const imageWrapRef = useRef(null);
@@ -229,7 +231,19 @@ export default function Services() {
           </div>
           <div className="nf9-services-list">
             {SERVICES.map((s, i) => (
-              <h1 key={i} className="nf9-services-item">
+              <h1
+                key={i}
+                className="nf9-services-item"
+                role="button"
+                tabIndex={0}
+                onClick={() => navigate('/services')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    navigate('/services');
+                  }
+                }}
+              >
                 {s.title}
               </h1>
             ))}

@@ -1,19 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import "./contactus.css";
 
 export default function ContactUs() {
   const sectionRef = useRef(null);
-  const recaptchaRef = useRef(null);
   const [submitted, setSubmitted] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  // rCAPTCHA site key (prefers env var; fallback for quick local testing)
-  const RECAPTCHA_SITE_KEY =
-    import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
-      "6LfHW4wsAAAAADWstDjbA-TmNDaKLXeI_G17YXXH";
 
   // API endpoint (prefers env var; fallback to the deployed WP backend)
   const API_CONTACT_URL =
@@ -41,11 +33,6 @@ export default function ContactUs() {
     e.preventDefault();
     setErrorMessage("");
 
-    if (!recaptchaToken) {
-      setErrorMessage("Please complete the captcha before submitting.");
-      return;
-    }
-
     const formData = new FormData(e.target);
 
     const data = {
@@ -53,7 +40,6 @@ export default function ContactUs() {
       email: formData.get("email"),
       phone: formData.get("phone"),
       message: formData.get("message"),
-      recaptchaToken,
     };
 
     setIsSubmitting(true);
@@ -95,8 +81,6 @@ export default function ContactUs() {
 
       if (result && result.success) {
         setSubmitted(true);
-        setRecaptchaToken(null);
-        recaptchaRef.current?.reset();
         e.target.reset();
       } else {
         setErrorMessage((result && (result.error || result.message)) || "Submission failed. Please try again.");
@@ -146,14 +130,6 @@ export default function ContactUs() {
                 <span className="line"></span>
               </div>
 
-              <div className="recaptcha-wrapper framer-reveal delay-8">
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={RECAPTCHA_SITE_KEY}
-                  onChange={(token) => setRecaptchaToken(token)}
-                />
-              </div>
-
               {errorMessage && (
                 <div className="form-error framer-reveal delay-8">{errorMessage}</div>
               )}
@@ -161,7 +137,7 @@ export default function ContactUs() {
               <button
                 className="submit-btn framer-reveal delay-9"
                 type="submit"
-                disabled={!recaptchaToken || isSubmitting}
+                disabled={isSubmitting}
               >
                 <span className="btn-text top">
                   {isSubmitting ? "Sending..." : "Submit"}

@@ -19,7 +19,7 @@
   letter-spacing: -0.04em;
   line-height: 0.88;
   margin: 0 0 64px;
-  font-size: clamp(2.6rem, 8vw, 7rem);
+  font-size: clamp(3.5rem, 7vw, 7rem);
   color: #080808;
   text-align: left;
 }

@@ -44,12 +44,18 @@ export default function Together() {
       const traveled = vh - rect.top;
       const raw      = Math.max(0, Math.min(1, traveled / total));
 
-      // Start spreading the moment the section enters the viewport (raw=0),
-      // reach full spread by the time 55% of the scroll is done.
-      const remapped = Math.max(0, Math.min(1, raw / 0.55));
+      // We want:
+      // - t = 0 when section is off-screen (not yet reached or already passed)
+      // - t ramps to 1 as section enters the viewport
+      // - t stays at 1 while the section remains in view
+      // - t ramps back to 0 as the section leaves the viewport
+      const enterEnd = vh / total;      // when section top reaches viewport top
+      const exitStart = 0.9;            // start returning as section nears leaving
 
-      // easeOutCubic — fast start, gentle finish
-      return 1 - Math.pow(1 - remapped, 3);
+      if (raw <= 0) return 0;
+      if (raw < enterEnd) return raw / enterEnd;
+      if (raw < exitStart) return 1;
+      return Math.max(0, (1 - (raw - exitStart) / (1 - exitStart)));
     };
 
     const applyFrame = () => {
@@ -96,20 +102,12 @@ export default function Together() {
 
     const tick = () => {
       const target = getTarget();
-      const diff   = target - current.current;
 
-      current.current += diff * 0.14; // faster tracking
-
+      // Apply directly to avoid latency and make movement feel in-sync with scroll.
+      current.current = target;
       applyFrame();
 
-      // Keep ticking only while there's visible movement
-      if (Math.abs(diff) > 0.0005) {
-        raf.current = requestAnimationFrame(tick);
-      } else {
-        current.current = target; // snap to final value
-        applyFrame();
-        raf.current = null;
-      }
+      raf.current = null;
     };
 
     const onScroll = () => {

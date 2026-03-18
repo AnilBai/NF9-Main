@@ -9,10 +9,6 @@ dotenv.config();
 const app = express();
 const port = Number(process.env.PORT || 3000);
 
-if (!process.env.RECAPTCHA_SECRET_KEY) {
-  console.warn("⚠️ RECAPTCHA_SECRET_KEY is not set. Captcha validation will fail.");
-}
-
 if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
   console.warn("⚠️ SMTP credentials are not fully configured. Email sending will fail.");
 }

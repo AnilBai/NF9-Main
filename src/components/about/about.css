@@ -45,10 +45,10 @@
   align-items: center;
   gap: 10px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
+  font-size: 18px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.75);
   opacity: 0.4;
   margin-bottom: 36px;
 }
@@ -78,17 +78,17 @@
 .about-description {
   font-family: 'DM Sans', sans-serif;
   font-size: clamp(16px, 1.8vw, 22px);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.72;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.75);
   margin-top: 40px;
 }
 
 .about-description .nf9-sign {
   display: block;
-  margin-top: 20px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.75);
+  margin-top: 24px;
+  font-weight: 600;
+  color: rgba(255,255,255);
 }
 
 /* word-reveal helpers */

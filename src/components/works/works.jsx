@@ -42,85 +42,111 @@ export default function Works() {
   );
 }
 
-function ProjectCard({ title, subtitle, image, color }) {
-  const wrapRef = useRef(null);
-  const imgRef  = useRef(null);
-  const raf     = useRef(null);
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
 
-  const lastScrollY = useRef(window.scrollY);
+function clamp(v, min = 0, max = 1) {
+  return Math.max(min, Math.min(max, v));
+}
+
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function ProjectCard({ title, subtitle, image, color }) {
+  const wrapRef   = useRef(null);
+  const imgRef    = useRef(null);
+  const rafRef    = useRef(null);
+
+  // smoothed values that lerp toward targets each frame
+  const current = useRef({ zoom: 1, scrollY: 0, hoverX: 0, hoverY: 0 });
+  const target  = useRef({ zoom: 1, scrollY: 0, hoverX: 0, hoverY: 0 });
 
   useEffect(() => {
-    const update = () => {
-      const wrap = wrapRef.current;
-      const img  = imgRef.current;
-      if (!wrap || !img) return;
+    const img  = imgRef.current;
+    const wrap = wrapRef.current;
+    if (!img || !wrap) return;
 
+    // lerpFactor: higher = snappier, lower = more floaty
+    // Use a slightly lower value on mobile for smoothness
+    const isMobile = window.innerWidth < 769;
+    const lerpFactor = isMobile ? 0.06 : 0.09;
+
+    const computeTarget = () => {
       const rect = wrap.getBoundingClientRect();
       const vh   = window.innerHeight;
+      const w    = window.innerWidth;
 
-      if (rect.bottom < 0 || rect.top > vh) {
-        raf.current = null;
+      // Card not near viewport — keep zoom at 1
+      if (rect.bottom < -200 || rect.top > vh + 200) {
+        target.current.zoom    = 1;
+        target.current.scrollY = 0;
         return;
       }
 
-      /* ── progress: 0 (card top at viewport bottom) → 1 (card bottom at viewport top) ── */
       const progress = (vh - rect.top) / (vh + rect.height);
-      const clamp    = (v) => Math.max(0, Math.min(1, v));
       const raw      = clamp(progress);
+      const p        = easeOutCubic(raw);
 
-      /* Framer-style easeOutCubic */
-      const p = 1 - Math.pow(1 - raw, 3);
+      const zoomStrength = w < 768 ? 0.14 : w < 1024 ? 0.16 : 0.18;
+      const parallaxStr  = w < 768 ? 5 : 8;
 
-      /* ── scroll speed for a subtle extra push ── */
-      const currentY = window.scrollY;
-      const velocity = Math.abs(currentY - lastScrollY.current);
-      lastScrollY.current = currentY;
-      const speed = Math.min(velocity / 40, 1);
-
-      /* ── responsive strength ── */
-      const w = window.innerWidth;
-      let zoomStrength    = 0.18;
-      if (w < 1024) zoomStrength = 0.24;
-      if (w < 768)  zoomStrength = 0.30;
-
-      const parallaxStrength = w < 768 ? 6 : 9;
-
-      /* ── zoom follows p in BOTH directions ──
-         removed maxZoom so scrolling back up shrinks the image again */
-      const targetZoom = 1 + p * zoomStrength * (1 + speed * 0.4);
-
-      img.style.setProperty("--scrollY", `${-p * parallaxStrength}px`);
-      img.style.setProperty("--zoom",    targetZoom.toFixed(4));
-
-      raf.current = null;
+      target.current.zoom    = 1 + p * zoomStrength;
+      target.current.scrollY = -p * parallaxStr;
     };
 
-    const onScroll = () => {
-      if (!raf.current) raf.current = requestAnimationFrame(update);
+    const applyTransform = () => {
+      const c = current.current;
+      img.style.transform = `translate3d(${c.hoverX.toFixed(2)}px, ${(c.scrollY + c.hoverY).toFixed(2)}px, 0) scale(${c.zoom.toFixed(4)})`;
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
+    let running = true;
+
+    const loop = () => {
+      if (!running) return;
+
+      computeTarget();
+
+      const c = current.current;
+      const t = target.current;
+      const f = lerpFactor;
+
+      const zDiff  = Math.abs(t.zoom    - c.zoom);
+      const yDiff  = Math.abs(t.scrollY - c.scrollY);
+      const hxDiff = Math.abs(t.hoverX  - c.hoverX);
+      const hyDiff = Math.abs(t.hoverY  - c.hoverY);
+
+      if (zDiff > 0.0001 || yDiff > 0.01 || hxDiff > 0.01 || hyDiff > 0.01) {
+        c.zoom    = lerp(c.zoom,    t.zoom,    f);
+        c.scrollY = lerp(c.scrollY, t.scrollY, f);
+        c.hoverX  = lerp(c.hoverX,  t.hoverX,  0.12);
+        c.hoverY  = lerp(c.hoverY,  t.hoverY,  0.12);
+        applyTransform();
+      }
+
+      rafRef.current = requestAnimationFrame(loop);
+    };
+
+    rafRef.current = requestAnimationFrame(loop);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf.current) cancelAnimationFrame(raf.current);
+      running = false;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
-  /* ── hover depth (desktop only) ── */
+  // Hover depth — only updates the target, the loop smooths it
   const onMove = (e) => {
     if (window.innerWidth < 769) return;
     const rect = wrapRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 14;
-    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 14;
-    imgRef.current.style.setProperty("--hoverX", `${x}px`);
-    imgRef.current.style.setProperty("--hoverY", `${y}px`);
+    target.current.hoverX = ((e.clientX - rect.left) / rect.width  - 0.5) * 14;
+    target.current.hoverY = ((e.clientY - rect.top)  / rect.height - 0.5) * 14;
   };
 
   const onLeave = () => {
-    imgRef.current.style.setProperty("--hoverX", "0px");
-    imgRef.current.style.setProperty("--hoverY", "0px");
+    target.current.hoverX = 0;
+    target.current.hoverY = 0;
   };
 
   return (

@@ -56,12 +56,12 @@
   align-items: center;
   gap: 10px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 400;
   letter-spacing: 3px;
   padding-right: 20px;
   text-transform: uppercase;
-  color: rgba(0,0,0,0.55);
+  color: rgba(0, 0, 0, 0.75);
 }
 .nf9-services-label  span::before { content: ''; display: block; width: 24px; height: 1px; background: #080808; }
 
@@ -74,7 +74,7 @@
 }
 
 .nf9-services-item {
-  font-size: clamp(48px, 10vw, 176px);
+  font-size: clamp(40px, 10vw, 160px);
   font-weight: 800;
   line-height: 1;
   white-space: nowrap;

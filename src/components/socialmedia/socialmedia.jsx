@@ -10,10 +10,6 @@ export default function SocialFollow() {
 
         {/* Phone Image (allowed to overflow) */}
         <div className="social-follow-image">
-          <img
-            src="https://www.theinternetcompany.one/Free_Realistic_iPhone_16_Pro_in_Hand_Mockup.svg"
-            alt="iPhone Mockup"
-          />
         </div>
 
         {/* Content */}
