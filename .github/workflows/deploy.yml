@@ -1,8 +1,9 @@
 name: NF9 Deploy
 
 on:
-  schedule:
-    - cron: '41 5 19 3 *'
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
