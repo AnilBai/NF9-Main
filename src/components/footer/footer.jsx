@@ -47,7 +47,7 @@ export default function Footer() {
 
           <div className="nf9-contact">
             <span className="nf9-plus">+</span>
-            <p className="nf9-phone">+91 xxxx xxx xxx</p>
+            <p className="nf9-phone">+91 9666959785</p>
             <a href="mailto:support@nf9.com" className="nf9-email">
               <span className="nf9-plus-circle">+</span>
               <span className="nf9-email-text">support@nf9.in</span>
@@ -81,7 +81,7 @@ export default function Footer() {
             <p className="nf9-label">Social</p>
             <div className="nf9-social-row">
               <a
-                href="https://wa.me/7093493897?text=did%20you%20get%20it%3F"
+                href="https://wa.me/919666959785?text=Hello%2C%20I%20need%20a%20website%20to%20develop%2C%20really%20wanna%20connect%20to%20the%20NF9%20team"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="nf9-social-link"

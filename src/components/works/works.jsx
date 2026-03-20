@@ -3,21 +3,23 @@ import "./works.css";
 
 const PROJECTS = [
   {
-    title: "Tabasque",
-    subtitle: "Classy cocktails for modern age",
-    image: "https://framerusercontent.com/images/UPqJOHQLdYtNuK2jee5437Lno.jpg",
+    title: "Devarsu Products",
+    subtitle: "Woo-Commerce Store",
+    image: "http://devarsuproducts.com/wp-content/uploads/2026/03/NF9xDevarsuproducts.png",
     color: "#ffcc96",
+    link: "https://devarsuproducts.com/",
   },
   {
     title: "Greentaj",
     subtitle: "TRADING & CONTRACTING W.L.L",
     image: "https://nf9.in/wp-content/uploads/2026/03/NF9xGreentaj.png",
     color: "#aab8ff",
+    link: "https://greentaj.com/",
   },
   {
-    title: "Le Blink",
-    subtitle: "Skincare for the future",
-    image: "https://framerusercontent.com/images/rzoORZnzNHiRX63g8X4x3iR2PnE.png",
+    title: "Order Managment Portal",
+    subtitle: "Order Management Portal for e-commerce stores",
+    image: "https://nf9.in/wp-content/uploads/2026/03/NF9xOrderPortal-scaled.png",
     color: "#fce7d6",
   },
 ];
@@ -54,7 +56,7 @@ function easeOutCubic(t) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-function ProjectCard({ title, subtitle, image, color }) {
+function ProjectCard({ title, subtitle, image, color, link }) {
   const wrapRef   = useRef(null);
   const imgRef    = useRef(null);
   const rafRef    = useRef(null);
@@ -149,8 +151,13 @@ function ProjectCard({ title, subtitle, image, color }) {
     target.current.hoverY = 0;
   };
 
+  const Wrapper = link ? "a" : "article";
+  const wrapperProps = link
+    ? { href: link, target: "_blank", rel: "noopener noreferrer" }
+    : {};
+
   return (
-    <article className="nf9-card">
+    <Wrapper className="nf9-card" {...wrapperProps}>
       <div
         ref={wrapRef}
         className="nf9-image-wrap"
@@ -166,6 +173,6 @@ function ProjectCard({ title, subtitle, image, color }) {
         <p className="title">{title}</p>
         <p className="subtitle">{subtitle}</p>
       </div>
-    </article>
+    </Wrapper>
   );
 }

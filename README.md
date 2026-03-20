@@ -27,3 +27,6 @@ This project includes a small Express server used to send contact form submissio
    - `npm run dev:server` (backend API)
 
 The frontend contact form will POST to the URL configured in `VITE_API_CONTACT_URL`.
+
+
+https://framerusercontent.com/images/rzoORZnzNHiRX63g8X4x3iR2PnE.png
