@@ -1,21 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import "./contactus.css";
 
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+
 export default function ContactUs() {
   const sectionRef = useRef(null);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // API endpoint (prefers env var; fallback to the deployed WP backend)
   const API_CONTACT_URL =
-    import.meta.env.VITE_API_CONTACT_URL ||
-      "https://backend.nf9.in/wp-json/nf9/v1/contact";
+  import.meta.env.VITE_API_CONTACT_URL ||
+  "https://nf9.in/wp-json/nf9/v1/contact";
 
+  // Intersection observer for animations
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -25,33 +26,63 @@ export default function ContactUs() {
       },
       { threshold: 0.25 }
     );
-
     observer.observe(el);
   }, []);
+
+  // Load reCAPTCHA script
+  useEffect(() => {
+    if (!RECAPTCHA_SITE_KEY) return;
+    const existing = document.querySelector(`script[src*="recaptcha"]`);
+    if (existing) return;
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    document.head.appendChild(script);
+  }, []);
+
+  const getRecaptchaToken = () => {
+    return new Promise((resolve, reject) => {
+      if (!window.grecaptcha) {
+        reject(new Error("reCAPTCHA not loaded"));
+        return;
+      }
+      window.grecaptcha.ready(async () => {
+        try {
+          const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+            action: "contact",
+          });
+          resolve(token);
+        } catch (err) {
+          reject(err);
+        }
+      });
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
+    setIsSubmitting(true);
 
     const formData = new FormData(e.target);
 
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      message: formData.get("message"),
-    };
-
-    setIsSubmitting(true);
-
     try {
-      console.log("Contact form request:", API_CONTACT_URL, data);
+      let recaptcha_token = "";
+      if (RECAPTCHA_SITE_KEY) {
+        recaptcha_token = await getRecaptchaToken();
+      }
+
+      const data = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        message: formData.get("message"),
+        recaptcha_token,
+      };
 
       const response = await fetch(API_CONTACT_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
@@ -62,13 +93,8 @@ export default function ContactUs() {
         rawBody = await response.text();
         result = rawBody ? JSON.parse(rawBody) : null;
       } catch (parseErr) {
-        // Not JSON — keep raw body for debugging
+        // Not JSON
       }
-
-      console.log("Contact form response", response.status, {
-        parsed: result,
-        raw: rawBody,
-      });
 
       if (!response.ok) {
         const message =
@@ -83,7 +109,10 @@ export default function ContactUs() {
         setSubmitted(true);
         e.target.reset();
       } else {
-        setErrorMessage((result && (result.error || result.message)) || "Submission failed. Please try again.");
+        setErrorMessage(
+          (result && (result.error || result.message)) ||
+          "Submission failed. Please try again."
+        );
       }
     } catch (error) {
       console.error(error);
@@ -102,7 +131,7 @@ export default function ContactUs() {
       <div className="contact-content-row">
         <div className="contact-left framer-reveal delay-2">
           <p>
-            <strong>Have a project in mind?</strong> Reach out to us, and we’ll
+            <strong>Have a project in mind?</strong> Reach out to us, and we'll
             discuss the best way to move forward.
           </p>
         </div>
@@ -111,27 +140,48 @@ export default function ContactUs() {
           {!submitted ? (
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="field framer-reveal delay-4">
-                <input name="name" type="text" placeholder="Your name *" required />
+                <input
+                  name="name"
+                  type="text"
+                  placeholder="Your name *"
+                  required
+                />
                 <span className="line"></span>
               </div>
 
               <div className="field framer-reveal delay-5">
-                <input name="email" type="email" placeholder="Email *" required />
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Email *"
+                  required
+                />
                 <span className="line"></span>
               </div>
 
               <div className="field framer-reveal delay-6">
-                <input name="phone" type="tel" placeholder="Phone number *" required />
+                <input
+                  name="phone"
+                  type="tel"
+                  placeholder="Phone number *"
+                  required
+                />
                 <span className="line"></span>
               </div>
 
               <div className="field framer-reveal delay-7">
-                <textarea name="message" placeholder="Your message *" required></textarea>
+                <textarea
+                  name="message"
+                  placeholder="Your message *"
+                  required
+                ></textarea>
                 <span className="line"></span>
               </div>
 
               {errorMessage && (
-                <div className="form-error framer-reveal delay-8">{errorMessage}</div>
+                <div className="form-error framer-reveal delay-8">
+                  {errorMessage}
+                </div>
               )}
 
               <button
@@ -157,7 +207,7 @@ export default function ContactUs() {
             <div className="success-message framer-reveal delay-4">
               <h3>Thank you for reaching out ✨</h3>
               <p>
-                We’ve received your message. Our team will contact you shortly.
+                We've received your message. Our team will contact you shortly.
                 <br />
                 Welcome to <strong>NF9</strong>.
               </p>
