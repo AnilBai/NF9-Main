@@ -7,12 +7,12 @@ import "./services.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const SERVICES = [
-  { title: "UI/UX Design",   image: "https://framerusercontent.com/images/xvbmP2RETgW6oOPW5kTmPh6busg.jpg" },
-  { title: "Website",        image: "https://framerusercontent.com/images/BwCmxlMIwWfqxkz8nvxIQfKBgk.jpg" },
-  { title: "eCommerce",      image: "https://framerusercontent.com/images/4WNOPai8HNpbkzXGrHQZwYWmibA.jpg" },
-  { title: "Applications",   image: "https://framerusercontent.com/images/xYeTN1Bn52IZWANLkSiNFVPy0jY.jpg" },
-  { title: "Infrastructure", image: "https://framerusercontent.com/images/1QkHnDWCstFb6jXN6WFLV6yDZB0.jpg" },
-  { title: "Branding",       image: "https://framerusercontent.com/images/36wvwfIbrnOBnFSzVzIZ4BEv9ms.jpeg" },
+  { title: "UI/UX Design",   image: "https://nf9.in/wp-content/uploads/2026/03/nf9image1.avif" },
+  { title: "Website",        image: "https://nf9.in/wp-content/uploads/2026/03/nf9image10.avif" },
+  { title: "eCommerce",      image: "https://nf9.in/wp-content/uploads/2026/03/nf9image6.avif" },
+  { title: "Applications",   image: "https://nf9.in/wp-content/uploads/2026/03/nf9image2.avif" },
+  { title: "Infrastructure", image: "https://nf9.in/wp-content/uploads/2026/03/nf9image8.avif" },
+  { title: "Branding",       image: "https://nf9.in/wp-content/uploads/2026/03/nf9image7.avif" },
 ];
 
 const getStep = () => {
