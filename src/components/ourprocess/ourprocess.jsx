@@ -47,10 +47,10 @@ const PROCESS = [
 const HORIZONTAL_MIN_WIDTH = 900;
 
 export default function OurProcess() {
-  const sectionRef   = useRef(null);
-  const trackRef     = useRef(null);
-  const progressRef  = useRef(null);
-  const ctxRef       = useRef(null);
+  const sectionRef  = useRef(null);
+  const trackRef    = useRef(null);
+  const progressRef = useRef(null);
+  const ctxRef      = useRef(null);
 
   const [isHorizontal, setIsHorizontal] = useState(
     typeof window !== "undefined" ? window.innerWidth >= HORIZONTAL_MIN_WIDTH : true
@@ -67,12 +67,11 @@ export default function OurProcess() {
 
   /* ── GSAP horizontal scroll (desktop only) ── */
   useEffect(() => {
-    const section  = sectionRef.current;
-    const track    = trackRef.current;
-    const bar      = progressRef.current;
+    const section = sectionRef.current;
+    const track   = trackRef.current;
+    const bar     = progressRef.current;
 
     if (!isHorizontal) {
-      // kill any lingering GSAP ctx
       if (ctxRef.current) {
         ctxRef.current.revert();
         ctxRef.current = null;
@@ -84,7 +83,7 @@ export default function OurProcess() {
       const getScrollAmount = () =>
         Math.max(0, track.scrollWidth - window.innerWidth);
 
-      const tl = gsap.to(track, {
+      gsap.to(track, {
         x: () => -getScrollAmount(),
         ease: "none",
         scrollTrigger: {
@@ -106,6 +105,32 @@ export default function OurProcess() {
     return () => ctx.revert();
   }, [isHorizontal]);
 
+  /* ── Mobile scroll-in animation (≤768px) ── */
+  useEffect(() => {
+    if (isHorizontal) return;
+
+    const targets = sectionRef.current?.querySelectorAll(
+      ".process-intro, .process-card"
+    );
+    if (!targets?.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    targets.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [isHorizontal]);
+
   return (
     <>
       {/* Progress bar — only meaningful on horizontal */}
@@ -121,7 +146,6 @@ export default function OurProcess() {
 
           {/* ── INTRO ── */}
           <div className="process-intro">
-
             <div className="process-intro-inner">
               <span className="process-eyebrow">How we work</span>
 

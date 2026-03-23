@@ -28,8 +28,7 @@
 
 .svc__topbar-label {
   font-family: var(--font-body);
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 14px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--col2);
@@ -39,18 +38,9 @@
   color: rgba(255, 255, 255, 0.75);
 }
 
-.svc__topbar-label::before {
-  content: '';
-  display: block;
-  width: 28px;
-  height: 1px;
-  background: currentColor;
-}
-
 .svc__topbar-count {
   font-family: var(--font-body);
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 14px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--col2);

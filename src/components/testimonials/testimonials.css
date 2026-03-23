@@ -33,8 +33,7 @@
 
 .nf9-t__kicker {
   font-family: var(--mono);
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 14px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.75);
@@ -42,14 +41,6 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 18px;
-}
-
-.nf9-t__kicker::before {
-  content: '';
-  width: 20px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.75);
-  flex-shrink: 0;
 }
 
 .nf9-t__title {

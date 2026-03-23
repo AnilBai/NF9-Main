@@ -34,7 +34,7 @@ export default function Footer() {
     { label: 'Services', to: '/services' },
     { label: 'Our Work', to: { pathname: '/', hash: '#works' } },
     { label: 'About NF9', to: { pathname: '/', hash: '#about' } },
-    { label: 'Careers', to: { pathname: '/', hash: '#together' } },
+    { label: 'Careers', to: { pathname: '/', hash: '#hero' } },
     { label: 'Contact us', to: '/contact-us' },
   ];
 

@@ -66,19 +66,11 @@
   align-items: center;
   gap: 10px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.75) !important; 
+  color: rgba(255,255,255,0.75) !important;
   margin-bottom: 32px;
-}
-
-.process-eyebrow::before {
-  content: '';
-  display: block;
-  width: 28px;
-  height: 1px;
-  background: currentColor;
 }
 
 .process-intro h1 {
@@ -242,7 +234,6 @@
   font-size: 18px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  
 }
 
 .process-dot {
@@ -301,14 +292,14 @@
 
 .process-card:nth-child(odd) .process-tag {
   background: rgba(255,255,255,0.45);
-  color: rgba(0,0,0.75);
-  border: 1px solid rgba(0,0,0.75);
+  color: rgba(0,0,0,0.75);
+  border: 1px solid rgba(0,0,0,0.75);
 }
 
 .process-card:nth-child(even) .process-tag {
   background: rgba(0,0,0,0.45);
-  color: rgba(255,255,255, 0.75);
-  border: 1px solid rgba(255,255,255, 0.75);
+  color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.75);
 }
 
 /* =============================================
@@ -319,6 +310,7 @@
   bottom: 0;
   left: 0;
   height: 2px;
+  width: 100%;
   background: #ffffff;
   z-index: 100;
   transform-origin: left;
@@ -360,9 +352,55 @@
 }
 
 /* =============================================
+   MOBILE SCROLL-IN ANIMATIONS  (≤ 768 px)
+   ============================================= */
+@media (max-width: 768px) {
+
+  /* --- initial hidden state --- */
+  .ourprocess.is-vertical .process-intro,
+  .ourprocess.is-vertical .process-card {
+    opacity: 0;
+    transition:
+      opacity  0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* intro + odd cards → slide in from LEFT */
+  .ourprocess.is-vertical .process-intro,
+  .ourprocess.is-vertical .process-card:nth-child(odd) {
+    transform: translateX(-64px);
+  }
+
+  /* even cards → slide in from RIGHT */
+  .ourprocess.is-vertical .process-card:nth-child(even) {
+    transform: translateX(64px);
+  }
+
+  /* --- visible state (class added by IntersectionObserver) --- */
+  .ourprocess.is-vertical .process-intro.is-visible,
+  .ourprocess.is-vertical .process-card.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* --- per-card stagger delay --- */
+  .ourprocess.is-vertical .process-intro         { transition-delay: 0ms; }
+  .ourprocess.is-vertical .process-card:nth-child(2) { transition-delay: 60ms; }
+  .ourprocess.is-vertical .process-card:nth-child(3) { transition-delay: 60ms; }
+  .ourprocess.is-vertical .process-card:nth-child(4) { transition-delay: 60ms; }
+  .ourprocess.is-vertical .process-card:nth-child(5) { transition-delay: 60ms; }
+  .ourprocess.is-vertical .process-card:nth-child(6) { transition-delay: 60ms; }
+
+  /* tighten ghost step number on small screens */
+  .ourprocess.is-vertical .process-card::before {
+    font-size: clamp(100px, 30vw, 180px);
+  }
+}
+
+/* =============================================
    TABLET ADJUSTMENTS
    ============================================= */
-@media (max-width: 1199px) and (min-width: 768px) {
+@media (max-width: 1199px) and (min-width: 769px) {
   .ourprocess.is-vertical .process-intro {
     padding: 80px 56px 72px;
     min-height: 75vh;
