@@ -1,15 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap');
 
 :root {
   --col1:         #000000;
   --col2:         #ffffff;
   --muted:        rgba(0, 0, 0, 0.35);
-  --font-heading: "Satoshi", sans-serif;
-  --font-body:    "Inter", sans-serif;
+  --font-heading: 'DM Sans', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --mono:         'DM Sans', sans-serif;
   --bg:           #080808;
   --border:       rgba(255, 255, 255, 0.08);
-  --mono:         "IBM Plex Mono", monospace;
 }
 
 /* ─── SECTION ─────────────────────────── */
@@ -44,7 +42,7 @@
 }
 
 .nf9-t__title {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 800;
   font-size: clamp(44px, 6vw, 84px);
   line-height: 0.9;
@@ -95,7 +93,7 @@
 }
 
 .nf9-t__big-mark {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 800;
   font-size: 120px;
   line-height: 1;
@@ -171,7 +169,7 @@
 }
 
 .nf9-t__name {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 15px;
   letter-spacing: -0.01em;

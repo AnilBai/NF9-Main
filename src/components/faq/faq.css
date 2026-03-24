@@ -14,7 +14,7 @@
 }
 
 .nf9-faq-title {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 0.88;
@@ -42,7 +42,7 @@
 
 .nf9-faq-question {
   flex: 1;
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(1rem, 2.4vw, 1.8rem);
   font-weight: 500;
   letter-spacing: -0.02em;

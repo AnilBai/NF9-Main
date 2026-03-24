@@ -29,7 +29,7 @@
 
 /* title */
 .contact-title-row h1 {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(52px, 10vw, 130px);
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -125,7 +125,7 @@
 
 /* success */
 .success-message { max-width: 420px; }
-.success-message h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #ffffff; letter-spacing: -0.02em; }
+.success-message h3 { font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #ffffff; letter-spacing: -0.02em; }
 .success-message p  { font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.65; color: rgba(255,255,255,0.55); font-weight: 300; }
 .success-message strong { color: #ffffff; }
 

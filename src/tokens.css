@@ -1,33 +1,22 @@
-/* ═══════════════════════════════════════════════════════════
-   NF9 — GLOBAL DESIGN TOKENS
-   Import this ONCE at the top of your global CSS / main.jsx.
-   Each section also re-declares only what it needs locally.
-═══════════════════════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
 
 :root {
-  /* ─ Palette ─ */
   --nf9-dark:    #080808;
   --nf9-cream:   #f0ede6;
   --nf9-white:   #ffffff;
   --nf9-accent:  #ff4500;
   --nf9-border:  rgba(255,255,255,0.08);
-
-  /* ─ Typography ─ */
-  --nf9-heading: 'Bricolage Grotesque', sans-serif;
+  --nf9-heading: 'DM Sans', sans-serif;
   --nf9-body:    'DM Sans', sans-serif;
-
-  /* ─ Easing ─ */
   --nf9-ease:    cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Universal box-sizing reset */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background: var(--nf9-dark);
   color: var(--nf9-white);
-  font-family: var(--nf9-body);
+  font-family: 'DM Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }

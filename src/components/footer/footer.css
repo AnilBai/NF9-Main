@@ -36,7 +36,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(22px, 2.5vw, 34px);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -106,7 +106,7 @@
 
 /* logo */
 .nf9-logo h1 {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(90px, 10vw, 150px);
   font-weight: 800;
   letter-spacing: -0.02em;

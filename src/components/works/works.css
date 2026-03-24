@@ -8,7 +8,7 @@
 }
 
 .nf9-projects-header h1 {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(48px, 8vw, 120px);
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -76,7 +76,7 @@
 
 /* info */
 .nf9-info .title {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(18px, 1.8vw, 26px);
   font-weight: 700;
   letter-spacing: -0.02em;
