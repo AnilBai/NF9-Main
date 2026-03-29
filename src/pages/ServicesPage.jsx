@@ -8,10 +8,10 @@ function ServicesPage() {
   return (
     <div>
       <Helmet>
-        <title>Services — NF9 Digital Studio</title>
-        <meta name="description" content="Explore NF9's full range of services — UI/UX design, web development, eCommerce, mobile apps, cloud infrastructure, and branding." />
-        <meta property="og:title" content="Services — NF9 Digital Studio" />
-        <meta property="og:description" content="Explore NF9's full range of services — UI/UX design, web development, eCommerce, mobile apps, cloud infrastructure, and branding." />
+        <title>Web Design, Development & Digital Services — NF9 Hyderabad</title>
+        <meta name="description" content="NF9 offers end-to-end digital services in Hyderabad — UI/UX design, website development, eCommerce, mobile apps, cloud infrastructure, and branding. Serving clients across India." />
+        <meta property="og:title" content="Web Design, Development & Digital Services — NF9 Hyderabad" />
+        <meta property="og:description" content="NF9 offers end-to-end digital services — UI/UX design, website development, eCommerce, mobile apps, cloud infrastructure, and branding. Based in Hyderabad, India." />
         <meta property="og:url" content="https://nf9.in/services" />
       </Helmet>
       <ServicesList />
