@@ -3,12 +3,21 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "dev:server": "node server/index.js",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+  "reactSnap": {
+    "source": "dist",
+    "destination": "dist",
+    "minifyHtml": false,
+    "crawl": true,
+    "inlineCss": false,
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
+    "routes": [
+      "/",
+      "/services",
+      "/contact-us"
+    ]
   },
   "dependencies": {
     "framer-motion": "^12.26.1",
@@ -31,6 +40,7 @@
     "globals": "^16.4.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.16",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "vite-ssg": "^28.3.0"
   }
 }
