@@ -275,7 +275,7 @@
 
 .svc__cta-heading .outline {
   display: block;
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.75);
   color: transparent;
 }
 
@@ -292,7 +292,7 @@
   font-size: 15px;
   font-weight: 300;
   line-height: 1.75;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.75);
   max-width: 340px;
 }
 

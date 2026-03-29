@@ -15,51 +15,30 @@ const SERVICES = [
   { title: "Branding",       image: "https://nf9.in/wp-content/uploads/2026/03/nf9image7.avif" },
 ];
 
-const getStep = () => {
-  const w = window.innerWidth;
-  if (w <= 468)  return 0;
-  if (w <= 768)  return 0;
-  if (w <= 1024) return 0;
-  if (w <= 1440) return 0;
-  return 5;
-};
-const getStartOffset = () => {
-  const w = window.innerWidth;
-  if (w <= 468)  return 0;
-  if (w <= 768)  return 20;
-  if (w <= 1024) return 20;
-  return 20;
-};
-const getEndOffset = () => {
-  const w = window.innerWidth;
-  if (w <= 468)  return 20;
-  if (w <= 768)  return 40;
-  if (w <= 1024) return 60;
-  return 100;
-};
-
 export default function Services() {
   const navigate = useNavigate();
   const sectionRef   = useRef(null);
   const imageColRef  = useRef(null);
   const imageWrapRef = useRef(null);
 
-  // Smooth Y lerp
+  // Smooth movement
   const targetY  = useRef(0);
   const currentY = useRef(0);
   const rafId    = useRef(null);
   const isMoving = useRef(false);
 
-  // Mouse tilt + drift
+  // Mouse tilt
   const mouse   = useRef({ x: 0, y: 0 });
   const tilt    = useRef({ rx: 0, ry: 0, dx: 0, dy: 0 });
   const tiltRAF = useRef(null);
 
-  /* ── apply combined transform ── */
+  /* ── Apply transform ── */
   function applyTransform() {
     const wrap = imageWrapRef.current;
     if (!wrap) return;
+
     const { rx, ry, dx, dy } = tilt.current;
+
     wrap.style.transform = `
       translateX(calc(-50% + ${dx}px))
       translateY(${currentY.current + dy}px)
@@ -69,26 +48,32 @@ export default function Services() {
     `;
   }
 
-  /* ── smooth Y lerp loop ── */
+  /* ── Ultra smooth lerp ── */
   function startLerp() {
     if (isMoving.current) return;
     isMoving.current = true;
+
     function step() {
       const diff = targetY.current - currentY.current;
-      if (Math.abs(diff) < 0.15) {
+
+      if (Math.abs(diff) < 0.1) {
         currentY.current = targetY.current;
         isMoving.current = false;
         applyTransform();
         return;
       }
-      currentY.current += diff * 0.09;
+
+      // Smooth easing (premium feel)
+      currentY.current += diff * 0.14;
+
       applyTransform();
       rafId.current = requestAnimationFrame(step);
     }
+
     rafId.current = requestAnimationFrame(step);
   }
 
-  /* ── 3D tilt + left/right drift ── */
+  /* ── Mouse tilt ── */
   useEffect(() => {
     const col = imageColRef.current;
 
@@ -98,80 +83,77 @@ export default function Services() {
     const MAX_DY = 20;
     const LERP   = 0.07;
 
-    const onMove  = (e) => {
+    const onMove = (e) => {
       const r = col.getBoundingClientRect();
       mouse.current = {
-        x: ((e.clientX - r.left) / r.width)  * 2 - 1,
-        y: ((e.clientY - r.top)  / r.height) * 2 - 1,
+        x: ((e.clientX - r.left) / r.width) * 2 - 1,
+        y: ((e.clientY - r.top) / r.height) * 2 - 1,
       };
     };
-    const onLeave = () => { mouse.current = { x: 0, y: 0 }; };
+
+    const onLeave = () => {
+      mouse.current = { x: 0, y: 0 };
+    };
 
     const tick = () => {
       const { x, y } = mouse.current;
       const t = tilt.current;
+
       t.rx += ((-y * MAX_RX) - t.rx) * LERP;
       t.ry += (( x * MAX_RY) - t.ry) * LERP;
       t.dx += (( x * MAX_DX) - t.dx) * LERP;
       t.dy += (( y * MAX_DY) - t.dy) * LERP;
+
       applyTransform();
       tiltRAF.current = requestAnimationFrame(tick);
     };
 
-    col.addEventListener("mousemove",  onMove);
+    col.addEventListener("mousemove", onMove);
     col.addEventListener("mouseleave", onLeave);
     tiltRAF.current = requestAnimationFrame(tick);
 
     return () => {
-      col.removeEventListener("mousemove",  onMove);
+      col.removeEventListener("mousemove", onMove);
       col.removeEventListener("mouseleave", onLeave);
       cancelAnimationFrame(tiltRAF.current);
     };
   }, []);
 
-  /* ── scroll triggers (your original logic, untouched) ── */
+  /* ── Scroll triggers ── */
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const items     = gsap.utils.toArray(".nf9-services-item");
-      const images    = gsap.utils.toArray(".nf9-services-image");
-      const imageWrap = imageWrapRef.current;
+      const items  = gsap.utils.toArray(".nf9-services-item");
+      const images = gsap.utils.toArray(".nf9-services-image");
 
-      gsap.set(images,    { opacity: 0, scale: 0.96 });
-      gsap.set(imageWrap, { autoAlpha: 1 });
+      gsap.set(images, { opacity: 0, scale: 0.96 });
 
       function activate(index) {
         const sectionRect = sectionRef.current.getBoundingClientRect();
         const itemRect    = items[index].getBoundingClientRect();
 
-        const step        = getStep();
-        const startOffset = getStartOffset();
-        const endOffset   = getEndOffset();
-
         let newY =
           itemRect.top -
           sectionRect.top +
           itemRect.height / 2 -
-          imageWrap.offsetHeight / 2;
+          imageWrapRef.current.offsetHeight / 2;
 
-        newY += index * step;
-        if (index === 0)               newY -= startOffset;
-        if (index === items.length - 1) newY -= endOffset;
+        // Prevent micro-jumps
+        if (Math.abs(targetY.current - newY) > 2) {
+          targetY.current = newY;
+          startLerp();
+        }
 
-        // Hand Y to the lerp — no GSAP tween on position
-        targetY.current = newY;
-        startLerp();
-
-        // Image crossfade — your original
+        // Smooth image transition
         images.forEach((img, i) => {
           gsap.to(img, {
             opacity:  i === index ? 1 : 0,
             scale:    i === index ? 1 : 0.96,
-            duration: 0.4,
-            ease:     "power3.out",
+            duration: 0.6,
+            ease:     "power4.out",
           });
         });
 
-        // Text opacity — your original
+        // Text opacity
         items.forEach((el, i) => {
           gsap.to(el, {
             opacity:  i === index ? 1 : 0.35,
@@ -181,18 +163,18 @@ export default function Services() {
       }
 
       ScrollTrigger.create({
-        trigger:     sectionRef.current,
-        start:       "top top",
-        onEnter:     () => activate(0),
+        trigger: sectionRef.current,
+        start: "top top",
+        onEnter: () => activate(0),
         onEnterBack: () => activate(0),
       });
 
       items.forEach((item, index) => {
         ScrollTrigger.create({
-          trigger:     item,
-          start:       "top center",
-          end:         "bottom center",
-          onEnter:     () => activate(index),
+          trigger: item,
+          start: "top center",
+          end: "bottom center",
+          onEnter: () => activate(index),
           onEnterBack: () => activate(index),
         });
       });
@@ -229,23 +211,16 @@ export default function Services() {
           <div className="nf9-services-label">
             <span>Our Services</span>
           </div>
+
           <div className="nf9-services-list">
             {SERVICES.map((s, i) => (
-              <h1
+              <button
                 key={i}
                 className="nf9-services-item"
-                role="button"
-                tabIndex={0}
-                onClick={() => navigate('/services')}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    navigate('/services');
-                  }
-                }}
+                onClick={() => navigate("/services")}
               >
                 {s.title}
-              </h1>
+              </button>
             ))}
             <div className="nf9-services-spacer" />
           </div>

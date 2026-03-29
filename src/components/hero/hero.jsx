@@ -16,7 +16,11 @@ const Hero = () => {
         >
           <source
             src="https://nf9.in/wp-content/uploads/2026/03/My-Movie-1.mov"
-            type="video/mp4"
+            type="video/mp4; codecs=avc1"
+          />
+          <source
+            src="https://nf9.in/wp-content/uploads/2026/03/My-Movie-1.mov"
+            type="video/quicktime"
           />
         </video>
         {/* Center Text */}

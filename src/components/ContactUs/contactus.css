@@ -115,6 +115,29 @@
   transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
 }
 
+/* Error message styling */
+.form-error {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #ff6b6b;
+  padding: 12px 0;
+  border-left: 2px solid #ff6b6b;
+  padding-left: 12px;
+}
+
+/* Screen reader only — visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .submit-btn:hover .btn-text.bottom { transform: translateY(140%); opacity: 0; }
 .submit-btn:hover .btn-text.top    { transform: translateY(-50%); opacity: 1; }
 .submit-btn:hover .btn-dot         { transform: translateY(-50%) scale(1.8); }
@@ -141,3 +164,4 @@
   .contact-title-row h1 { margin-bottom: 32px; }
   .contact-left p { font-size: 16px; line-height: 1.55; }
 }
+

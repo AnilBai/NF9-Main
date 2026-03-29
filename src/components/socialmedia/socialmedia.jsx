@@ -24,8 +24,22 @@ export default function SocialFollow() {
           </div>
 
           <div className="social-follow-actions">
-            <a href="#" className="social-btn">Instagram</a>
-            <a href="#" className="social-btn">Linkedin</a>
+            <a
+              href="https://www.instagram.com/nf9.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-btn"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.linkedin.com/company/nf9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-btn"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
 

@@ -6,6 +6,8 @@ const Header = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [bgText, setBgText] = useState('NF9');
   const backgroundTextRef = useRef(null);
+  const hamburgerRef = useRef(null);
+  const firstMenuItemRef = useRef(null);
   const navigate = useNavigate();
 
   const scrollToHash = (hash) => {
@@ -55,6 +57,8 @@ const Header = () => {
       }
     };
 
+    
+
     if (isMenuActive) {
       // Try immediately first
       updateBounceDistance();
@@ -68,6 +72,32 @@ const Header = () => {
       };
     }
   }, [isMenuActive, bgText]);
+
+  useEffect(() => {
+    if (isMenuActive) {
+      // Move focus to first menu item when menu opens
+      setTimeout(() => {
+        if (firstMenuItemRef.current) {
+          firstMenuItemRef.current.focus();
+        }
+      }, 100);
+    } else {
+      // Return focus to hamburger when menu closes
+      if (hamburgerRef.current) {
+        hamburgerRef.current.focus();
+      }
+    }
+  }, [isMenuActive]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isMenuActive) {
+        toggleMenu();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMenuActive]);
 
   const menuItems = [
     { id: 1, text: 'Start Here', to: { pathname: '/', hash: '#hero' } },
@@ -88,8 +118,19 @@ const Header = () => {
         </Link>
 
         <div
+          ref={hamburgerRef}
           className={`hamburger ${isMenuActive ? 'active' : ''}`}
           onClick={toggleMenu}
+          role="button"
+          aria-label={isMenuActive ? 'Close menu' : 'Open menu'}
+          aria-expanded={isMenuActive}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleMenu();
+            }
+          }}
         >
           <span></span>
           <span></span>
@@ -109,9 +150,10 @@ const Header = () => {
           <div className="menu-container">
             <nav>
               <ul>
-                {menuItems.map((item) => (
+                {menuItems.map((item, index) => (
                   <li key={item.id}>
                     <Link
+                      ref={index === 0 ? firstMenuItemRef : null}
                       to={item.to}
                       onClick={() => {
                         toggleMenu()
@@ -144,7 +186,7 @@ const Header = () => {
                 </svg>
               </a>
               <a
-                href="mailto:contact@nf9.com"
+                href="mailto:support@nf9.in"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Email"

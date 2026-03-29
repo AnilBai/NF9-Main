@@ -153,11 +153,16 @@ export default function ServicesSection() {
       {/* CTA band */}
       <div className="svc__cta">
         <div className="svc__cta-left">
-         
+          <h2 className="svc__cta-heading">
+            Start your
+            <span className="outline">project.</span>
+          </h2>
         </div>
         <div className="svc__cta-right">
-          
-        
+          <p className="svc__cta-note">
+            Whether you need a full product build or just want to improve
+            what you already have — we're ready to help you move fast.
+          </p>
         </div>
       </div>
 

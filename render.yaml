@@ -6,7 +6,7 @@ services:
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_CONTACT_URL
-        value: https://trendyhomevibe.com/wp-json/nf9/v1/contact
+        value: https://nf9.in/wp-json/nf9/v1/contact
     routes:
       - type: rewrite
         source: /*

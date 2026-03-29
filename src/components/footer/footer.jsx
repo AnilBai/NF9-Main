@@ -48,7 +48,7 @@ export default function Footer() {
           <div className="nf9-contact">
             <span className="nf9-plus">+</span>
             <p className="nf9-phone">+91 9666959785</p>
-            <a href="mailto:support@nf9.com" className="nf9-email">
+            <a href="mailto:support@nf9.in" className="nf9-email">
               <span className="nf9-plus-circle">+</span>
               <span className="nf9-email-text">support@nf9.in</span>
             </a>
@@ -96,8 +96,13 @@ export default function Footer() {
               >
                 Instagram
               </a>
-              <a href="#" className="nf9-social-link">
-                LinkedIn 
+              <a
+                href="https://www.linkedin.com/company/nf9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nf9-social-link"
+              >
+                LinkedIn
               </a>
             </div>
           </div>
@@ -115,8 +120,8 @@ export default function Footer() {
             © 2025 NF9 Studio. All rights reserved.
             </div>
           <div className="nf9-bottom-right">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+            <a href="#" title="Coming soon">Privacy Policy</a>
+            <a href="#" title="Coming soon">Terms of Service</a>
           </div>
         </div>
       </div>

@@ -10,9 +10,8 @@ export default function ContactUs() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const API_CONTACT_URL =
-  import.meta.env.VITE_API_CONTACT_URL ||
-  "https://nf9.in/wp-json/nf9/v1/contact";
-
+  import.meta.env.VITE_API_CONTACT_URL; 
+  
   // Intersection observer for animations
   useEffect(() => {
     const el = sectionRef.current;
@@ -140,46 +139,58 @@ export default function ContactUs() {
           {!submitted ? (
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="field framer-reveal delay-4">
+                <label htmlFor="name" className="sr-only">Your name</label>
                 <input
+                  id="name"
                   name="name"
                   type="text"
                   placeholder="Your name *"
                   required
+                  aria-required="true"
                 />
                 <span className="line"></span>
               </div>
 
               <div className="field framer-reveal delay-5">
+                <label htmlFor="email" className="sr-only">Email address</label>
                 <input
+                  id="email"
                   name="email"
                   type="email"
                   placeholder="Email *"
                   required
+                  aria-required="true"
                 />
                 <span className="line"></span>
               </div>
 
               <div className="field framer-reveal delay-6">
+                <label htmlFor="phone" className="sr-only">Phone number</label>
                 <input
+                  id="phone"
                   name="phone"
                   type="tel"
                   placeholder="Phone number *"
                   required
+                  aria-required="true"
                 />
                 <span className="line"></span>
               </div>
 
               <div className="field framer-reveal delay-7">
+                <label htmlFor="message" className="sr-only">Your message</label>
                 <textarea
+                  id="message"
                   name="message"
                   placeholder="Your message *"
                   required
+                  aria-required="true"
                 ></textarea>
                 <span className="line"></span>
               </div>
 
               {errorMessage && (
-                <div className="form-error framer-reveal delay-8">
+                <div className="form-error framer-reveal delay-8" role="alert">
                   {errorMessage}
                 </div>
               )}
@@ -188,24 +199,25 @@ export default function ContactUs() {
                 className="submit-btn framer-reveal delay-9"
                 type="submit"
                 disabled={isSubmitting}
+                aria-label={isSubmitting ? 'Sending message' : 'Submit contact form'}
               >
                 <span className="btn-text top">
-                  {isSubmitting ? "Sending..." : "Submit"}
+                  {isSubmitting ? 'Sending...' : 'Submit'}
                 </span>
                 <span className="btn-text bottom">
-                  {isSubmitting ? "Sending..." : "Submit"}
+                  {isSubmitting ? 'Sending...' : 'Submit'}
                 </span>
                 <span className="btn-dot"></span>
               </button>
 
               <p className="terms framer-reveal delay-9">
-                By submitting, you agree to our <a href="#">Terms</a> and{" "}
+                By submitting, you agree to our <a href="#">Terms</a> and{' '}
                 <a href="#">Privacy Policy</a>.
               </p>
             </form>
           ) : (
             <div className="success-message framer-reveal delay-4">
-              <h3>Thank you for reaching out ✨</h3>
+              <h3>Thank you for reaching out </h3>
               <p>
                 We've received your message. Our team will contact you shortly.
                 <br />

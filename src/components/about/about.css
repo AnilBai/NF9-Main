@@ -56,7 +56,7 @@
 .about-title {
   font-family: 'DM Sans', sans-serif;
   font-size: clamp(40px, 6.5vw, 84px);
-  font-weight: 800;
+  font-weight: 400;
   line-height: 1.0;
   letter-spacing: -0.03em;
   margin-bottom: 40px;
@@ -71,14 +71,14 @@
   font-size: clamp(16px, 1.8vw, 22px);
   font-weight: 400;
   line-height: 1.72;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255);
   margin-top: 40px;
 }
 
 .about-description .nf9-sign {
   display: block;
   margin-top: 24px;
-  font-weight: 600;
+  font-weight: 400;
   color: rgba(255,255,255);
 }
 

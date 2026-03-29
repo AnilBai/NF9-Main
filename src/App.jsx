@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import MainContent from './pages/MainContent'
 import ContactUs from './pages/ContactUs'
 import ServicesPage from './pages/ServicesPage'
+import NotFound from './pages/NotFound'
 
 function App() {
   const location = useLocation()
@@ -50,6 +51,7 @@ function App() {
         <Route path="contact-us" element={<ContactUs />} />
         <Route path="services" element={<ServicesPage />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }

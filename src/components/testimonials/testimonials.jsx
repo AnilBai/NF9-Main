@@ -4,33 +4,21 @@ import "./testimonials.css";
 const TESTIMONIALS = [
   {
     quote:
-      "NF9 transformed our vision into a stunning website that loads fast and converts visitors into customers. The team was responsive and delivered beyond expectations.",
-    name: "Priya Sharma",
-    role: "Founder, BrightStart",
+      "NF9 built our WooCommerce and React-based eCommerce platform with excellent performance and a seamless user experience. The Order Management integration made handling sales incredibly efficient.",
+    name: "Muthyam",
+    role: "Founder, Devarsu Products",
   },
   {
     quote:
-      "Working with NF9 was seamless. Their design sense is exceptional, and their ability to translate complex requirements into a beautiful experience is unmatched.",
-    name: "Rahul Mehta",
-    role: "Product Lead, QuantumX",
+      "NF9 delivered a clean and professional website for our Qatar-based construction business. Their React frontend combined with WordPress backend gave us both performance and easy content control.",
+    name: "Raja Shekar",
+    role: "Founder, Greentaj Trading & Contracting W.L.L",
   },
   {
     quote:
-      "From kickoff to launch, the NF9 team kept communication clear and executed quickly. Our website now feels modern, polished, and incredibly fast.",
-    name: "Neha Gupta",
-    role: "Marketing Head, Stellar Studio",
-  },
-  {
-    quote:
-      "The attention to detail in both design and code was impressive. Every interaction felt considered. NF9 didn't just build a product — they built an experience.",
-    name: "Arjun Nair",
-    role: "CEO, Launchpad Studio",
-  },
-  {
-    quote:
-      "We had a tight deadline and a complex brief. NF9 delivered on both counts without cutting corners. The results speak for themselves — traffic is up 3×.",
-    name: "Sana Iqbal",
-    role: "Head of Growth, Vortex Labs",
+      "The Order Management Portal developed by NF9 is now used by multiple companies to track and manage their eCommerce operations efficiently. It simplified workflows and improved overall business visibility.",
+    name: "Operations Team",
+    role: "Order Management Portal Users",
   },
 ];
 
@@ -46,7 +34,6 @@ export default function Testimonials() {
   const startTimeRef              = useRef(null);
   const pausedRef                 = useRef(false);
 
-  // ── advance to next slide ──
   const goTo = useCallback((idx) => {
     const next = (idx + total) % total;
     setExiting(current);
@@ -60,7 +47,6 @@ export default function Testimonials() {
   const next = useCallback(() => goTo(current + 1), [goTo, current]);
   const prev = useCallback(() => goTo(current - 1), [goTo, current]);
 
-  // ── auto timer ──
   const startTimer = useCallback(() => {
     clearInterval(timerRef.current);
     clearInterval(progressRef.current);
@@ -86,7 +72,6 @@ export default function Testimonials() {
     };
   }, [startTimer]);
 
-  // pause on hover
   const onEnter = () => { pausedRef.current = true; };
   const onLeave = () => {
     pausedRef.current = false;
@@ -101,7 +86,6 @@ export default function Testimonials() {
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      {/* ── Header ── */}
       <div className="nf9-t__header">
         <div>
           <div className="nf9-t__kicker">Client Reviews</div>
@@ -115,14 +99,11 @@ export default function Testimonials() {
         </span>
       </div>
 
-      {/* ── Stage ── */}
       <div className="nf9-t__stage">
-        {/* Decorative quote mark column */}
         <div className="nf9-t__aside" aria-hidden="true">
           <span className="nf9-t__big-mark">"</span>
         </div>
 
-        {/* Slides */}
         <div className="nf9-t__slides">
           {TESTIMONIALS.map((item, i) => (
             <div
@@ -148,10 +129,8 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* ── Footer ── */}
       <div className="nf9-t__footer">
 
-        {/* Dot buttons */}
         <div className="nf9-t__dots">
           {TESTIMONIALS.map((_, i) => (
             <button
@@ -165,7 +144,6 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* Progress bar */}
         <div className="nf9-t__progress" aria-hidden="true">
           <div
             className="nf9-t__progress-fill"
@@ -173,7 +151,6 @@ export default function Testimonials() {
           />
         </div>
 
-        {/* Prev / Next */}
         <div className="nf9-t__nav">
           <button
             className="nf9-t__nav-btn"

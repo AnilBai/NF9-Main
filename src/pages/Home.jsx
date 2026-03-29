@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Preloader from '../components/preloader'
 import Header from '../components/header/header'
 import Footer from '../components/footer/footer'
+import BackToTop from '../components/backtotop/backtotop'
 
 function Home() {
   const [preloaderComplete, setPreloaderComplete] = useState(() => {
@@ -19,7 +20,7 @@ function Home() {
     setPreloaderComplete(true)
   }
 
-  // Fail-safe: ensure the page becomes visible even if the preloader animation never completes.
+  // Fail-safe: if preloader animation never completes, force show after 5s
   useEffect(() => {
     if (preloaderComplete) return
     const timeout = window.setTimeout(() => {
@@ -48,13 +49,6 @@ function Home() {
     }
   }, [location, preloaderComplete])
 
-  // In rare cases the preloader animation may fail to complete; ensure the app becomes visible.
-  useEffect(() => {
-    if (preloaderComplete) return
-    const fallback = window.setTimeout(() => setPreloaderComplete(true), 5000)
-    return () => window.clearTimeout(fallback)
-  }, [preloaderComplete])
-
   return (
     <>
       <Header />
@@ -62,6 +56,8 @@ function Home() {
         <Outlet />
       </main>
       <Footer />
+      <BackToTop />
+
 
       {!preloaderComplete && <Preloader onComplete={handlePreloaderComplete} />}
     </>
