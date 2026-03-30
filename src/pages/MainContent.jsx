@@ -11,11 +11,10 @@ function MainContent() {
   return (
     <>
       <Helmet>
-        <title>Contact NF9 — Web Design Studio Hyderabad</title>
-        <meta name="description" content="Get in touch with NF9, a web design and development studio based in Hyderabad. Tell us about your project and we'll get back to you shortly." />
-        <meta property="og:title" content="Contact NF9 — Web Design Studio Hyderabad" />
-        <meta property="og:description" content="Get in touch with NF9, a web design and development studio based in Hyderabad. Tell us about your project and we'll get back to you shortly." />
-        <meta property="og:url" content="https://nf9.in/contact-us" />
+        <title>NF9 — Creative Web Design & Development Studio</title>
+        <meta name="description" content="NF9 is a India-based digital studio crafting modern, high-performing web experiences. UI/UX design, web development, eCommerce, and mobile apps." />
+        <meta property="og:title" content="NF9 — Creative Web Design & Development Studio" />
+        <meta property="og:url" content="https://nf9.in/" />
       </Helmet>
       <Hero />
       <About />
