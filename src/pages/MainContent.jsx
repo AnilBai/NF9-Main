@@ -11,7 +11,7 @@ function MainContent() {
   return (
     <>
       <Helmet>
-        <title>NF9 — Creative Web Design & Development Studio</title>
+        <title>NF9 - Creative Web Design & Development Studio</title>
         <meta name="description" content="NF9 is a India-based digital studio crafting modern, high-performing web experiences. UI/UX design, web development, eCommerce, and mobile apps." />
         <meta property="og:title" content="NF9 — Creative Web Design & Development Studio" />
         <meta property="og:url" content="https://nf9.in/" />
