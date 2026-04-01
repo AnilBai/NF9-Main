@@ -75,16 +75,15 @@ const Header = () => {
 
   useEffect(() => {
     if (isMenuActive) {
-      // Move focus to first menu item when menu opens
       setTimeout(() => {
         if (firstMenuItemRef.current) {
-          firstMenuItemRef.current.focus();
+          firstMenuItemRef.current.blur()
+          firstMenuItemRef.current.focus({ preventScroll: true })
         }
       }, 100);
     } else {
-      // Return focus to hamburger when menu closes
       if (hamburgerRef.current) {
-        hamburgerRef.current.focus();
+        hamburgerRef.current.blur()
       }
     }
   }, [isMenuActive]);
