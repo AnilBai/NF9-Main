@@ -106,6 +106,15 @@ export default function ContactUs() {
 
       if (result && result.success) {
         setSubmitted(true);
+        
+        // GA4 conversion event
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'generate_lead', {
+            event_category: 'contact',
+            event_label: 'contact_form',
+          })
+        }
+        
         e.target.reset();
       } else {
         setErrorMessage(
@@ -202,10 +211,10 @@ export default function ContactUs() {
                 aria-label={isSubmitting ? 'Sending message' : 'Submit contact form'}
               >
                 <span className="btn-text top">
-                  {isSubmitting ? 'Sending...' : 'Submit'}
+                  {isSubmitting ? 'Sending...' : 'Get free proposal'}
                 </span>
                 <span className="btn-text bottom">
-                  {isSubmitting ? 'Sending...' : 'Submit'}
+                  {isSubmitting ? 'Sending...' : 'Get free proposal'}
                 </span>
                 <span className="btn-dot"></span>
               </button>

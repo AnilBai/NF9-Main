@@ -100,24 +100,35 @@ export default function Together() {
       }
     };
 
+    let targetAnim = getTarget();
+    current.current = targetAnim;
+    
+    // Smooth render loop
     const tick = () => {
-      const target = getTarget();
+      // Lerp for smooth catching up (adjust 0.08 for more/less smoothness)
+      current.current = lerp(current.current, targetAnim, 0.08);
+      
+      // If we are extremely close to the target, snap and stop animating
+      if (Math.abs(targetAnim - current.current) < 0.001) {
+        current.current = targetAnim;
+        applyFrame();
+        raf.current = null;
+        return;
+      }
 
-      // Apply directly to avoid latency and make movement feel in-sync with scroll.
-      current.current = target;
       applyFrame();
-
-      raf.current = null;
+      raf.current = requestAnimationFrame(tick);
     };
 
     const onScroll = () => {
+      targetAnim = getTarget();
       if (!raf.current) raf.current = requestAnimationFrame(tick);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
 
     // Run once on mount to set initial state
-    tick();
+    applyFrame();
 
     /* ── text slide-up ── */
     const titleIO = new IntersectionObserver(

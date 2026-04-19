@@ -4,6 +4,7 @@ import Preloader from '../components/preloader'
 import Header from '../components/header/header'
 import Footer from '../components/footer/footer'
 import BackToTop from '../components/backtotop/backtotop'
+import WhatsAppButton from '../components/whatsapp/whatsAppButton'
 
 function Home() {
   const [preloaderComplete, setPreloaderComplete] = useState(() => {
@@ -57,8 +58,7 @@ function Home() {
       </main>
       <Footer />
       <BackToTop />
-
-
+      <WhatsAppButton />
       {!preloaderComplete && <Preloader onComplete={handlePreloaderComplete} />}
     </>
   )

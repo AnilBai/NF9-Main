@@ -4,7 +4,7 @@ import "./testimonials.css";
 const TESTIMONIALS = [
   {
     quote:
-      "NF9 built our WooCommerce and React-based eCommerce platform with excellent performance and a seamless user experience. The Order Management integration made handling sales incredibly efficient.",
+      "We wanted a simple website to show our farming products. NF9 did exactly that without making it complicated. Now my business is online.",
     name: "Muthyam",
     role: "Founder, Devarsu Products",
   },
@@ -25,14 +25,14 @@ const TESTIMONIALS = [
 const INTERVAL = 3000; // ms per slide
 
 export default function Testimonials() {
-  const total                     = TESTIMONIALS.length;
-  const [current, setCurrent]     = useState(0);
-  const [exiting, setExiting]     = useState(null);
-  const [progress, setProgress]   = useState(0);
-  const timerRef                  = useRef(null);
-  const progressRef               = useRef(null);
-  const startTimeRef              = useRef(null);
-  const pausedRef                 = useRef(false);
+  const total = TESTIMONIALS.length;
+  const [current, setCurrent] = useState(0);
+  const [exiting, setExiting] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const timerRef = useRef(null);
+  const progressRef = useRef(null);
+  const startTimeRef = useRef(null);
+  const pausedRef = useRef(false);
 
   const goTo = useCallback((idx) => {
     const next = (idx + total) % total;
@@ -111,7 +111,7 @@ export default function Testimonials() {
               className={[
                 "nf9-t__slide",
                 i === current ? "active" : "",
-                i === exiting ? "exit"   : "",
+                i === exiting ? "exit" : "",
               ].filter(Boolean).join(" ")}
               aria-hidden={i !== current}
             >

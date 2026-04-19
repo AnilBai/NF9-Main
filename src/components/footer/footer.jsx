@@ -47,7 +47,7 @@ export default function Footer() {
 
           <div className="nf9-contact">
             <span className="nf9-plus">+</span>
-            <p className="nf9-phone">+91 9666959785</p>
+            <p className="nf9-phone" onClick={() => window.location.href = 'tel:+917093493897'} style={{ cursor: 'pointer' }}>+91 7093493897</p>
             <a href="mailto:support@nf9.in" className="nf9-email">
               <span className="nf9-plus-circle">+</span>
               <span className="nf9-email-text">support@nf9.in</span>
@@ -81,7 +81,7 @@ export default function Footer() {
             <p className="nf9-label">Social</p>
             <div className="nf9-social-row">
               <a
-                href="https://wa.me/919666959785?text=Hello%2C%20I%20need%20a%20website%20to%20develop%2C%20really%20wanna%20connect%20to%20the%20NF9%20team"
+                href="https://wa.me/917093493897?text=Hi%20NF9!%20I%20visited%20your%20website%20and%20I%20am%20interested%20in%20discussing%20a%20project."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="nf9-social-link"
@@ -118,7 +118,7 @@ export default function Footer() {
         <div className="nf9-bottom">
           <div className="nf9-bottom-left">
             © 2025 NF9 Studio. All rights reserved.
-            </div>
+          </div>
           <div className="nf9-bottom-right">
             <a href="#" title="Coming soon">Privacy Policy</a>
             <a href="#" title="Coming soon">Terms of Service</a>
