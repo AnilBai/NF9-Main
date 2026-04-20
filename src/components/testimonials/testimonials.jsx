@@ -10,7 +10,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "NF9 delivered a clean and professional website for our Qatar-based construction business. Their React frontend combined with WordPress backend gave us both performance and easy content control.",
+      "We were looking for a more refined and minimal approach, and NF9 delivered precisely that without unnecessary complexity.",
     name: "Raja Shekar",
     role: "Founder, Greentaj Trading & Contracting W.L.L",
   },
