@@ -33,11 +33,11 @@ const Hero = () => {
           style={{ pointerEvents: "none" }}
         >
           <source
-            src="https://nf9.in/wp-content/uploads/2026/04/NF9BannerWhale.mp4"
+            src="https://nf9.in/wp-content/uploads/2026/04/NF9banner.mp4"
             type="video/mp4; codecs=avc1"
           />
           <source
-            src="https://nf9.in/wp-content/uploads/2026/04/NF9BannerWhale.mp4"
+            src="https://nf9.in/wp-content/uploads/2026/04/NF9banner.mp4"
             type="video/quicktime"
           />
         </video>
