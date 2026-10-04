@@ -112,6 +112,10 @@ const Header = () => {
       {/* Header */}
       <header className={`fixed main-header left-0 right-0 flex justify-between items-center px-5 md:px-10  z-[1000] ${isMenuActive ? 'header-active' : ''}`}>
 
+        <Link to="/" className="corner-logo" aria-label="NF9 home">
+          <span className="corner-logo-mark" aria-hidden="true" />
+        </Link>
+
         <Link to="/" className="center-text">
           NF9
         </Link>
