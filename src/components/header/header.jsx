@@ -102,7 +102,7 @@ const Header = () => {
     { id: 1, text: 'Start Here', to: { pathname: '/', hash: '#hero' } },
     { id: 2, text: 'Services', to: '/services' },
     { id: 3, text: 'Our Work', to: { pathname: '/', hash: '#works' } },
-    { id: 4, text: 'About', to: { pathname: '/', hash: '#about' } },
+    { id: 4, text: 'About NF9', to: { pathname: '/', hash: '#about' } },
     { id: 5, text: 'Careers', to: { pathname: '/', hash: '#together' } },
     { id: 6, text: 'Contact Us', to: '/contact-us' }
   ];
