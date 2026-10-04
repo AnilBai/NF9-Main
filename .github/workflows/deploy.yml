@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 jobs:
@@ -11,33 +12,61 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # ----------------------------------------
+      # 1. Checkout repository
+      # ----------------------------------------
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node
+
+      # ----------------------------------------
+      # 2. Setup Node.js
+      # ----------------------------------------
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
+
+      # ----------------------------------------
+      # 3. Install dependencies
+      # ----------------------------------------
       - name: Install Dependencies
         run: npm ci
 
-      - name: Create env file
+
+      # ----------------------------------------
+      # 4. Create production environment file
+      # ----------------------------------------
+      - name: Create Environment File
         run: |
           echo "VITE_WP_API_URL=${{ secrets.VITE_WP_API_URL }}" >> .env
           echo "VITE_API_CONTACT_URL=${{ secrets.VITE_API_CONTACT_URL }}" >> .env
           echo "VITE_RECAPTCHA_SITE_KEY=${{ secrets.VITE_RECAPTCHA_SITE_KEY }}" >> .env
 
+
+      # ----------------------------------------
+      # 5. Build Vite application
+      # ----------------------------------------
       - name: Build Project
         run: npm run build
 
-      - name: Install deploy tools
+
+      # ----------------------------------------
+      # 6. Install SSH + rsync
+      # ----------------------------------------
+      - name: Install Deployment Tools
         run: |
           sudo apt-get update
           sudo apt-get install -y sshpass rsync
 
-      - name: Test SSH connection
+
+      # ----------------------------------------
+      # 7. Test SSH connection
+      # ----------------------------------------
+      - name: Test SSH Connection
         env:
           SSHPASS: ${{ secrets.SSH_PASSWORD }}
         run: |
@@ -46,13 +75,57 @@ jobs:
             -o StrictHostKeyChecking=no \
             -o ConnectTimeout=20 \
             "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" \
-            "echo 'SSH Connected' && ls -la /home/u940599466/domains/nf9.in/public_html"
+            "echo '=================================' && \
+             echo 'SSH CONNECTION SUCCESSFUL' && \
+             echo '=================================' && \
+             pwd && \
+             ls -la"
 
-      - name: Deploy via rsync
+
+      # ----------------------------------------
+      # 8. Verify website directory
+      # ----------------------------------------
+      - name: Verify Website Directory
         env:
           SSHPASS: ${{ secrets.SSH_PASSWORD }}
         run: |
-          sshpass -e rsync -avz --delete --progress \
+          sshpass -e ssh \
+            -p "${{ secrets.SSH_PORT }}" \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=20 \
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" \
+            "echo 'Checking website directory...' && \
+             ls -la /home/u940599466/domains/nf9.in/public_html"
+
+
+      # ----------------------------------------
+      # 9. Deploy dist/ using rsync
+      # ----------------------------------------
+      - name: Deploy to Hostinger
+        env:
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          sshpass -e rsync \
+            -avz \
+            --progress \
             -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
             dist/ \
             "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/u940599466/domains/nf9.in/public_html/"
+
+
+      # ----------------------------------------
+      # 10. Verify deployment
+      # ----------------------------------------
+      - name: Verify Deployment
+        env:
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          sshpass -e ssh \
+            -p "${{ secrets.SSH_PORT }}" \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=20 \
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" \
+            "echo '=================================' && \
+             echo 'DEPLOYMENT SUCCESSFUL' && \
+             echo '=================================' && \
+             ls -lah /home/u940599466/domains/nf9.in/public_html"
