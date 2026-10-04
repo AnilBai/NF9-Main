@@ -8,6 +8,7 @@
   --muted: rgba(251, 249, 249, 0.264);
   --font-family: 'DM Sans', sans-serif;
   --font-body: "Inter", sans-serif;
+  --nf9-corner-logo: url("https://nf9.in/wp-content/uploads/2026/10/NF9-1-scaled.png");
 }
   
   body {
@@ -33,6 +34,48 @@
   .main-header.header-active {
     mix-blend-mode: normal;
   }
+
+  /* ============================================
+     CORNER LOGO
+  ============================================ */
+
+  .corner-logo {
+    position: absolute;
+    left: clamp(18px, 2.7vw, 40px);
+    top: 50%;
+    width: clamp(64px, 8vw, 112px);
+    height: clamp(40px, 5vw, 68px);
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .corner-logo-mark {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: currentColor;
+    -webkit-mask-image: var(--nf9-corner-logo);
+    mask-image: var(--nf9-corner-logo);
+    -webkit-mask-position: left center;
+    mask-position: left center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transform-origin: left center;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .corner-logo:hover .corner-logo-mark,
+  .corner-logo:focus-visible .corner-logo-mark {
+    transform: scale(1.08);
+  }
   
   /* ============================================
      CENTER TEXT
@@ -43,9 +86,9 @@
     left: 50%;
     transform: translateX(-50%);
     font-family: var(--font-brand); 
-    font-size: 50px;
+    font-size: 35px;
     font-weight: 600;
-    letter-spacing: 6px;
+    letter-spacing: 3px;
     text-transform: uppercase;
     color: currentColor;
     transition: color 0.3s ease;
@@ -63,8 +106,8 @@
   ============================================ */
   
   .hamburger {
-    width: 55px;
-    height: 35px;
+    width: 45px;
+    height: 28px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -101,7 +144,7 @@
   }
   
   .hamburger.active span:nth-child(1) {
-    transform: translateY(13px) rotate(45deg);
+    transform: translateY(11px) rotate(45deg);
   }
   
   .hamburger.active span:nth-child(2) {
@@ -109,7 +152,7 @@
   }
   
   .hamburger.active span:nth-child(3) {
-    transform: translateY(-13px) rotate(-45deg);
+    transform: translateY(-11px) rotate(-45deg);
   }
   
   /* ============================================
@@ -587,18 +630,18 @@
     }
 
     .hamburger {
-      width: 48px;
-      height: 28px;
+      width: 42px;
+      height: 24px;
       right: 10px;
 
     }
 
     .hamburger.active span:nth-child(1) {
-      transform: translateY(10px) rotate(45deg);
+      transform: translateY(9px) rotate(45deg);
     }
 
     .hamburger.active span:nth-child(3) {
-      transform: translateY(-10px) rotate(-45deg);
+      transform: translateY(-9px) rotate(-45deg);
     }
 
     .menu ul li a {
@@ -637,9 +680,9 @@
     }
 
     .center-text {
-      left: 10px;
-      transform: none;
-      font-size: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(22px, 7vw, 27px);
       letter-spacing: 0.5px;
     }
 
