@@ -33,21 +33,26 @@ jobs:
         run: npm run build
 
       - name: Install deploy tools
-        run: sudo apt-get update && sudo apt-get install -y sshpass rsync
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync
 
       - name: Test SSH connection
         env:
-          SSHPASS: ${{ secrets.FTP_PASSWORD }}
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
         run: |
-          sshpass -e ssh -p 65002 -o StrictHostKeyChecking=no -o ConnectTimeout=20 \
-            ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} \
-            "echo Connected && ls /home/u940599466/domains/nf9.in/public_html"
+          sshpass -e ssh \
+            -p "${{ secrets.SSH_PORT }}" \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=20 \
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" \
+            "echo 'SSH Connected' && ls -la /home/u940599466/domains/nf9.in/public_html"
 
       - name: Deploy via rsync
         env:
-          SSHPASS: ${{ secrets.FTP_PASSWORD }}
+          SSHPASS: ${{ secrets.SSH_PASSWORD }}
         run: |
-          sshpass -e rsync -avz --progress \
-            -e "ssh -p 65002 -o StrictHostKeyChecking=no" \
+          sshpass -e rsync -avz --delete --progress \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
             dist/ \
-            ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}:/home/u940599466/domains/nf9.in/public_html/
+            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/u940599466/domains/nf9.in/public_html/"
