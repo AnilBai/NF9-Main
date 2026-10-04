@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 jobs:
@@ -12,12 +13,16 @@ jobs:
 
     steps:
 
-      # 1. Checkout code
+      # ----------------------------------------
+      # 1. Checkout source code
+      # ----------------------------------------
       - name: Checkout Code
         uses: actions/checkout@v4
 
 
+      # ----------------------------------------
       # 2. Setup Node.js
+      # ----------------------------------------
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -25,12 +30,16 @@ jobs:
           cache: npm
 
 
+      # ----------------------------------------
       # 3. Install dependencies
+      # ----------------------------------------
       - name: Install Dependencies
         run: npm ci
 
 
-      # 4. Create environment file
+      # ----------------------------------------
+      # 4. Create production environment file
+      # ----------------------------------------
       - name: Create env file
         run: |
           echo "VITE_WP_API_URL=${{ secrets.VITE_WP_API_URL }}" >> .env
@@ -38,39 +47,32 @@ jobs:
           echo "VITE_RECAPTCHA_SITE_KEY=${{ secrets.VITE_RECAPTCHA_SITE_KEY }}" >> .env
 
 
-      # 5. Build project
+      # ----------------------------------------
+      # 5. Build Vite application
+      # ----------------------------------------
       - name: Build Project
         run: npm run build
 
 
-      # 6. Install SSH and rsync
-      - name: Install deploy tools
+      # ----------------------------------------
+      # 6. Install FTP deployment tool
+      # ----------------------------------------
+      - name: Install FTP Deploy Tool
         run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass rsync
+          echo "FTP deployment will be handled by GitHub Action"
 
 
-      # 7. Test SSH connection
-      - name: Test SSH connection
-        env:
-          SSHPASS: ${{ secrets.SSH_PASSWORD }}
-        run: |
-          sshpass -e ssh \
-            -p "${{ secrets.SSH_PORT }}" \
-            -o StrictHostKeyChecking=no \
-            -o ConnectTimeout=20 \
-            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}" \
-            "echo 'SSH Connected' && ls -la /home/u940599466/domains/nf9.in/public_html"
-
-
-      # 8. Deploy dist folder
-      - name: Deploy via rsync
-        env:
-          SSHPASS: ${{ secrets.SSH_PASSWORD }}
-        run: |
-          sshpass -e rsync \
-            -avz \
-            --progress \
-            -e "ssh -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no" \
-            dist/ \
-            "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/u940599466/domains/nf9.in/public_html/"
+      # ----------------------------------------
+      # 7. Deploy to Hostinger via FTP
+      # ----------------------------------------
+      - name: Deploy to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: ${{ secrets.FTP_PORT }}
+          local-dir: ./dist/
+          server-dir: public_html/
+          log-level: standard
