@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 jobs:
@@ -12,67 +11,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      # ----------------------------------------
-      # 1. Checkout source code
-      # ----------------------------------------
       - name: Checkout Code
         uses: actions/checkout@v4
 
-
-      # ----------------------------------------
-      # 2. Setup Node.js
-      # ----------------------------------------
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-
-      # ----------------------------------------
-      # 3. Install dependencies
-      # ----------------------------------------
       - name: Install Dependencies
         run: npm ci
 
-
-      # ----------------------------------------
-      # 4. Create production environment file
-      # ----------------------------------------
       - name: Create env file
         run: |
           echo "VITE_WP_API_URL=${{ secrets.VITE_WP_API_URL }}" >> .env
           echo "VITE_API_CONTACT_URL=${{ secrets.VITE_API_CONTACT_URL }}" >> .env
           echo "VITE_RECAPTCHA_SITE_KEY=${{ secrets.VITE_RECAPTCHA_SITE_KEY }}" >> .env
 
-
-      # ----------------------------------------
-      # 5. Build Vite application
-      # ----------------------------------------
       - name: Build Project
         run: npm run build
 
-
-      # ----------------------------------------
-      # 6. Install FTP deployment tool
-      # ----------------------------------------
-      - name: Install FTP Deploy Tool
+      - name: Install lftp
         run: |
-          echo "FTP deployment will be handled by GitHub Action"
+          sudo apt-get update
+          sudo apt-get install -y lftp
 
-
-      # ----------------------------------------
-      # 7. Deploy to Hostinger via FTP
-      # ----------------------------------------
       - name: Deploy to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: ${{ secrets.FTP_PORT }}
-          local-dir: ./dist/
-          server-dir: public_html/
-          log-level: standard
+        env:
+          FTP_HOST: ${{ secrets.FTP_SERVER }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -c "
+            set ftp:ssl-force false;
+            set ftp:ssl-protect-data false;
+            set net:timeout 30;
+            set net:max-retries 3;
+            set net:reconnect-interval-base 5;
+            open -u ${FTP_USER},${FTP_PASS} ftp://${FTP_HOST}:21;
+            mirror --reverse --verbose --only-newer --parallel=2 ./dist/ public_html/;
+            bye
+          "
