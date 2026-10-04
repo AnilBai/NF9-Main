@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 jobs:
@@ -12,59 +13,59 @@ jobs:
 
     steps:
 
-      # ----------------------------------------
-      # 1. Checkout
-      # ----------------------------------------
+      # --------------------------------------------------
+      # 1. Checkout repository
+      # --------------------------------------------------
       - name: Checkout Code
         uses: actions/checkout@v4
 
 
-      # ----------------------------------------
+      # --------------------------------------------------
       # 2. Setup Node.js
-      # ----------------------------------------
-      - name: Setup Node
+      # --------------------------------------------------
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
 
-      # ----------------------------------------
+      # --------------------------------------------------
       # 3. Install dependencies
-      # ----------------------------------------
+      # --------------------------------------------------
       - name: Install Dependencies
         run: npm ci
 
 
-      # ----------------------------------------
-      # 4. Create environment file
-      # ----------------------------------------
-      - name: Create env file
+      # --------------------------------------------------
+      # 4. Create production environment file
+      # --------------------------------------------------
+      - name: Create .env
         run: |
           echo "VITE_WP_API_URL=${{ secrets.VITE_WP_API_URL }}" >> .env
           echo "VITE_API_CONTACT_URL=${{ secrets.VITE_API_CONTACT_URL }}" >> .env
           echo "VITE_RECAPTCHA_SITE_KEY=${{ secrets.VITE_RECAPTCHA_SITE_KEY }}" >> .env
 
 
-      # ----------------------------------------
-      # 5. Build
-      # ----------------------------------------
+      # --------------------------------------------------
+      # 5. Build Vite application
+      # --------------------------------------------------
       - name: Build Project
         run: npm run build
 
 
-      # ----------------------------------------
+      # --------------------------------------------------
       # 6. Install lftp
-      # ----------------------------------------
+      # --------------------------------------------------
       - name: Install lftp
         run: |
           sudo apt-get update
           sudo apt-get install -y lftp
 
 
-      # ----------------------------------------
-      # 7. Deploy
-      # ----------------------------------------
+      # --------------------------------------------------
+      # 7. Deploy dist/ to Hostinger
+      # --------------------------------------------------
       - name: Deploy to Hostinger
         env:
           FTP_HOST: ${{ secrets.FTP_SERVER }}
@@ -75,10 +76,19 @@ jobs:
             set ftp:ssl-allow false;
             set ftp:ssl-force false;
             set ssl:verify-certificate false;
+
             set net:timeout 30;
             set net:max-retries 3;
             set net:reconnect-interval-base 5;
+
             open -u ${FTP_USER},${FTP_PASS} ftp://${FTP_HOST}:21;
-            mirror --reverse --verbose --parallel=1 ./dist/ ./;
+
+            mirror \
+              --reverse \
+              --verbose \
+              --parallel=1 \
+              ./dist/ \
+              ./;
+
             bye
           "
